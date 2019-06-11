@@ -9,7 +9,7 @@ import java.net.URL;
 public class PhotoModel {
 
     private String ID, description, userName, location;
-    private URL raw, full, regular;
+    private String raw, full, regular;
     private int height, width, likes;
 
     // getter and setter methods
@@ -46,27 +46,27 @@ public class PhotoModel {
         this.location = location;
     }
 
-    public URL getRaw() {
+    public String getRaw() {
         return raw;
     }
 
-    public void setRaw(URL raw) {
+    public void setRaw(String raw) {
         this.raw = raw;
     }
 
-    public URL getFull() {
+    public String getFull() {
         return full;
     }
 
-    public void setFull(URL full) {
+    public void setFull(String full) {
         this.full = full;
     }
 
-    public URL getRegular() {
+    public String getRegular() {
         return regular;
     }
 
-    public void setRegular(URL regular) {
+    public void setRegular(String regular) {
         this.regular = regular;
     }
 
