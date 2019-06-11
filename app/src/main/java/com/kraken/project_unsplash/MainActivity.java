@@ -17,6 +17,11 @@ import com.kraken.project_unsplash.Utils.Constants;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * MainActivity class
+ * The Application starts from here
+ */
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
