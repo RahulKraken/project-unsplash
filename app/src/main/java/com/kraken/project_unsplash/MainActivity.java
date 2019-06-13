@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.kraken.project_unsplash.Adapters.StaggeredRecyclerViewAdapter;
 import com.kraken.project_unsplash.Fragments.FeaturedPhotosFragment;
+import com.kraken.project_unsplash.Models.Collection;
 import com.kraken.project_unsplash.Models.Photo;
 import com.kraken.project_unsplash.Network.UrlBuilder;
 import com.kraken.project_unsplash.Utils.Constants;

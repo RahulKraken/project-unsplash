@@ -82,7 +82,7 @@ public class UrlBuilder {
      * @param id : id of collection
      * @return url
      */
-    public static String getCollection(String id) {
+    public static String getCollection(int id) {
         url = Constants.getBaseUrl();
         url += "/collections/" + id;
         return url;
@@ -93,7 +93,7 @@ public class UrlBuilder {
      * @param id : id of collection
      * @return url
      */
-    public static String getCollectionPhotos(String id) {
+    public static String getCollectionPhotos(int id) {
         url = Constants.getBaseUrl();
         url += "/collections/" + id + "/photos";
         return url;
