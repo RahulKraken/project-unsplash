@@ -35,8 +35,10 @@ import java.util.Map;
 
 public class SearchAndCollectionsFragment extends Fragment {
 
+    // TAG for log messages
     private static final String TAG = "SearchAndCollectionsFra";
 
+    // root view holding the layout of the fragment
     private View rootView;
 
     @Override
@@ -47,21 +49,30 @@ public class SearchAndCollectionsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // inflate the root view
         rootView = inflater.inflate(R.layout.fragment_search_and_collections, container, false);
+        // fetch the collections
         fetchCuratedCollections();
         return rootView;
     }
 
+    /**
+     * fetch the featured collections
+     */
     private void fetchCuratedCollections() {
         Log.d(TAG, "fetchPhotos: " + UrlBuilder.getFeaturedCollections(6));
+        // StringRequest to fetch raw JSON
         StringRequest curatedCollectionsRequest = new StringRequest(Request.Method.GET,
                 UrlBuilder.getFeaturedCollections(7), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "onResponse: 200 OK\n" + response);
+                // serializer converts the raw JSON into Collection[]
                 Serializer serializer = new Serializer();
                 Collection[] collections = serializer.listCollections(response);
+                // inflate the main Collection card
                 inflateMainCollection(collections[0]);
+                // create the recycler view with rest of the Collection[]
                 initRecyclerView(Arrays.copyOfRange(collections, 1, 7));
             }
         }, new Response.ErrorListener() {
@@ -80,21 +91,33 @@ public class SearchAndCollectionsFragment extends Fragment {
             }
         };
 
+        // add the string request to app wide local request queue
         MyApplication.getLocalRequestQueue().add(curatedCollectionsRequest);
     }
 
+    /**
+     * populate the main collection card
+     * @param collection : Collection obj
+     */
     private void inflateMainCollection(Collection collection) {
+        // image view and text view of the main collection card
         ImageView mainImage = rootView.findViewById(R.id.main_collection_img);
         TextView mainImageTitle = rootView.findViewById(R.id.main_collection_title);
 
+        // using glide to populate the main image view
         Glide.with(getContext())
                 .load(collection.getCover_photo().getUrls().getSmall())
                 .apply(new RequestOptions()
                         .placeholder(R.drawable.ic_launcher_background))
                 .into(mainImage);
+        // set the title of the card
         mainImageTitle.setText(collection.getTitle());
     }
 
+    /**
+     * Init the recycler view
+     * @param collections : Collection[]
+     */
     private void initRecyclerView(Collection[] collections) {
         RecyclerView collectionsRecyclerView = rootView.findViewById(R.id.collectionsRecyclerView);
 
