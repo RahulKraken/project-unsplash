@@ -6,4 +6,8 @@
     <string name="et_search_hint">Search</string>
     <string name="collections_label">Collections</string>
     <string name="featured_label">Featured</string>
+    <string name="nav_featured_label">Featured</string>
+    <string name="nav_search_label">Search</string>
+    <string name="nav_favorites_label">Favorites</string>
+    <string name="nav_profile_label">Profile</string>
 </resources>

@@ -62,7 +62,7 @@ public class FeaturedPhotosFragment extends Fragment {
     private void fetchPhotos() {
         Log.d(TAG, "fetchPhotos: " + UrlBuilder.getAllPhotos(50));
         // string request fetches raw json using volley
-        StringRequest allPhotosRequest = new StringRequest(Request.Method.GET, UrlBuilder.getAllPhotos(20),
+        StringRequest allPhotosRequest = new StringRequest(Request.Method.GET, UrlBuilder.getAllPhotos(50),
                 new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

@@ -5,23 +5,23 @@
     <item
         android:id="@+id/nav_item_featured"
         android:icon="@drawable/global_light"
-        android:title="Featured"
-        app:showAsAction="always"/>
+        android:title="@string/nav_featured_label"
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/nav_item_search"
         android:icon="@drawable/search_light"
-        android:title="Search"
-        app:showAsAction="always"/>
+        android:title="@string/nav_search_label"
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/nav_item_favorites"
         android:icon="@drawable/star_light"
-        android:title="Favorites"
-        app:showAsAction="always"/>
+        android:title="@string/nav_favorites_label"
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/nav_item_profile"
         android:icon="@drawable/user_light"
-        android:title="Profile"
-        app:showAsAction="always"/>
+        android:title="@string/nav_profile_label"
+        app:showAsAction="ifRoom"/>
 
 </menu>
