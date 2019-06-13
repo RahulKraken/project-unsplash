@@ -11,4 +11,5 @@
     <string name="nav_favorites_label">Favorites</string>
     <string name="nav_profile_label">Profile</string>
     <string name="photo_intent_transfer_key">PHOTO</string>
+    <string name="set_wallpaper_btn_label">APPLY</string>
 </resources>
