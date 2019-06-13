@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Project-Unsplash</string>
+    <string name="image_view_content_desc">Image</string>
 </resources>

@@ -4,18 +4,18 @@ import android.support.annotation.Nullable;
 
 import com.kraken.project_unsplash.Utils.Constants;
 
-public class UrlCreator {
-    private String url;
+public class UrlBuilder {
+    private static String url;
 
     /**
      * url to get all photos
      * @param count @Nullable int
      * @return url
      */
-    public String getAllPhotos(@Nullable Integer count) {
+    public static String getAllPhotos(@Nullable Integer count) {
         url = Constants.getBaseUrl();
         url += count == null ?
-                "/photos?per_page=50" : "/photos?per_page=" + count + "\"";
+                "/photos?per_page=50" : "/photos?per_page=" + count;
         return url;
     }
 
@@ -24,7 +24,7 @@ public class UrlCreator {
      * @param param : "latest", "oldest", "popular"
      * @return url
      */
-    public String getAllPhotosSorted(String param) {
+    public static String getAllPhotosSorted(String param) {
         url = Constants.getBaseUrl();
         url += "/photos?per_page=50&order_by=\"" + param + "\"";
         return url;
@@ -35,10 +35,10 @@ public class UrlCreator {
      * @param count @Nullable int
      * @return url
      */
-    public String getCuratedPhotos(@Nullable Integer count) {
+    public static String getCuratedPhotos(@Nullable Integer count) {
         url = Constants.getBaseUrl();
         url += count == null ? "/photos/curated?per_page=50" :
-                "/photos/curated?per_page=" + count + "\"";
+                "/photos/curated?per_page=" + count;
         return url;
     }
 
@@ -47,7 +47,7 @@ public class UrlCreator {
      * @param id : ID of the photo
      * @return url
      */
-    public String getPhoto(String id) {
+    public static String getPhoto(String id) {
         url = Constants.getBaseUrl();
         url += "/photos/" + id;
         return url;
@@ -58,10 +58,10 @@ public class UrlCreator {
      * @param count : count of collections (default 10)
      * @return url
      */
-    public String getFeaturedCollections(@Nullable Integer count) {
+    public static String getFeaturedCollections(@Nullable Integer count) {
         url = Constants.getBaseUrl();
         url += count == null ? "/collections/featured" :
-                "/collections/featured?per_page=" + count + "\"";
+                "/collections/featured?per_page=" + count;
         return url;
     }
 
@@ -70,10 +70,10 @@ public class UrlCreator {
      * @param count : count of collections (default 10)
      * @return url
      */
-    public String getCuratedCollections(@Nullable Integer count) {
+    public static String getCuratedCollections(@Nullable Integer count) {
         url = Constants.getBaseUrl();
         url += count == null ? "/collections/curated" :
-                "/collections/curated?per_page=" + count + "\"";
+                "/collections/curated?per_page=" + count;
         return url;
     }
 
@@ -82,7 +82,7 @@ public class UrlCreator {
      * @param id : id of collection
      * @return url
      */
-    public String getCollection(String id) {
+    public static String getCollection(String id) {
         url = Constants.getBaseUrl();
         url += "/collections/" + id;
         return url;
@@ -93,7 +93,7 @@ public class UrlCreator {
      * @param id : id of collection
      * @return url
      */
-    public String getCollectionPhotos(String id) {
+    public static String getCollectionPhotos(String id) {
         url = Constants.getBaseUrl();
         url += "/collections/" + id + "/photos";
         return url;
@@ -104,7 +104,7 @@ public class UrlCreator {
      * @param key : keyword
      * @return url
      */
-    public String searchPhoto(String key) {
+    public static String searchPhoto(String key) {
         url = Constants.getBaseUrl();
         url += "/search/photos?per_page=50&query=" + key + "\"";
         return url;
@@ -115,7 +115,7 @@ public class UrlCreator {
      * @param key : keyword
      * @return url
      */
-    public String searchCollections(String key) {
+    public static String searchCollections(String key) {
         url = Constants.getBaseUrl();
         url += "/search/collections?per_page=25&query=" + key + "\"";
         return url;
@@ -126,7 +126,7 @@ public class UrlCreator {
      * @param id : id of photo
      * @return url
      */
-    public String likePhoto(String id) {
+    public static String likePhoto(String id) {
         url = Constants.getBaseUrl();
         url += "/photos/" + id + "/like";
         return url;
@@ -136,7 +136,7 @@ public class UrlCreator {
      * get a random photo
      * @return url
      */
-    public String getRandomPhoto() {
+    public static String getRandomPhoto() {
         url = Constants.getBaseUrl();
         url += "/photos/random";
         return url;
@@ -147,7 +147,7 @@ public class UrlCreator {
      * @param id : id source collection
      * @return url
      */
-    public String getRelatedCollections(String id) {
+    public static String getRelatedCollections(String id) {
         url = Constants.getBaseUrl();
         url += "/collections/" + id + "/related";
         return url;
