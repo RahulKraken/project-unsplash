@@ -3,6 +3,7 @@ package com.kraken.project_unsplash.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,5 +37,17 @@ public class ImageViewer extends AppCompatActivity {
                 .into(imageView);
 
         textView.setText(photo.getUser().getName());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // hide the status bar
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
     }
 }
