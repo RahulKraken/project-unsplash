@@ -1,6 +1,8 @@
 package com.kraken.project_unsplash.Models;
 
-public class Collection {
+import java.io.Serializable;
+
+public class Collection implements Serializable {
     private String title, description, published_at, updated_at;
     private boolean featured, curated;
     private int id, total_photos;

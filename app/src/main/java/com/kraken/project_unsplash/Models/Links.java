@@ -1,6 +1,8 @@
 package com.kraken.project_unsplash.Models;
 
-public class Links {
+import java.io.Serializable;
+
+public class Links implements Serializable {
 
     private String self, html, download, download_location;
 

@@ -10,4 +10,5 @@
     <string name="nav_search_label">Search</string>
     <string name="nav_favorites_label">Favorites</string>
     <string name="nav_profile_label">Profile</string>
+    <string name="photo_intent_transfer_key">PHOTO</string>
 </resources>

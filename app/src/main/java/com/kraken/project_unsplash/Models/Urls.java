@@ -1,6 +1,8 @@
 package com.kraken.project_unsplash.Models;
 
-public class Urls {
+import java.io.Serializable;
+
+public class Urls implements Serializable {
 
     private String raw, full, regular, small, thumb;
 

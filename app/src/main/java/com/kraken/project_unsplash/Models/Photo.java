@@ -1,10 +1,12 @@
 package com.kraken.project_unsplash.Models;
 
+import java.io.Serializable;
+
 /**
  * Model class for photo
  */
 
-public class Photo {
+public class Photo implements Serializable {
 
     private String id, createdAt, updatedAt, description, alt_description, color;
     private int width, height, likes;
