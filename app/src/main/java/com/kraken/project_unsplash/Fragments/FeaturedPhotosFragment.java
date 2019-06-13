@@ -60,7 +60,7 @@ public class FeaturedPhotosFragment extends Fragment {
      * Use the localRequestQueue to fetch featured photos
      */
     private void fetchPhotos() {
-        Log.d(TAG, "fetchPhotos: " + UrlBuilder.getAllPhotos(20));
+        Log.d(TAG, "fetchPhotos: " + UrlBuilder.getAllPhotos(50));
         // string request fetches raw json using volley
         StringRequest allPhotosRequest = new StringRequest(Request.Method.GET, UrlBuilder.getAllPhotos(20),
                 new Response.Listener<String>() {

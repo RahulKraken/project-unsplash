@@ -38,9 +38,9 @@ public class FeaturedPhotosRecyclerViewAdapter extends RecyclerView.Adapter<Feat
     public void onBindViewHolder(@NonNull ScatteredRecyclerViewHolder holder, int i) {
         Log.d(TAG, "onBindViewHolder: called");
         Glide.with(context)
-                .load(photos[i].getUrls().getRegular())
+                .load(photos[i].getUrls().getSmall())
                 .apply(new RequestOptions()
-                            .placeholder(R.drawable.ic_launcher_background))
+                        .placeholder(R.drawable.ic_launcher_background))
                 .into(holder.imageView);
     }
 
