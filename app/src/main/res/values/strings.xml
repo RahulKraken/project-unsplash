@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Project-Unsplash</string>
     <string name="image_view_content_desc">Image</string>
+    <string name="search_button_content_desc">Search button</string>
+    <string name="collection_recycler_view_item">Collection Recycler view item</string>
+    <string name="et_search_hint">Search</string>
+    <string name="collections_label">Collections</string>
+    <string name="featured_label">Featured</string>
 </resources>

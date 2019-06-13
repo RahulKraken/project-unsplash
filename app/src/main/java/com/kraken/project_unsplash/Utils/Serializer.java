@@ -6,9 +6,6 @@ import com.google.gson.Gson;
 import com.kraken.project_unsplash.Models.Collection;
 import com.kraken.project_unsplash.Models.Photo;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Serializer {
 
     private static final String TAG = "Serializer";

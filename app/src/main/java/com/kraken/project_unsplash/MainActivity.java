@@ -4,33 +4,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.kraken.project_unsplash.Adapters.StaggeredRecyclerViewAdapter;
 import com.kraken.project_unsplash.Fragments.FeaturedPhotosFragment;
-import com.kraken.project_unsplash.Models.Collection;
-import com.kraken.project_unsplash.Models.Photo;
-import com.kraken.project_unsplash.Network.UrlBuilder;
-import com.kraken.project_unsplash.Utils.Constants;
-import com.kraken.project_unsplash.Utils.Serializer;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.kraken.project_unsplash.Fragments.SearchAndCollectionsFragment;
 
 /**
  * MainActivity class
@@ -61,9 +42,11 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.nav_item_featured:
                         Toast.makeText(MainActivity.this, "Featured", Toast.LENGTH_SHORT).show();
+                        setFragment(new FeaturedPhotosFragment());
                         return true;
                     case R.id.nav_item_search:
                         Toast.makeText(MainActivity.this, "Search", Toast.LENGTH_SHORT).show();
+                        setFragment(new SearchAndCollectionsFragment());
                         return true;
                     case R.id.nav_item_favorites:
                         Toast.makeText(MainActivity.this, "Favorites", Toast.LENGTH_SHORT).show();

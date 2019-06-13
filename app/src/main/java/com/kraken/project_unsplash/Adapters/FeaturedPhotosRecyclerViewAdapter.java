@@ -14,14 +14,14 @@ import com.bumptech.glide.request.RequestOptions;
 import com.kraken.project_unsplash.Models.Photo;
 import com.kraken.project_unsplash.R;
 
-public class StaggeredRecyclerViewAdapter extends RecyclerView.Adapter<StaggeredRecyclerViewAdapter.ScatteredRecyclerViewHolder> {
+public class FeaturedPhotosRecyclerViewAdapter extends RecyclerView.Adapter<FeaturedPhotosRecyclerViewAdapter.ScatteredRecyclerViewHolder> {
 
     private static final String TAG = "StaggeredRecyclerViewAd";
 
     private Context context;
     private Photo[] photos;
 
-    public StaggeredRecyclerViewAdapter(Context context, Photo[] photos) {
+    public FeaturedPhotosRecyclerViewAdapter(Context context, Photo[] photos) {
         this.context = context;
         this.photos = photos;
     }
@@ -29,7 +29,7 @@ public class StaggeredRecyclerViewAdapter extends RecyclerView.Adapter<Staggered
     @NonNull
     @Override
     public ScatteredRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(context).inflate(R.layout.rv_main_layout_item, viewGroup,
+        View view = LayoutInflater.from(context).inflate(R.layout.rv_featured_grid_item, viewGroup,
                 false);
         return new ScatteredRecyclerViewHolder(view);
     }
