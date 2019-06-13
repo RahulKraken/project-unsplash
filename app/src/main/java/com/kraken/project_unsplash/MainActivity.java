@@ -1,11 +1,18 @@
 package com.kraken.project_unsplash;
 
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -15,6 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.kraken.project_unsplash.Adapters.StaggeredRecyclerViewAdapter;
+import com.kraken.project_unsplash.Fragments.FeaturedPhotosFragment;
 import com.kraken.project_unsplash.Models.Photo;
 import com.kraken.project_unsplash.Network.UrlBuilder;
 import com.kraken.project_unsplash.Utils.Constants;
@@ -37,54 +45,40 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fetchPhotos();
+        setUpBottomNavigation(null);
     }
 
-    private void fetchPhotos() {
-        Log.d(TAG, "fetchPhotos: " + UrlBuilder.getAllPhotos(20));
-        StringRequest allPhotosRequest = new StringRequest(Request.Method.GET,
-                UrlBuilder.getAllPhotos(20), new Response.Listener<String>() {
+    private void setUpBottomNavigation(@Nullable Fragment fragment) {
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        if (fragment == null) fragment = new FeaturedPhotosFragment();
+        setFragment(fragment);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onResponse(String response) {
-                Log.d(TAG, "onResponse: 200 OK\n" + response);
-                Serializer serializer = new Serializer();
-                Photo[] photos = serializer.listPhotos(response);
-                initRecyclerView(photos);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "onErrorResponse: " + error.toString());
-                Toast.makeText(MainActivity.this, error.getCause().toString(), Toast.LENGTH_LONG).show();
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("Accept-Version", "v1");
-                params.put("Authorization", "Client-ID " + Constants.getAccessKey());
-                return params;
-            }
-        };
-
-        MyApplication.getLocalRequestQueue().add(allPhotosRequest);
-    }
-
-    private void initRecyclerView(Photo[] photos) {
-        RecyclerView recyclerView = findViewById(R.id.mainRecyclerView);
-
-        StaggeredRecyclerViewAdapter staggeredRecyclerViewAdapter = new StaggeredRecyclerViewAdapter(this, photos);
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,
-                LinearLayoutManager.VERTICAL);
-
-        recyclerView.setAdapter(staggeredRecyclerViewAdapter);
-        recyclerView.setLayoutManager(layoutManager);
-
-        recyclerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "clicked", Toast.LENGTH_SHORT).show();
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_item_featured:
+                        Toast.makeText(MainActivity.this, "Featured", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.nav_item_search:
+                        Toast.makeText(MainActivity.this, "Search", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.nav_item_favorites:
+                        Toast.makeText(MainActivity.this, "Favorites", Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.nav_item_profile:
+                        Toast.makeText(MainActivity.this, "Profile", Toast.LENGTH_SHORT).show();
+                        return true;
+                }
+                return false;
             }
         });
+    }
+
+    private void setFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.featured_photos_fragment_frame, fragment);
+        fragmentTransaction.commit();
     }
 }
