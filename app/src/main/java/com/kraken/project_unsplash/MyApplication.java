@@ -1,10 +1,15 @@
 package com.kraken.project_unsplash;
 
 import android.app.Application;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.kraken.project_unsplash.Database.DatabaseContract;
+import com.kraken.project_unsplash.Database.DatabaseHelper;
 
 public class MyApplication extends Application {
 
@@ -26,8 +31,15 @@ public class MyApplication extends Application {
         searchRequestQueue = Volley.newRequestQueue(this);
 
         Log.d(TAG, "onCreate: request queues created");
+        createDatabase();
     }
 
+    /**
+     * testing interaction with the database
+     */
+    private void createDatabase() {
+        new DatabaseHelper(this);
+    }
 
     /**
      * getters for request queues
