@@ -25,7 +25,7 @@ import com.kraken.project_unsplash.Database.DatabaseHelper;
 import com.kraken.project_unsplash.Models.Photo;
 import com.kraken.project_unsplash.MyApplication;
 import com.kraken.project_unsplash.R;
-a
+
 /**
  * ImageViewer Activity class
  */
