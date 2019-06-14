@@ -1,5 +1,6 @@
 package com.kraken.project_unsplash.Activities;
 
+import android.annotation.SuppressLint;
 import android.app.WallpaperManager;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,8 +27,9 @@ public class ImageViewer extends AppCompatActivity {
     private static final String TAG = "ImageViewer";
 
     private ImageView imageView;
-    private TextView tvUserName, tvDescription;
+    private TextView tvUserName, tvDescription, tvLikesCnt;
     private Button setWallpaperBtn;
+    private ImageButton addFavoritesBtn;
     private Photo photo;
 
     @Override
@@ -39,12 +42,25 @@ public class ImageViewer extends AppCompatActivity {
         tvUserName = findViewById(R.id.tv_user_name);
         tvDescription = findViewById(R.id.tv_description);
         setWallpaperBtn = findViewById(R.id.setWallpaperBtn);
+        addFavoritesBtn = findViewById(R.id.img_btn_add_favorites);
+        tvLikesCnt = findViewById(R.id.tv_likes_count);
 
         Intent intent = getIntent();
         photo = (Photo) intent.getSerializableExtra(getResources().getString(R.string.photo_intent_transfer_key));
 
         LoadImage();
         initSetWallpaperBtn();
+        initAddToFavoritesBtn();
+    }
+
+    private void initAddToFavoritesBtn() {
+        addFavoritesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "onClick: add to favorites " + photo.getId());
+                Toast.makeText(ImageViewer.this, "Adding to favorites", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void initSetWallpaperBtn() {
@@ -76,6 +92,7 @@ public class ImageViewer extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void LoadImage() {
         // load image with glide
         Glide.with(this)
@@ -86,6 +103,7 @@ public class ImageViewer extends AppCompatActivity {
         if (photo.getDescription() != null || photo.getAlt_description() != null) {
             tvDescription.setText(photo.getDescription() != null ? photo.getDescription() : photo.getAlt_description());
         }
+        tvLikesCnt.setText(photo.getLikes() + " Likes");
     }
 
     @Override

@@ -17,4 +17,5 @@
     <string name="collection_title_replacement">Collection</string>
     <string name="view_more_btn_label">View More</string>
     <string name="featured_collections_title">Featured Collections</string>
+    <string name="add_to_favorites_btn_label">Add to Favorites</string>
 </resources>
