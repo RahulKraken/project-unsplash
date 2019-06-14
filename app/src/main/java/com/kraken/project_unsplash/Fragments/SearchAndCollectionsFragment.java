@@ -1,5 +1,6 @@
 package com.kraken.project_unsplash.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +24,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.kraken.project_unsplash.Adapters.CollectionsRecyclerViewAdapter;
+import com.kraken.project_unsplash.Activities.FeaturedCollections;
 import com.kraken.project_unsplash.Models.Collection;
 import com.kraken.project_unsplash.MyApplication;
 import com.kraken.project_unsplash.Network.UrlBuilder;
@@ -53,7 +56,21 @@ public class SearchAndCollectionsFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_search_and_collections, container, false);
         // fetch the collections
         fetchCuratedCollections();
+        addOnClickListener();
         return rootView;
+    }
+
+    /**
+     * add onClickListener to the view more button
+     */
+    private void addOnClickListener() {
+        Button viewMoreBtn = rootView.findViewById(R.id.viewMoreBtn);
+        viewMoreBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), FeaturedCollections.class));
+            }
+        });
     }
 
     /**

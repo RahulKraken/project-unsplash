@@ -15,4 +15,6 @@
     <string name="collection_view_photos_label">Photos</string>
     <string name="collection_parcelable_intent_extra">COLLECTION</string>
     <string name="collection_title_replacement">Collection</string>
+    <string name="view_more_btn_label">View More</string>
+    <string name="featured_collections_title">Featured Collections</string>
 </resources>

@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.CollectionView"></activity>
+        <activity android:name=".Activities.FeaturedCollections"></activity>
+        <activity android:name=".Activities.CollectionView" />
         <activity android:name=".Activities.ImageViewer" />
         <activity android:name=".MainActivity">
             <intent-filter>
