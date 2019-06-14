@@ -46,9 +46,7 @@
 
             <TextView
                 android:text="@string/collections_label"
-                android:textSize="24sp"
-                android:textColor="@color/md_black_1000"
-                android:textStyle="bold"
+                style="@style/subTitleStyle"
                 android:layout_marginStart="14dp"
                 android:layout_marginEnd="14dp"
                 android:layout_width="wrap_content"

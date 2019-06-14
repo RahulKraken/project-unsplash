@@ -18,7 +18,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.kraken.project_unsplash.Adapters.FeaturedPhotosRecyclerViewAdapter;
+import com.kraken.project_unsplash.Adapters.PhotosRecyclerViewAdapter;
 import com.kraken.project_unsplash.Models.Photo;
 import com.kraken.project_unsplash.MyApplication;
 import com.kraken.project_unsplash.Network.UrlBuilder;
@@ -102,10 +102,10 @@ public class FeaturedPhotosFragment extends Fragment {
     private void initRecyclerView(Photo[] photos) {
         RecyclerView recyclerView = rootView.findViewById(R.id.rv_featured_photos);
 
-        FeaturedPhotosRecyclerViewAdapter featuredPhotosRecyclerViewAdapter = new FeaturedPhotosRecyclerViewAdapter(getContext(), photos);
+        PhotosRecyclerViewAdapter photosRecyclerViewAdapter = new PhotosRecyclerViewAdapter(getContext(), photos);
         StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
 
-        recyclerView.setAdapter(featuredPhotosRecyclerViewAdapter);
+        recyclerView.setAdapter(photosRecyclerViewAdapter);
         recyclerView.setLayoutManager(layoutManager);
     }
 }

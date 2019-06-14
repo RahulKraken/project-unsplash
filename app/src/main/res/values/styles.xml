@@ -10,4 +10,25 @@
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
+    <!-- style for titles -->
+    <style name="TitleStyle">
+        <item name="android:textSize">32sp</item>
+        <item name="android:textColor">@color/md_black_1000</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- style for subtitles -->
+    <style name="subTitleStyle">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/md_black_1000</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- style for descriptions -->
+    <style name="DescStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/md_black_1000</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
 </resources>

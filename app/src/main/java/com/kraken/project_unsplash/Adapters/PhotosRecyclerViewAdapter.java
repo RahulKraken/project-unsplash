@@ -17,14 +17,14 @@ import com.kraken.project_unsplash.Activities.ImageViewer;
 import com.kraken.project_unsplash.Models.Photo;
 import com.kraken.project_unsplash.R;
 
-public class FeaturedPhotosRecyclerViewAdapter extends RecyclerView.Adapter<FeaturedPhotosRecyclerViewAdapter.ScatteredRecyclerViewHolder> {
+public class PhotosRecyclerViewAdapter extends RecyclerView.Adapter<PhotosRecyclerViewAdapter.ScatteredRecyclerViewHolder> {
 
     private static final String TAG = "StaggeredRecyclerViewAd";
 
     private Context context;
     private Photo[] photos;
 
-    public FeaturedPhotosRecyclerViewAdapter(Context context, Photo[] photos) {
+    public PhotosRecyclerViewAdapter(Context context, Photo[] photos) {
         this.context = context;
         this.photos = photos;
     }
@@ -32,7 +32,7 @@ public class FeaturedPhotosRecyclerViewAdapter extends RecyclerView.Adapter<Feat
     @NonNull
     @Override
     public ScatteredRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View view = LayoutInflater.from(context).inflate(R.layout.rv_featured_grid_item, viewGroup,
+        View view = LayoutInflater.from(context).inflate(R.layout.rv_image_grid_item, viewGroup,
                 false);
         return new ScatteredRecyclerViewHolder(view);
     }
