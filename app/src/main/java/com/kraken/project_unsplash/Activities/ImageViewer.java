@@ -25,6 +25,7 @@ import com.kraken.project_unsplash.Database.DatabaseHelper;
 import com.kraken.project_unsplash.Models.Photo;
 import com.kraken.project_unsplash.MyApplication;
 import com.kraken.project_unsplash.R;
+import com.kraken.project_unsplash.Utils.Serializer;
 
 /**
  * ImageViewer Activity class
@@ -72,7 +73,7 @@ public class ImageViewer extends AppCompatActivity {
     }
 
     /**
-     * adds current photo id to the fav_table in database
+     * adds current photo to the fav_table in database
      */
     private void initAddToFavoritesBtn() {
         // add onClickListener on addToFavoritesBtn
@@ -81,13 +82,17 @@ public class ImageViewer extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d(TAG, "onClick: add to favorites " + photo.getId());
 
+                // get the byte[] from photo
+                byte[] bytes = Serializer.objectToByteArray(photo);
+                Log.d(TAG, "onClick: converted to byte array");
+
                 // get the database
                 DatabaseHelper helper = new DatabaseHelper(ImageViewer.this);
                 SQLiteDatabase database = helper.getWritableDatabase();
 
                 // create the content values
                 ContentValues values = new ContentValues();
-                values.put(DatabaseContract.FavoritesEntry.COLUMN_PHOTO_ID, photo.getId());
+                values.put(DatabaseContract.FavoritesEntry.COLUMN_PHOTO, bytes);
 
                 // insert into the database
                 database.insert(DatabaseContract.FavoritesEntry.TABLE_NAME, null, values);
