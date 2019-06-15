@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.kraken.project_unsplash.Fragments.FavoritesFragment;
 import com.kraken.project_unsplash.Fragments.FeaturedPhotosFragment;
 import com.kraken.project_unsplash.Fragments.SearchAndCollectionsFragment;
 
@@ -41,15 +42,13 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.nav_item_featured:
-                        Toast.makeText(MainActivity.this, "Featured", Toast.LENGTH_SHORT).show();
                         setFragment(new FeaturedPhotosFragment());
                         return true;
                     case R.id.nav_item_search:
-                        Toast.makeText(MainActivity.this, "Search", Toast.LENGTH_SHORT).show();
                         setFragment(new SearchAndCollectionsFragment());
                         return true;
                     case R.id.nav_item_favorites:
-                        Toast.makeText(MainActivity.this, "Favorites", Toast.LENGTH_SHORT).show();
+                        setFragment(new FavoritesFragment());
                         return true;
                     case R.id.nav_item_profile:
                         Toast.makeText(MainActivity.this, "Profile", Toast.LENGTH_SHORT).show();
