@@ -44,6 +44,13 @@ public class FavoritesFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        // get fav photos
+        getFavPhotos();
+    }
+
     /**
      * get List of Photos from database
      */

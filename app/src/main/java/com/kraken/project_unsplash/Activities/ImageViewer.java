@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.WallpaperManager;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -26,6 +27,8 @@ import com.kraken.project_unsplash.Models.Photo;
 import com.kraken.project_unsplash.MyApplication;
 import com.kraken.project_unsplash.R;
 import com.kraken.project_unsplash.Utils.Serializer;
+
+import java.util.Objects;
 
 /**
  * ImageViewer Activity class
@@ -69,36 +72,90 @@ public class ImageViewer extends AppCompatActivity {
         // activate the set wallpaper button
         initSetWallpaperBtn();
         // activate the add to favorites button
-        initAddToFavoritesBtn();
+        handleFavoritesBtn();
     }
 
     /**
-     * adds current photo to the fav_table in database
+     * adds/deletes current photo to/from the fav_table in database
      */
-    private void initAddToFavoritesBtn() {
+    private void handleFavoritesBtn() {
         // add onClickListener on addToFavoritesBtn
         addFavoritesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: add to favorites " + photo.getId());
 
-                // get the byte[] from photo
-                byte[] bytes = Serializer.objectToByteArray(photo);
-                Log.d(TAG, "onClick: converted to byte array");
-
-                // get the database
+                // get readable database
                 DatabaseHelper helper = new DatabaseHelper(ImageViewer.this);
-                SQLiteDatabase database = helper.getWritableDatabase();
+                SQLiteDatabase database = helper.getReadableDatabase();
 
-                // create the content values
-                ContentValues values = new ContentValues();
-                values.put(DatabaseContract.FavoritesEntry.COLUMN_PHOTO, bytes);
+                // columns to be read
+                String[] columns = {getResources().getString(R.string.database_photo_id_col_name),
+                        DatabaseContract.FavoritesEntry.COLUMN_PHOTO};
 
-                // insert into the database
-                database.insert(DatabaseContract.FavoritesEntry.TABLE_NAME, null, values);
+                // query database
+                Cursor cursor = database.query(DatabaseContract.FavoritesEntry.TABLE_NAME, columns, null,
+                        null, null, null, null);
+
+                Photo currPhoto;
+                int foundIdx = 0;
+                boolean favPhoto = false;
+
+                // loop through all photos and if found the photo already in database then delete it otherwise add it
+                while (cursor.moveToNext()) {
+                    currPhoto = (Photo) Serializer.photoFromByteArray(cursor.getBlob(
+                            cursor.getColumnIndex(DatabaseContract.FavoritesEntry.COLUMN_PHOTO)
+                    ));
+                    if (Objects.requireNonNull(currPhoto).getId().equals(photo.getId())) {
+                        favPhoto = true;
+                        foundIdx = cursor.getInt(cursor.getColumnIndex(getResources().getString(R.string.database_photo_id_col_name)));
+                        Log.d(TAG, "onClick: index -> " + foundIdx);
+                        break;
+                    }
+                }
+
+                // close cursor and database
+                cursor.close();
                 database.close();
+
+                if (!favPhoto) addPhotoToDatabase();
+                else deletePhotoFromDatabase(foundIdx);
             }
         });
+    }
+
+    /**
+     * add photo to database
+     */
+    private void addPhotoToDatabase() {
+        // get the byte[] from photo
+        byte[] bytes = Serializer.objectToByteArray(photo);
+        Log.d(TAG, "onClick: converted to byte array");
+
+        // get the database
+        DatabaseHelper helper = new DatabaseHelper(ImageViewer.this);
+        SQLiteDatabase database = helper.getWritableDatabase();
+
+        // create the content values
+        ContentValues values = new ContentValues();
+        values.put(DatabaseContract.FavoritesEntry.COLUMN_PHOTO, bytes);
+
+        // insert into the database
+        database.insert(DatabaseContract.FavoritesEntry.TABLE_NAME, null, values);
+        database.close();
+    }
+
+    /**
+     * delete photo from database
+     * @param index : _id of photo
+     */
+    private void deletePhotoFromDatabase(int index) {
+        DatabaseHelper helper = new DatabaseHelper(ImageViewer.this);
+        SQLiteDatabase database = helper.getWritableDatabase();
+
+        // query to delete
+        database.delete(DatabaseContract.FavoritesEntry.TABLE_NAME, "_id = " + index, null);
+        database.close();
     }
 
     /**

@@ -19,4 +19,5 @@
     <string name="featured_collections_title">Featured Collections</string>
     <string name="add_to_favorites_btn_label">Add to Favorites</string>
     <string name="favorites_fragment_title">Favorites</string>
+    <string name="database_photo_id_col_name">_id</string>
 </resources>
