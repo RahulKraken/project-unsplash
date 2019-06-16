@@ -54,9 +54,6 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.nav_item_favorites:
                         setFragment(new FavoritesFragment());
                         return true;
-                    case R.id.nav_item_profile:
-                        Toast.makeText(MainActivity.this, "Profile", Toast.LENGTH_SHORT).show();
-                        return true;
                 }
                 return false;
             }

@@ -18,10 +18,5 @@
         android:icon="@drawable/star_light"
         android:title="@string/nav_favorites_label"
         app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/nav_item_profile"
-        android:icon="@drawable/user_light"
-        android:title="@string/nav_profile_label"
-        app:showAsAction="ifRoom"/>
 
 </menu>
