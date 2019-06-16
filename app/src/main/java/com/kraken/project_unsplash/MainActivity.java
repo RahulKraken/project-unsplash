@@ -31,6 +31,10 @@ public class MainActivity extends AppCompatActivity {
         setUpBottomNavigation(null);
     }
 
+    /**
+     * setup bottom nav bar
+     * @param fragment : default fragment
+     */
     private void setUpBottomNavigation(@Nullable Fragment fragment) {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -59,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * set @param "fragment" into the frame layout
+     * @param fragment : fragment
+     */
     private void setFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.featured_photos_fragment_frame, fragment);

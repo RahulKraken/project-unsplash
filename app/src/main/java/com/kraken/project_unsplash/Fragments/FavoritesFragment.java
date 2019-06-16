@@ -44,6 +44,9 @@ public class FavoritesFragment extends Fragment {
         return rootView;
     }
 
+    /**
+     * get List of Photos from database
+     */
     private void getFavPhotos() {
         // get the database
         DatabaseHelper helper = new DatabaseHelper(getContext());
@@ -57,13 +60,18 @@ public class FavoritesFragment extends Fragment {
         // get list of photos
         List<Photo> photos = new ArrayList<>();
         while (cursor.moveToNext()) {
-            photos.add((Photo) Serializer.photoFromByteArray(cursor.getBlob(cursor.getColumnIndex(DatabaseContract.FavoritesEntry.COLUMN_PHOTO))));
+            photos.add(
+                    (Photo) Serializer.photoFromByteArray(cursor.getBlob(cursor.getColumnIndex(DatabaseContract.FavoritesEntry.COLUMN_PHOTO))));
         }
 
         cursor.close();
         initRecyclerView(photos);
     }
 
+    /**
+     * inflate the recycler view with photos
+     * @param photos : List<Photo>
+     */
     private void initRecyclerView(List<Photo> photos) {
         RecyclerView recyclerView = rootView.findViewById(R.id.fav_recycler_view);
         PhotosRecyclerViewAdapter photosRecyclerViewAdapter = new PhotosRecyclerViewAdapter(getContext(), photos.toArray(new Photo[0]));

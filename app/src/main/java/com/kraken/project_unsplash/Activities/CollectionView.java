@@ -34,6 +34,7 @@ public class CollectionView extends AppCompatActivity {
 
     private static final String TAG = "CollectionView";
 
+    // current collection
     private Collection collection;
 
     @Override
@@ -41,17 +42,21 @@ public class CollectionView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection_view);
 
+        // inflate widgets
         TextView tv_title = findViewById(R.id.collectionTitle);
 
+        // get collection from the intent
         collection = (Collection) getIntent().getSerializableExtra(getResources().getString(R.string.collection_parcelable_intent_extra));
 
         Log.d(TAG, "onCreate: " + collection.getId());
 
+        // set title of the collection
         String title = collection.getTitle() != null ? collection.getTitle() : getResources().getString(R.string.collection_title_replacement);
         tv_title.setText(title);
 
         Log.d(TAG, "onCreate: description " + collection.getDescription());
 
+        // if collection has a description create a textView for description and add to linear layout
         if (collection.getDescription() != null) {
             TextView tv_desc = new TextView(this, null, 0, R.style.DescStyle);
             tv_desc.setTextSize(14);
@@ -71,17 +76,24 @@ public class CollectionView extends AppCompatActivity {
             nestedScrollView.requestLayout();
         }
 
+        // get photos belonging to collection
         getPhotosForCollection();
     }
 
+    /**
+     * get photos belonging to the current collection
+     */
     private void getPhotosForCollection() {
+        // string request to get raw json for the photos
         StringRequest photosForCollectionRequest =
                 new StringRequest(Request.Method.GET, UrlBuilder.getCollectionPhotos(collection.getId()), new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Log.d(TAG, "onResponse: 200 OK\n" + response);
+                        // serialize raw json into Photo[]
                         Serializer serializer = new Serializer();
                         Photo[] photos = serializer.listPhotos(response);
+                        // inflate the recycler view
                         initRecyclerView(photos);
                     }
                 }, new Response.ErrorListener() {
@@ -100,9 +112,14 @@ public class CollectionView extends AppCompatActivity {
                     }
                 };
 
+        // get local request queue and add request to it
         MyApplication.getLocalRequestQueue().add(photosForCollectionRequest);
     }
 
+    /**
+     * inflate the recycler view
+     * @param photos : Photo[]
+     */
     private void initRecyclerView(Photo[] photos) {
         RecyclerView recyclerView = findViewById(R.id.collectionViewRecyclerView);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
