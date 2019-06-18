@@ -4,14 +4,14 @@
 
     <item
         android:id="@+id/nav_item_featured"
-        android:icon="@drawable/global_light"
+        android:icon="@mipmap/ic_explore"
         android:title="@string/nav_featured_label"
         app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/nav_item_search"
-        android:icon="@drawable/search_light"
-        android:title="@string/nav_search_label"
+        android:icon="@mipmap/ic_collections"
+        android:title="@string/collections_nav_bar_label"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/nav_item_favorites"
