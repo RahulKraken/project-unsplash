@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -35,6 +36,13 @@ public class CollectionsFragment extends Fragment {
 
     // root view holding the layout of the fragment
     private View rootView;
+    private int page = 1;
+
+    //----------------- experimental -----------------
+
+    // recycler view scroll stuff
+    private boolean loading = true;
+    private int pastVisibleItems, visibleItemCount, totalItemCount;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,10 +63,10 @@ public class CollectionsFragment extends Fragment {
      * fetch the featured collections
      */
     private void fetchCuratedCollections() {
-        Log.d(TAG, "fetchPhotos: " + UrlBuilder.getFeaturedCollections(30, 1));
+        Log.d(TAG, "fetchPhotos: " + UrlBuilder.getFeaturedCollections(30, page));
         // StringRequest to fetch raw JSON
         StringRequest curatedCollectionsRequest = new StringRequest(Request.Method.GET,
-                UrlBuilder.getFeaturedCollections(30, 1), new Response.Listener<String>() {
+                UrlBuilder.getFeaturedCollections(30, page), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "onResponse: 200 OK\n" + response);
@@ -96,9 +104,30 @@ public class CollectionsFragment extends Fragment {
         RecyclerView collectionsRecyclerView = rootView.findViewById(R.id.collectionsRecyclerView);
 
         CollectionsRecyclerViewAdapter adapter = new CollectionsRecyclerViewAdapter(collections, getContext());
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
         collectionsRecyclerView.setAdapter(adapter);
         collectionsRecyclerView.setLayoutManager(layoutManager);
+
+        //------------------- experimental --------------------
+
+        // add onScrollListener on recycler view to enable continuous indefinite scroll
+        collectionsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0) {
+                    visibleItemCount = recyclerView.getChildCount();
+                    totalItemCount = layoutManager.getItemCount();
+                    pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
+
+                    if (loading) {
+                        if (visibleItemCount + pastVisibleItems >= totalItemCount) {
+                            loading = false;
+                            Toast.makeText(getContext(), "reached end", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            }
+        });
     }
 }
