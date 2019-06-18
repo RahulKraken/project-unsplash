@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <!-- main image -->
+    <ImageView
+        android:id="@+id/rv_image_main"
+        android:contentDescription="@string/image_view_content_desc"
+        android:scaleType="center"
+        android:src="@drawable/profile_picture"
+        android:maxHeight="375dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- large linear layout containing user detail and likes -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="56dp">
+
+        <!-- contains user details -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <!-- user profile picture -->
+            <ImageView
+                android:id="@+id/rv_image_profile_picture"
+                android:src="@drawable/profile_picture"
+                android:contentDescription="@string/image_view_content_desc"
+                android:layout_width="40dp"
+                android:layout_height="40dp" />
+
+            <!-- contains full name and username of user -->
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginStart="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <!-- full name -->
+                <TextView
+                    android:id="@+id/rv_image_name"
+                    android:text="Emma Watson"
+                    style="@style/titleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <!-- username -->
+                <TextView
+                    android:id="@+id/rv_image_username"
+                    android:text="emmaW"
+                    style="@style/subtitleStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            
+        </LinearLayout>
+
+        <!-- contains like icons and count -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
+            android:gravity="end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <!-- like icon -->
+            <ImageButton
+                android:id="@+id/rv_image_like_btn"
+                android:src="@mipmap/ic_like_dark"
+                android:contentDescription="@string/image_view_content_desc"
+                android:scaleType="center"
+                android:layout_gravity="center_vertical"
+                android:layout_width="24dp"
+                android:layout_height="24dp" />
+
+            <!-- like count -->
+            <TextView
+                android:id="@+id/rv_image_like_cnt"
+                android:text="645,711"
+                style="@style/actionTextStyle"
+                android:layout_marginStart="8dp"
+                android:layout_gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginBottom="5dp"
+        android:background="@color/md_grey_300"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+</LinearLayout>

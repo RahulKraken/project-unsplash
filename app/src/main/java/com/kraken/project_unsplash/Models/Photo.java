@@ -11,7 +11,7 @@ public class Photo implements Serializable {
     private String id, createdAt, updatedAt, description, alt_description, color;
     private int width, height, likes;
     private Urls urls;
-    private Links links;
+    private PhotoLinks links;
     private User user;
 
     public String getId() {
@@ -94,11 +94,11 @@ public class Photo implements Serializable {
         this.urls = urls;
     }
 
-    public Links getLinks() {
+    public PhotoLinks getLinks() {
         return links;
     }
 
-    public void setLinks(Links links) {
+    public void setLinks(PhotoLinks links) {
         this.links = links;
     }
 

@@ -2,7 +2,7 @@ package com.kraken.project_unsplash.Models;
 
 import java.io.Serializable;
 
-public class Links implements Serializable {
+public class PhotoLinks implements Serializable {
 
     private String self, html, download, download_location;
 

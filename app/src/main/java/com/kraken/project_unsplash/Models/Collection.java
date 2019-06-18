@@ -6,7 +6,7 @@ public class Collection implements Serializable {
     private String title, description, published_at, updated_at;
     private boolean featured, curated;
     private int id, total_photos;
-    private Links links;
+    private PhotoLinks links;
     private User user;
     private Photo cover_photo;
 
@@ -74,11 +74,11 @@ public class Collection implements Serializable {
         this.total_photos = total_photos;
     }
 
-    public Links getLinks() {
+    public PhotoLinks getLinks() {
         return links;
     }
 
-    public void setLinks(Links links) {
+    public void setLinks(PhotoLinks links) {
         this.links = links;
     }
 

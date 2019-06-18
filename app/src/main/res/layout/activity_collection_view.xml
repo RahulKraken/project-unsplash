@@ -20,7 +20,7 @@
 
             <TextView
                 android:id="@+id/collectionTitle"
-                style="@style/TitleStyle"
+                style="@style/titleStyle"
                 android:layout_marginTop="14dp"
                 android:layout_marginStart="14dp"
                 android:layout_marginEnd="14dp"
@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                style="@style/subTitleStyle"
+                style="@style/titleStyle"
                 android:text="@string/collection_view_photos_label"
                 android:layout_marginTop="14dp"
                 android:layout_marginStart="14dp"

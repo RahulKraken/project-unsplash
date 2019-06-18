@@ -103,7 +103,7 @@ public class FeaturedPhotosFragment extends Fragment {
         RecyclerView recyclerView = rootView.findViewById(R.id.rv_featured_photos);
 
         PhotosRecyclerViewAdapter photosRecyclerViewAdapter = new PhotosRecyclerViewAdapter(getContext(), photos);
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
         recyclerView.setAdapter(photosRecyclerViewAdapter);
         recyclerView.setLayoutManager(layoutManager);

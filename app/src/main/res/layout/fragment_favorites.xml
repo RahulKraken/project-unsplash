@@ -15,7 +15,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                style="@style/TitleStyle"
+                style="@style/titleStyle"
                 android:text="@string/favorites_fragment_title"
                 android:layout_marginStart="14dp"
                 android:layout_marginTop="14dp"

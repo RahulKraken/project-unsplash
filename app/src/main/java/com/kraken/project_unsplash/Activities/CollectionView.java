@@ -58,7 +58,7 @@ public class CollectionView extends AppCompatActivity {
 
         // if collection has a description create a textView for description and add to linear layout
         if (collection.getDescription() != null) {
-            TextView tv_desc = new TextView(this, null, 0, R.style.DescStyle);
+            TextView tv_desc = new TextView(this, null, 0, R.style.subtitleStyle);
             tv_desc.setTextSize(14);
             tv_desc.setPadding(14, 14, 14, 0);
             tv_desc.setTextColor(ContextCompat.getColor(this, R.color.md_black_1000));

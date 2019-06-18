@@ -46,7 +46,7 @@
 
             <TextView
                 android:text="@string/collections_label"
-                style="@style/subTitleStyle"
+                style="@style/subtitleStyle"
                 android:layout_marginStart="14dp"
                 android:layout_marginEnd="14dp"
                 android:layout_width="wrap_content"

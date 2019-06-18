@@ -39,7 +39,7 @@
 
             <TextView
                 android:id="@+id/tv_user_name"
-                style="@style/subTitleStyle"
+                style="@style/subtitleStyle"
                 android:textColor="@color/md_white_1000"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="5"
@@ -62,7 +62,7 @@
 
             <TextView
                 android:id="@+id/tv_description"
-                style="@style/DescStyle"
+                style="@style/subtitleStyle"
                 android:textColor="@color/md_white_1000"
                 android:alpha="0.65"
                 android:layout_width="match_parent"
@@ -85,7 +85,7 @@
 
                 <TextView
                     android:id="@+id/tv_likes_count"
-                    style="@style/DescStyle"
+                    style="@style/subtitleStyle"
                     android:textColor="@color/md_white_1000"
                     android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
