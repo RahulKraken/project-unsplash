@@ -42,10 +42,7 @@ public class CollectionsFragment extends Fragment {
     // data
     List<Collection> collections;
 
-    //----------------- experimental -----------------
-
     // recycler view scroll stuff
-    private boolean loading = true;
     private int pastVisibleItems, visibleItemCount, totalItemCount;
     private CollectionsRecyclerViewAdapter recyclerViewAdapter;
 
@@ -82,7 +79,7 @@ public class CollectionsFragment extends Fragment {
                 // serializer converts the raw JSON into Collection[]
                 Serializer serializer = new Serializer();
                 collections.addAll(serializer.listCollections(response));
-                // create the recycler view with rest of the Collection[]
+                // notify adapter of the data change
                 recyclerViewAdapter.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
@@ -120,30 +117,25 @@ public class CollectionsFragment extends Fragment {
         collectionsRecyclerView.setAdapter(recyclerViewAdapter);
         collectionsRecyclerView.setLayoutManager(layoutManager);
 
-        //------------------- experimental --------------------
-
         // add onScrollListener on recycler view to enable continuous indefinite scroll
         collectionsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                // if scroll possible
+                // if scroll up
                 if (dy > 0) {
-
                     // get counts of past items, currently visible items and total items
                     visibleItemCount = recyclerView.getChildCount();
                     totalItemCount = layoutManager.getItemCount();
                     pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
 
-                    if (loading) {
-                        // if visible cnt + past item cnt >= total items cnt then we've reached
-                        // the end
-                        // we can also change the total item count to be some integer less than
-                        // that to allow for continuous scroll without breaks
-                        if (visibleItemCount + pastVisibleItems >= totalItemCount) {
-                            Toast.makeText(getContext(), "reached end", Toast.LENGTH_SHORT).show();
-                            // when end reached fetch more content
-                            fetchCuratedCollections();
-                        }
+                    // if visible cnt + past item cnt >= total items cnt then we've reached
+                    // the end
+                    // we can also change the total item count to be some integer less than
+                    // that to allow for continuous scroll without breaks
+                    if (visibleItemCount + pastVisibleItems >= totalItemCount) {
+                        Toast.makeText(getContext(), "reached end", Toast.LENGTH_SHORT).show();
+                        // when end reached fetch more content
+                        fetchCuratedCollections();
                     }
                 }
             }

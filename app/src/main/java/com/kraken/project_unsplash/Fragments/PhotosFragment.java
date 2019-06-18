@@ -25,6 +25,7 @@ import com.kraken.project_unsplash.R;
 import com.kraken.project_unsplash.Utils.Constants;
 import com.kraken.project_unsplash.Utils.Serializer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,10 +41,20 @@ public class PhotosFragment extends Fragment {
 
     // root view of the fragment
     private View rootView;
+    int page = 1;
+
+    // data
+    List<Photo> photos;
+
+    // recycler view scroll stuff
+    private PhotosRecyclerViewAdapter recyclerViewAdapter;
+    private int pastItemsCount, visibleItemCount, totalItemCount;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // init data
+        photos = new ArrayList<>();
     }
 
     @Nullable
@@ -53,6 +64,8 @@ public class PhotosFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_photos, container, false);
         // run the network task to fetch photos before returning the view
         fetchPhotos();
+        // init recycler view
+        initRecyclerView();
         return rootView;
     }
 
@@ -60,19 +73,18 @@ public class PhotosFragment extends Fragment {
      * Use the localRequestQueue to fetch featured photos
      */
     private void fetchPhotos() {
-        Log.d(TAG, "fetchPhotos: " + UrlBuilder.getAllPhotos(50, 1));
+        Log.d(TAG, "fetchPhotos: " + UrlBuilder.getAllPhotos(50, page));
         // string request fetches raw json using volley
-        StringRequest allPhotosRequest = new StringRequest(Request.Method.GET,
-                UrlBuilder.getAllPhotos(50, 1),
+        StringRequest allPhotosRequest = new StringRequest(Request.Method.GET, UrlBuilder.getAllPhotos(50, page),
                 new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "onResponse: 200 OK\n" + response);
                 // serializer converts the raw json into a Photo[]
                 Serializer serializer = new Serializer();
-                List<Photo> photos = serializer.listPhotos(response);
-                // create the recycler view with the photos
-                initRecyclerView(photos);
+                photos.addAll(serializer.listPhotos(response));
+                // notify recycler view adapter
+                recyclerViewAdapter.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -92,21 +104,43 @@ public class PhotosFragment extends Fragment {
             }
         };
 
+        // increment page
+        page += 1;
+
         // add the string request to the local request queue in the application context;
         MyApplication.getLocalRequestQueue().add(allPhotosRequest);
     }
 
     /**
      * create the recycler view
-     * @param photos : Photo[]
      */
-    private void initRecyclerView(List<Photo> photos) {
+    private void initRecyclerView() {
         RecyclerView recyclerView = rootView.findViewById(R.id.rv_featured_photos);
 
-        PhotosRecyclerViewAdapter photosRecyclerViewAdapter = new PhotosRecyclerViewAdapter(getContext(), photos);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerViewAdapter = new PhotosRecyclerViewAdapter(getContext(), photos);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
-        recyclerView.setAdapter(photosRecyclerViewAdapter);
+        recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setLayoutManager(layoutManager);
+
+        // add onScroll listener
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                // if scroll up
+                if (dy > 0) {
+                    // get the needed item counts
+                    visibleItemCount = recyclerView.getChildCount();
+                    totalItemCount = layoutManager.getItemCount();
+                    pastItemsCount = layoutManager.findFirstVisibleItemPosition();
+
+                    if (visibleItemCount + pastItemsCount >= totalItemCount) {
+                        Toast.makeText(getContext(), "reached end", Toast.LENGTH_LONG).show();
+                        // fetch new photos
+                        fetchPhotos();
+                    }
+                }
+            }
+        });
     }
 }
