@@ -25,6 +25,7 @@ import com.kraken.project_unsplash.R;
 import com.kraken.project_unsplash.Utils.Constants;
 import com.kraken.project_unsplash.Utils.Serializer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,15 +39,21 @@ public class CollectionsFragment extends Fragment {
     private View rootView;
     private int page = 1;
 
+    // data
+    List<Collection> collections;
+
     //----------------- experimental -----------------
 
     // recycler view scroll stuff
     private boolean loading = true;
     private int pastVisibleItems, visibleItemCount, totalItemCount;
+    private CollectionsRecyclerViewAdapter recyclerViewAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // init data
+        collections = new ArrayList<>();
     }
 
     @Nullable
@@ -56,6 +63,8 @@ public class CollectionsFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_collections, container, false);
         // fetch the collections
         fetchCuratedCollections();
+        // init the recycler view
+        initRecyclerView();
         return rootView;
     }
 
@@ -72,9 +81,9 @@ public class CollectionsFragment extends Fragment {
                 Log.d(TAG, "onResponse: 200 OK\n" + response);
                 // serializer converts the raw JSON into Collection[]
                 Serializer serializer = new Serializer();
-                List<Collection> collections = serializer.listCollections(response);
+                collections.addAll(serializer.listCollections(response));
                 // create the recycler view with rest of the Collection[]
-                initRecyclerView(collections);
+                recyclerViewAdapter.notifyDataSetChanged();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -92,21 +101,23 @@ public class CollectionsFragment extends Fragment {
             }
         };
 
+        // increment page
+        page += 1;
+
         // add the string request to app wide local request queue
         MyApplication.getLocalRequestQueue().add(curatedCollectionsRequest);
     }
 
     /**
      * Init the recycler view
-     * @param collections : Collection[]
      */
-    private void initRecyclerView(List<Collection> collections) {
+    private void initRecyclerView() {
         RecyclerView collectionsRecyclerView = rootView.findViewById(R.id.collectionsRecyclerView);
 
-        CollectionsRecyclerViewAdapter adapter = new CollectionsRecyclerViewAdapter(collections, getContext());
+        recyclerViewAdapter = new CollectionsRecyclerViewAdapter(collections, getContext());
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
-        collectionsRecyclerView.setAdapter(adapter);
+        collectionsRecyclerView.setAdapter(recyclerViewAdapter);
         collectionsRecyclerView.setLayoutManager(layoutManager);
 
         //------------------- experimental --------------------
@@ -115,15 +126,23 @@ public class CollectionsFragment extends Fragment {
         collectionsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                // if scroll possible
                 if (dy > 0) {
+
+                    // get counts of past items, currently visible items and total items
                     visibleItemCount = recyclerView.getChildCount();
                     totalItemCount = layoutManager.getItemCount();
                     pastVisibleItems = layoutManager.findFirstVisibleItemPosition();
 
                     if (loading) {
+                        // if visible cnt + past item cnt >= total items cnt then we've reached
+                        // the end
+                        // we can also change the total item count to be some integer less than
+                        // that to allow for continuous scroll without breaks
                         if (visibleItemCount + pastVisibleItems >= totalItemCount) {
-                            loading = false;
                             Toast.makeText(getContext(), "reached end", Toast.LENGTH_SHORT).show();
+                            // when end reached fetch more content
+                            fetchCuratedCollections();
                         }
                     }
                 }
