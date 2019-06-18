@@ -43,7 +43,7 @@ public class FeaturedCollections extends AppCompatActivity {
      */
     private void getCollections() {
         StringRequest featuredCollectionsRequest = new StringRequest(Request.Method.GET,
-                UrlBuilder.getFeaturedCollections(50), new Response.Listener<String>() {
+                UrlBuilder.getFeaturedCollections(50, 1), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "onResponse: 200 OK\n" + response);

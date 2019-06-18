@@ -55,10 +55,10 @@ public class CollectionsFragment extends Fragment {
      * fetch the featured collections
      */
     private void fetchCuratedCollections() {
-        Log.d(TAG, "fetchPhotos: " + UrlBuilder.getFeaturedCollections(30));
+        Log.d(TAG, "fetchPhotos: " + UrlBuilder.getFeaturedCollections(30, 1));
         // StringRequest to fetch raw JSON
         StringRequest curatedCollectionsRequest = new StringRequest(Request.Method.GET,
-                UrlBuilder.getFeaturedCollections(30), new Response.Listener<String>() {
+                UrlBuilder.getFeaturedCollections(30, 1), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "onResponse: 200 OK\n" + response);
