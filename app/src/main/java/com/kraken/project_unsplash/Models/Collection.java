@@ -6,9 +6,27 @@ public class Collection implements Serializable {
     private String title, description, published_at, updated_at;
     private boolean featured, curated;
     private int id, total_photos;
-    private PhotoLinks links;
+    private CollectionLinks links;
+    private Tag[] tags;
     private User user;
     private Photo cover_photo;
+    private Photo[] preview_photos;
+
+    public Tag[] getTags() {
+        return tags;
+    }
+
+    public void setTags(Tag[] tags) {
+        this.tags = tags;
+    }
+
+    public Photo[] getPreview_photos() {
+        return preview_photos;
+    }
+
+    public void setPreview_photos(Photo[] preview_photos) {
+        this.preview_photos = preview_photos;
+    }
 
     public String getTitle() {
         return title;
@@ -74,11 +92,11 @@ public class Collection implements Serializable {
         this.total_photos = total_photos;
     }
 
-    public PhotoLinks getLinks() {
+    public CollectionLinks getLinks() {
         return links;
     }
 
-    public void setLinks(PhotoLinks links) {
+    public void setLinks(CollectionLinks links) {
         this.links = links;
     }
 

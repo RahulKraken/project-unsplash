@@ -26,6 +26,9 @@ public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<Collect
     private Collection[] collections;
     private Context context;
 
+    // request options for glide
+    private RequestOptions requestOptions;
+
     /**
      * constructor
      * @param collections : collection[]
@@ -41,21 +44,25 @@ public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<Collect
     @Override
     public CollectionsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         // inflate view from layout and return a view holder with that view
-        View view = LayoutInflater.from(context).inflate(R.layout.rv_collections_grid_item,
+        View view = LayoutInflater.from(context).inflate(R.layout.rv_collections_item,
                 viewGroup, false);
+        requestOptions = new RequestOptions()
+                .placeholder(R.color.md_grey_300);
+
         return new CollectionsViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CollectionsViewHolder holder, int i) {
-        // populate the image view with small size cover photo of the collection
-        Glide.with(context)
-                .load(collections[i].getCover_photo().getUrls().getSmall())
-                .apply(new RequestOptions()
-                        .placeholder(R.drawable.ic_launcher_background))
-                .into(holder.image);
-        // and set the title of the collection card
+        // load the images
+        loadImage(collections[i].getCover_photo().getUrls().getSmall(), holder.largeImage);
+        loadImage(collections[i].getPreview_photos()[0].getUrls().getSmall(), holder.smallImageTop);
+        loadImage(collections[i].getPreview_photos()[1].getUrls().getSmall(), holder.smallImageBottom);
+
+        // set details in text view
         holder.title.setText(collections[i].getTitle());
+        holder.username.setText("by @" + collections[i].getUser().getUsername());
+        holder.photoCnt.setText(String.valueOf(collections[i].getTotal_photos()));
     }
 
     @Override
@@ -64,14 +71,27 @@ public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<Collect
         return collections.length;
     }
 
+    /**
+     * load image into imageView using url
+     * @param url : URL of image
+     * @param imageView : target view
+     */
+    private void loadImage(String url, ImageView imageView) {
+        // load image using Glide
+        Glide.with(context)
+                .load(url)
+                .apply(requestOptions)
+                .into(imageView);
+    }
+
     class CollectionsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         /**
          * View holder class for Collection recycler view
          */
 
         // widgets in one recycler view item
-        ImageView image;
-        TextView title;
+        ImageView largeImage, smallImageTop, smallImageBottom;
+        TextView title, username, photoCnt;
 
         /**
          * constructor
@@ -79,8 +99,14 @@ public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<Collect
          */
         CollectionsViewHolder(@NonNull View itemView) {
             super(itemView);
-            image = itemView.findViewById(R.id.rv_collection_img);
+
+            largeImage = itemView.findViewById(R.id.rv_collection_large_img);
+            smallImageTop = itemView.findViewById(R.id.rv_collection_small_img_top);
+            smallImageBottom = itemView.findViewById(R.id.rv_collection_small_img_bottom);
+
             title = itemView.findViewById(R.id.rv_collection_title);
+            username = itemView.findViewById(R.id.rv_collection_username);
+            photoCnt = itemView.findViewById(R.id.rv_collection_photo_cnt);
 
             // set on click listener : "this" passed as parameter because class implements onClickListener
             itemView.setOnClickListener(this);

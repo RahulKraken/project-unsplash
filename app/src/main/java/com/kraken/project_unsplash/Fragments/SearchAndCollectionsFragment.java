@@ -53,7 +53,7 @@ public class SearchAndCollectionsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // inflate the root view
-        rootView = inflater.inflate(R.layout.fragment_search_and_collections, container, false);
+        rootView = inflater.inflate(R.layout.fragment_collections, container, false);
         // fetch the collections
         fetchCuratedCollections();
         addOnClickListener();

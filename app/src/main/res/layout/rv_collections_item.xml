@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="280dp">
+
+    <!--main layout for collection images-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="224dp">
+
+        <!--large image-->
+        <ImageView
+            android:id="@+id/rv_collection_large_img"
+            android:layout_weight="1"
+            android:scaleType="center"
+            android:src="@color/md_grey_200"
+            android:contentDescription="@string/image_view_content_desc"
+            android:layout_marginEnd="1dp"
+            android:layout_gravity="start"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!--for smaller images-->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="2"
+            android:gravity="end"
+            android:layout_marginStart="1dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--top image view-->
+            <ImageView
+                android:id="@+id/rv_collection_small_img_top"
+                android:scaleType="center"
+                android:src="@color/md_grey_200"
+                android:contentDescription="@string/image_view_content_desc"
+                android:layout_marginBottom="1dp"
+                android:layout_gravity="top"
+                android:layout_width="match_parent"
+                android:layout_height="111dp" />
+
+            <!--top image view-->
+            <ImageView
+                android:id="@+id/rv_collection_small_img_bottom"
+                android:scaleType="center"
+                android:src="@color/md_grey_200"
+                android:contentDescription="@string/image_view_content_desc"
+                android:layout_marginTop="1dp"
+                android:layout_gravity="bottom"
+                android:layout_width="match_parent"
+                android:layout_height="111dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--contains details-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="56dp">
+
+        <!-- contains full name and username of user -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <!-- full name -->
+            <TextView
+                android:id="@+id/rv_collection_title"
+                style="@style/titleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <!-- username -->
+            <TextView
+                android:id="@+id/rv_collection_username"
+                style="@style/subtitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <!-- contains photos count -->
+        <TextView
+            android:id="@+id/rv_collection_photo_cnt"
+            style="@style/actionTextStyle"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_marginBottom="5dp"
+        android:background="@color/md_grey_300"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+
+</LinearLayout>
