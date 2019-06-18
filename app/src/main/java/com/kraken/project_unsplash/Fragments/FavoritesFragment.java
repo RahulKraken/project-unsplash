@@ -81,7 +81,7 @@ public class FavoritesFragment extends Fragment {
      */
     private void initRecyclerView(List<Photo> photos) {
         RecyclerView recyclerView = rootView.findViewById(R.id.fav_recycler_view);
-        PhotosRecyclerViewAdapter photosRecyclerViewAdapter = new PhotosRecyclerViewAdapter(getContext(), photos.toArray(new Photo[0]));
+        PhotosRecyclerViewAdapter photosRecyclerViewAdapter = new PhotosRecyclerViewAdapter(getContext(), photos);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,
                 LinearLayoutManager.VERTICAL);
 

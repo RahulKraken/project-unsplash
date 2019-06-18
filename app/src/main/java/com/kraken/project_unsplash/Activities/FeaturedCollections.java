@@ -22,6 +22,7 @@ import com.kraken.project_unsplash.Utils.Constants;
 import com.kraken.project_unsplash.Utils.Serializer;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FeaturedCollections extends AppCompatActivity {
@@ -48,7 +49,7 @@ public class FeaturedCollections extends AppCompatActivity {
                 Log.d(TAG, "onResponse: 200 OK\n" + response);
                 // serialize into Collection[]
                 Serializer serializer = new Serializer();
-                Collection[] collections = serializer.listCollections(response);
+                List<Collection> collections = serializer.listCollections(response);
                 // inflate the recycler view with Collection[]
                 populateRecyclerView(collections);
             }
@@ -76,7 +77,7 @@ public class FeaturedCollections extends AppCompatActivity {
      * inflate the recycler view
      * @param collections : Collection[]
      */
-    private void populateRecyclerView(Collection[] collections) {
+    private void populateRecyclerView(List<Collection> collections) {
         RecyclerView recyclerView = findViewById(R.id.featuredCollectionsRecyclerView);
         CollectionsRecyclerViewAdapter collectionsRecyclerViewAdapter = new CollectionsRecyclerViewAdapter(collections, this);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);

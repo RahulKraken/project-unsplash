@@ -17,13 +17,16 @@ import com.kraken.project_unsplash.Activities.CollectionView;
 import com.kraken.project_unsplash.Models.Collection;
 import com.kraken.project_unsplash.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<CollectionsRecyclerViewAdapter.CollectionsViewHolder> {
 
     // TAG for log messages
     private static final String TAG = "CollectionsRecyclerView";
 
-    // collection array
-    private Collection[] collections;
+    // collection list
+    private List<Collection> collections;
     private Context context;
 
     // request options for glide
@@ -34,10 +37,10 @@ public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<Collect
      * @param collections : collection[]
      * @param context : activity context
      */
-    public CollectionsRecyclerViewAdapter(Collection[] collections, Context context) {
+    public CollectionsRecyclerViewAdapter(List<Collection> collections, Context context) {
         this.collections = collections;
         this.context = context;
-        Log.d(TAG, "CollectionsRecyclerViewAdapter: " + collections.length);
+        Log.d(TAG, "CollectionsRecyclerViewAdapter: " + collections.size());
     }
 
     @NonNull
@@ -55,20 +58,21 @@ public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<Collect
     @Override
     public void onBindViewHolder(@NonNull CollectionsViewHolder holder, int i) {
         // load the images
-        loadImage(collections[i].getPreview_photos()[0].getUrls().getSmall(), holder.largeImage);
-        loadImage(collections[i].getPreview_photos()[1].getUrls().getSmall(), holder.smallImageTop);
-        loadImage(collections[i].getPreview_photos()[2].getUrls().getSmall(), holder.smallImageBottom);
+        loadImage(collections.get(i).getPreview_photos()[0].getUrls().getSmall(),
+                holder.largeImage);
+        loadImage(collections.get(i).getPreview_photos()[1].getUrls().getSmall(), holder.smallImageTop);
+        loadImage(collections.get(i).getPreview_photos()[2].getUrls().getSmall(), holder.smallImageBottom);
 
         // set details in text view
-        holder.title.setText(collections[i].getTitle());
-        holder.username.setText("by @" + collections[i].getUser().getUsername());
-        holder.photoCnt.setText(String.valueOf(collections[i].getTotal_photos()) + " Photos");
+        holder.title.setText(collections.get(i).getTitle());
+        holder.username.setText("by @" + collections.get(i).getUser().getUsername());
+        holder.photoCnt.setText(String.valueOf(collections.get(i).getTotal_photos()) + " Photos");
     }
 
     @Override
     public int getItemCount() {
         // return how many items are there in the recycler view
-        return collections.length;
+        return collections.size();
     }
 
     /**
@@ -117,7 +121,7 @@ public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<Collect
             // create intent to CollectionView class and put collection as intent extra
             Intent intent = new Intent(context, CollectionView.class);
             intent.putExtra(context.getResources().getString(R.string.collection_parcelable_intent_extra),
-                    collections[getAdapterPosition()]);
+                    collections.get(getAdapterPosition()));
             // start the activity
             context.startActivity(intent);
         }

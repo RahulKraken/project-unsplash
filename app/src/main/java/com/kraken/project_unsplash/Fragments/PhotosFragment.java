@@ -26,6 +26,7 @@ import com.kraken.project_unsplash.Utils.Constants;
 import com.kraken.project_unsplash.Utils.Serializer;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -33,9 +34,9 @@ import java.util.Map;
  * selected by default
  */
 
-public class FeaturedPhotosFragment extends Fragment {
+public class PhotosFragment extends Fragment {
 
-    private static final String TAG = "FeaturedPhotosFragment";
+    private static final String TAG = "PhotosFragment";
 
     // root view of the fragment
     private View rootView;
@@ -68,7 +69,7 @@ public class FeaturedPhotosFragment extends Fragment {
                 Log.d(TAG, "onResponse: 200 OK\n" + response);
                 // serializer converts the raw json into a Photo[]
                 Serializer serializer = new Serializer();
-                Photo[] photos = serializer.listPhotos(response);
+                List<Photo> photos = serializer.listPhotos(response);
                 // create the recycler view with the photos
                 initRecyclerView(photos);
             }
@@ -98,7 +99,7 @@ public class FeaturedPhotosFragment extends Fragment {
      * create the recycler view
      * @param photos : Photo[]
      */
-    private void initRecyclerView(Photo[] photos) {
+    private void initRecyclerView(List<Photo> photos) {
         RecyclerView recyclerView = rootView.findViewById(R.id.rv_featured_photos);
 
         PhotosRecyclerViewAdapter photosRecyclerViewAdapter = new PhotosRecyclerViewAdapter(getContext(), photos);

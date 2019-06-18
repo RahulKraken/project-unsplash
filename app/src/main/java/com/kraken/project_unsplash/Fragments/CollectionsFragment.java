@@ -25,9 +25,10 @@ import com.kraken.project_unsplash.Utils.Constants;
 import com.kraken.project_unsplash.Utils.Serializer;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class SearchAndCollectionsFragment extends Fragment {
+public class CollectionsFragment extends Fragment {
 
     // TAG for log messages
     private static final String TAG = "SearchAndCollectionsFra";
@@ -63,7 +64,7 @@ public class SearchAndCollectionsFragment extends Fragment {
                 Log.d(TAG, "onResponse: 200 OK\n" + response);
                 // serializer converts the raw JSON into Collection[]
                 Serializer serializer = new Serializer();
-                Collection[] collections = serializer.listCollections(response);
+                List<Collection> collections = serializer.listCollections(response);
                 // create the recycler view with rest of the Collection[]
                 initRecyclerView(collections);
             }
@@ -91,7 +92,7 @@ public class SearchAndCollectionsFragment extends Fragment {
      * Init the recycler view
      * @param collections : Collection[]
      */
-    private void initRecyclerView(Collection[] collections) {
+    private void initRecyclerView(List<Collection> collections) {
         RecyclerView collectionsRecyclerView = rootView.findViewById(R.id.collectionsRecyclerView);
 
         CollectionsRecyclerViewAdapter adapter = new CollectionsRecyclerViewAdapter(collections, getContext());

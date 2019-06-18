@@ -28,6 +28,7 @@ import com.kraken.project_unsplash.Utils.Constants;
 import com.kraken.project_unsplash.Utils.Serializer;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CollectionView extends AppCompatActivity {
@@ -92,7 +93,7 @@ public class CollectionView extends AppCompatActivity {
                         Log.d(TAG, "onResponse: 200 OK\n" + response);
                         // serialize raw json into Photo[]
                         Serializer serializer = new Serializer();
-                        Photo[] photos = serializer.listPhotos(response);
+                        List<Photo> photos = serializer.listPhotos(response);
                         // inflate the recycler view
                         initRecyclerView(photos);
                     }
@@ -120,7 +121,7 @@ public class CollectionView extends AppCompatActivity {
      * inflate the recycler view
      * @param photos : Photo[]
      */
-    private void initRecyclerView(Photo[] photos) {
+    private void initRecyclerView(List<Photo> photos) {
         RecyclerView recyclerView = findViewById(R.id.collectionViewRecyclerView);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
         PhotosRecyclerViewAdapter photosRecyclerViewAdapter = new PhotosRecyclerViewAdapter(this, photos);

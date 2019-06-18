@@ -11,7 +11,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Serializer {
 
@@ -31,23 +33,21 @@ public class Serializer {
     /**
      * convert json into Photo[]
      * @param raw : json <String>
-     * @return : photos <Photo[]>
+     * @return : ArrayList<Photo>
      */
-    public Photo[] listPhotos(String raw) {
+    public List<Photo> listPhotos(String raw) {
         Photo[] photos = gson.fromJson(raw, Photo[].class);
-        Log.d(TAG, "listPhotos: " + photos.length);
-        return photos;
+        return new ArrayList<>(Arrays.asList(photos));
     }
 
     /**
      * convert json into Collection[]
      * @param raw : json <String>
-     * @return : collections <Collection[]>
+     * @return : ArrayList<Collection>
      */
-    public Collection[] listCollections(String raw) {
+    public List<Collection> listCollections(String raw) {
         Collection[] collections = gson.fromJson(raw, Collection[].class);
-        Log.d(TAG, "listCollections: " + collections.length);
-        return collections;
+        return new ArrayList<>(Arrays.asList(collections));
     }
 
     /**

@@ -15,20 +15,22 @@ import com.bumptech.glide.request.RequestOptions;
 import com.kraken.project_unsplash.Models.Photo;
 import com.kraken.project_unsplash.R;
 
+import java.util.List;
+
 public class PhotosRecyclerViewAdapter extends RecyclerView.Adapter<PhotosRecyclerViewAdapter.PhotoViewHolder> {
 
     private static final String TAG = "StaggeredRecyclerViewAd";
 
     // class variables
     private Context context;
-    private Photo[] photos;
+    private List<Photo> photos;
 
     /**
      * constructor
      * @param context : activity
      * @param photos : Photo[]
      */
-    public PhotosRecyclerViewAdapter(Context context, Photo[] photos) {
+    public PhotosRecyclerViewAdapter(Context context, List<Photo> photos) {
         this.context = context;
         this.photos = photos;
     }
@@ -51,28 +53,28 @@ public class PhotosRecyclerViewAdapter extends RecyclerView.Adapter<PhotosRecycl
 
         // Load main image
         Glide.with(context)
-                .load(photos[i].getUrls().getSmall())
+                .load(photos.get(i).getUrls().getSmall())
                 .apply(requestOptions)
                 .into(holder.mainImage);
 
         // load user profile image
         Glide.with(context)
-                .load(photos[i].getUser().getProfile_image().getSmall())
+                .load(photos.get(i).getUser().getProfile_image().getSmall())
                 .apply(requestOptions)
                 .into(holder.profileImage);
 
         // set user full name
-        holder.fullName.setText(photos[i].getUser().getName());
+        holder.fullName.setText(photos.get(i).getUser().getName());
         // set user username
-        String username = "@" + photos[i].getUser().getUsername();
+        String username = "@" + photos.get(i).getUser().getUsername();
         holder.username.setText(username);
         // set likes count
-        holder.likesCnt.setText(String.valueOf(photos[i].getLikes()));
+        holder.likesCnt.setText(String.valueOf(photos.get(i).getLikes()));
     }
 
     @Override
     public int getItemCount() {
-        return photos.length;
+        return photos.size();
     }
 
     class PhotoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

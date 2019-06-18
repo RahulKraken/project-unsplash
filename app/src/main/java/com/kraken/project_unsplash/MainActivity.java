@@ -8,11 +8,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.kraken.project_unsplash.Fragments.FavoritesFragment;
-import com.kraken.project_unsplash.Fragments.FeaturedPhotosFragment;
-import com.kraken.project_unsplash.Fragments.SearchAndCollectionsFragment;
+import com.kraken.project_unsplash.Fragments.PhotosFragment;
+import com.kraken.project_unsplash.Fragments.CollectionsFragment;
 
 /**
  * MainActivity class
@@ -38,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private void setUpBottomNavigation(@Nullable Fragment fragment) {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        if (fragment == null) fragment = new FeaturedPhotosFragment();
+        if (fragment == null) fragment = new PhotosFragment();
         setFragment(fragment);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -46,10 +45,10 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.nav_item_featured:
-                        setFragment(new FeaturedPhotosFragment());
+                        setFragment(new PhotosFragment());
                         return true;
                     case R.id.nav_item_search:
-                        setFragment(new SearchAndCollectionsFragment());
+                        setFragment(new CollectionsFragment());
                         return true;
                     case R.id.nav_item_favorites:
                         setFragment(new FavoritesFragment());
