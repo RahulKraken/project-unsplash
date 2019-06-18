@@ -45,22 +45,23 @@
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_marginStart="8dp"
+                android:layout_gravity="top"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
                 <!-- full name -->
                 <TextView
                     android:id="@+id/rv_image_name"
-                    android:text="Emma Watson"
                     style="@style/titleStyle"
+                    android:maxLines="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <!-- username -->
                 <TextView
                     android:id="@+id/rv_image_username"
-                    android:text="emmaW"
                     style="@style/subtitleStyle"
+                    android:maxLines="1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
@@ -89,7 +90,6 @@
             <!-- like count -->
             <TextView
                 android:id="@+id/rv_image_like_cnt"
-                android:text="645,711"
                 style="@style/actionTextStyle"
                 android:layout_marginStart="8dp"
                 android:layout_gravity="center_vertical"

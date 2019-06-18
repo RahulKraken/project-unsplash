@@ -55,14 +55,14 @@ public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<Collect
     @Override
     public void onBindViewHolder(@NonNull CollectionsViewHolder holder, int i) {
         // load the images
-        loadImage(collections[i].getCover_photo().getUrls().getSmall(), holder.largeImage);
-        loadImage(collections[i].getPreview_photos()[0].getUrls().getSmall(), holder.smallImageTop);
-        loadImage(collections[i].getPreview_photos()[1].getUrls().getSmall(), holder.smallImageBottom);
+        loadImage(collections[i].getPreview_photos()[0].getUrls().getSmall(), holder.largeImage);
+        loadImage(collections[i].getPreview_photos()[1].getUrls().getSmall(), holder.smallImageTop);
+        loadImage(collections[i].getPreview_photos()[2].getUrls().getSmall(), holder.smallImageBottom);
 
         // set details in text view
         holder.title.setText(collections[i].getTitle());
         holder.username.setText("by @" + collections[i].getUser().getUsername());
-        holder.photoCnt.setText(String.valueOf(collections[i].getTotal_photos()));
+        holder.photoCnt.setText(String.valueOf(collections[i].getTotal_photos()) + " Photos");
     }
 
     @Override
