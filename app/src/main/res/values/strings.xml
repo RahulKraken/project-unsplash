@@ -21,4 +21,5 @@
     <string name="favorites_fragment_title">Favorites</string>
     <string name="database_photo_id_col_name">_id</string>
     <string name="collections_nav_bar_label">Collections</string>
+    <string name="featured_nav_item_label">Featured</string>
 </resources>

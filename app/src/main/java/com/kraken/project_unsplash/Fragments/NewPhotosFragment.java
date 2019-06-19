@@ -35,9 +35,9 @@ import java.util.Map;
  * selected by default
  */
 
-public class PhotosFragment extends Fragment {
+public class NewPhotosFragment extends Fragment {
 
-    private static final String TAG = "PhotosFragment";
+    private static final String TAG = "NewPhotosFragment";
 
     // root view of the fragment
     private View rootView;

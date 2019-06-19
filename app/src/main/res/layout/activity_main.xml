@@ -19,10 +19,11 @@
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
         app:menu="@menu/bottom_navigation_menu"
-        android:backgroundTint="@color/md_grey_200"
+        android:background="@color/md_white_1000"
         app:labelVisibilityMode="unlabeled"
         app:itemHorizontalTranslationEnabled="false"
         app:itemIconTint="@color/bottom_nav_bar_color"
+        app:elevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

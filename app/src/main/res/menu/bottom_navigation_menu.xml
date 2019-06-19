@@ -10,13 +10,14 @@
 
     <item
         android:id="@+id/nav_item_search"
-        android:icon="@mipmap/ic_collections"
-        android:title="@string/collections_nav_bar_label"
+        android:icon="@mipmap/ic_favorites"
+        android:title="@string/featured_nav_item_label"
         app:showAsAction="ifRoom"/>
+
     <item
         android:id="@+id/nav_item_favorites"
-        android:icon="@drawable/star_light"
-        android:title="@string/nav_favorites_label"
+        android:icon="@mipmap/ic_collections"
+        android:title="@string/collections_nav_bar_label"
         app:showAsAction="ifRoom"/>
 
 </menu>
