@@ -8,6 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:statusBarColor">@color/md_white_1000</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <!--<item name="actionButtonStyle">@style/ActionButtonStyle</item>-->
     </style>
 
     <!-- style for app bar headings -->
@@ -37,5 +39,28 @@
         <item name="android:textColor">@color/md_black_1000</item>
         <item name="android:fontFamily">@font/roboto_medium</item>
     </style>
+
+    <!--style for nav drawer toggle-->
+    <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle" >
+        <item name="spinBars">true</item>
+        <item name="color">@color/md_black_1000</item>
+    </style>
+
+    <!--style for action buttons-->
+    <!--<style name="ActionButtonStyle" parent="Widget.AppCompat.Light.ActionButton">-->
+        <!--<item name="android:layout_height">24dp</item>-->
+        <!--<item name="android:layout_width">24dp</item>-->
+    <!--</style>-->
+
+    <!--app bar styles-->
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
