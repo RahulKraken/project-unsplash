@@ -12,21 +12,11 @@ public class UrlBuilder {
      * @param count @Nullable int
      * @return url
      */
-    public static String getAllPhotos(@Nullable Integer count, Integer page) {
+    public static String getAllPhotos(@Nullable Integer count, String param, Integer page) {
         url = Constants.getBaseUrl();
         url += count == null ?
-                "/photos?per_page=50&page=" + page : "/photos?per_page=" + count + "&page=" + page;
-        return url;
-    }
-
-    /**
-     * sort photos on keywords "latest", "oldest", "popular"
-     * @param param : "latest", "oldest", "popular"
-     * @return url
-     */
-    public static String getAllPhotosSorted(String param) {
-        url = Constants.getBaseUrl();
-        url += "/photos?per_page=50&order_by=\"" + param + "\"";
+                "/photos?per_page=50&page=" + page + "@order_by=\"" + param + "\"" :
+                "/photos?per_page=" + count + "&page=" + page + "&order_by=\"" + param + "\"";
         return url;
     }
 
@@ -35,10 +25,10 @@ public class UrlBuilder {
      * @param count @Nullable int
      * @return url
      */
-    public static String getCuratedPhotos(@Nullable Integer count, Integer page) {
+    public static String getCuratedPhotos(@Nullable Integer count, @Nullable String param, Integer page) {
         url = Constants.getBaseUrl();
-        url += count == null ? "/photos/curated?per_page=50&page=" + page :
-                "/photos/curated?per_page=" + count + "&page=" + page;
+        url += count == null ? "/photos/curated?per_page=50&page=" + page + "@order_by=\"" + param + "\"" :
+                "/photos/curated?per_page=" + count + "&page=" + page + "@order_by=\"" + param + "\"";
         return url;
     }
 
@@ -58,10 +48,11 @@ public class UrlBuilder {
      * @param count : count of collections (default 10)
      * @return url
      */
-    public static String getFeaturedCollections(@Nullable Integer count, Integer page) {
+    public static String getFeaturedCollections(@Nullable Integer count,
+                                                @Nullable String param, Integer page) {
         url = Constants.getBaseUrl();
-        url += count == null ? "/collections/featured&page=" + page :
-                "/collections/featured?per_page=" + count + "&page=" + page;
+        url += count == null ? "/collections/featured&page=" + page + "@order_by=\"" + param + "\"" :
+                "/collections/featured?per_page=" + count + "&page=" + page + "@order_by=\"" + param + "\"";
         return url;
     }
 
@@ -70,10 +61,11 @@ public class UrlBuilder {
      * @param count : count of collections (default 10)
      * @return url
      */
-    public static String getCuratedCollections(@Nullable Integer count, Integer page) {
+    public static String getCuratedCollections(@Nullable Integer count,
+                                               @Nullable String param, Integer page) {
         url = Constants.getBaseUrl();
-        url += count == null ? "/collections/curated&page=" + page :
-                "/collections/curated?per_page=" + count + "&page=" + page;
+        url += count == null ? "/collections/curated&page=" + page + "@order_by=\"" + param + "\"" :
+                "/collections/curated?per_page=" + count + "&page=" + page + "@order_by=\"" + param + "\"";
         return url;
     }
 

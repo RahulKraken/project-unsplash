@@ -42,6 +42,7 @@ public class NewPhotosFragment extends Fragment {
     // root view of the fragment
     private View rootView;
     int page = 1;
+    private String orderBy = "latest";
 
     // data
     List<Photo> photos;
@@ -73,9 +74,10 @@ public class NewPhotosFragment extends Fragment {
      * Use the localRequestQueue to fetch featured photos
      */
     private void fetchPhotos() {
-        Log.d(TAG, "fetchPhotos: " + UrlBuilder.getAllPhotos(50, page));
+        Log.d(TAG, "fetchPhotos: " + UrlBuilder.getAllPhotos(50, orderBy, page));
         // string request fetches raw json using volley
-        StringRequest allPhotosRequest = new StringRequest(Request.Method.GET, UrlBuilder.getAllPhotos(50, page),
+        StringRequest allPhotosRequest = new StringRequest(Request.Method.GET,
+                UrlBuilder.getAllPhotos(50, orderBy, page),
                 new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
