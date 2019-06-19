@@ -28,7 +28,8 @@ public class UrlBuilder {
     public static String getCuratedPhotos(@Nullable Integer count, @Nullable String param, Integer page) {
         url = Constants.getBaseUrl();
         url += count == null ? "/photos/curated?per_page=50&page=" + page + "@order_by=\"" + param + "\"" :
-                "/photos/curated?per_page=" + count + "&page=" + page + "@order_by=\"" + param + "\"";
+                "/photos/curated?per_page=" + count + "&page=" + page + "&order_by=\"" + param +
+                        "\"";
         return url;
     }
 
@@ -48,11 +49,10 @@ public class UrlBuilder {
      * @param count : count of collections (default 10)
      * @return url
      */
-    public static String getFeaturedCollections(@Nullable Integer count,
-                                                @Nullable String param, Integer page) {
+    public static String getFeaturedCollections(@Nullable Integer count, Integer page) {
         url = Constants.getBaseUrl();
-        url += count == null ? "/collections/featured&page=" + page + "@order_by=\"" + param + "\"" :
-                "/collections/featured?per_page=" + count + "&page=" + page + "@order_by=\"" + param + "\"";
+        url += count == null ? "/collections/featured&page=" + page :
+                "/collections/featured?per_page=" + count + "&page=" + page;
         return url;
     }
 
@@ -61,11 +61,10 @@ public class UrlBuilder {
      * @param count : count of collections (default 10)
      * @return url
      */
-    public static String getCuratedCollections(@Nullable Integer count,
-                                               @Nullable String param, Integer page) {
+    public static String getCuratedCollections(@Nullable Integer count, Integer page) {
         url = Constants.getBaseUrl();
-        url += count == null ? "/collections/curated&page=" + page + "@order_by=\"" + param + "\"" :
-                "/collections/curated?per_page=" + count + "&page=" + page + "@order_by=\"" + param + "\"";
+        url += count == null ? "/collections/curated&page=" + page :
+                "/collections/curated?per_page=" + count + "&page=" + page;
         return url;
     }
 

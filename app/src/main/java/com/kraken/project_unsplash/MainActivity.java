@@ -1,24 +1,43 @@
 package com.kraken.project_unsplash;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
+
+import com.kraken.project_unsplash.Fragments.CollectionsFragment;
+import com.kraken.project_unsplash.Fragments.FeaturedPhotosFragment;
+import com.kraken.project_unsplash.Fragments.NewPhotosFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static final String TAG = "MainActivity";
+
+    // widgets
+    private BottomNavigationView bottomNavigationView;
+    private FrameLayout frameLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // setting up the toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // setting up the drawer layout
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -26,6 +45,47 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        // setting up bottom navigation view
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        frameLayout = findViewById(R.id.frame_layout_main_activity);
+        setupBottomNavigation();
+    }
+
+    /**
+     * set up bottom navigation view with navigationItemSelectedListener
+     */
+    private void setupBottomNavigation() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.nav_item_new:
+                        Log.d(TAG, "onNavigationItemSelected: new photos fragment");
+                        setFragment(new NewPhotosFragment());
+                        return true;
+                    case R.id.nav_item_featured:
+                        Log.d(TAG, "onNavigationItemSelected: featured photos fragment");
+                        setFragment(new FeaturedPhotosFragment());
+                        return true;
+                    case R.id.nav_item_collections:
+                        Log.d(TAG, "onNavigationItemSelected: collections fragment");
+                        setFragment(new CollectionsFragment());
+                        return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    /**
+     * put fragment in place of frame layout
+     * @param fragment : Fragment
+     */
+    private void setFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(frameLayout.getId(), fragment);
+        fragmentTransaction.commit();
     }
 
     @Override

@@ -38,7 +38,6 @@ public class CollectionsFragment extends Fragment {
     // root view holding the layout of the fragment
     private View rootView;
     private int page = 1;
-    private String orderBy = "latest";
 
     // data
     List<Collection> collections;
@@ -70,10 +69,10 @@ public class CollectionsFragment extends Fragment {
      * fetch the featured collections
      */
     private void fetchCuratedCollections() {
-        Log.d(TAG, "fetchPhotos: " + UrlBuilder.getFeaturedCollections(30, orderBy, page));
+        Log.d(TAG, "fetchPhotos: " + UrlBuilder.getFeaturedCollections(30, page));
         // StringRequest to fetch raw JSON
         StringRequest curatedCollectionsRequest = new StringRequest(Request.Method.GET,
-                UrlBuilder.getFeaturedCollections(30, orderBy, page),
+                UrlBuilder.getFeaturedCollections(30, page),
                 new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
