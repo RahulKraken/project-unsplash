@@ -1,5 +1,6 @@
 package com.kraken.project_unsplash;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -10,16 +11,20 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.ListAdapter;
 
 import com.kraken.project_unsplash.Fragments.CollectionsFragment;
 import com.kraken.project_unsplash.Fragments.FeaturedPhotosFragment;
 import com.kraken.project_unsplash.Fragments.NewPhotosFragment;
+import com.kraken.project_unsplash.Utils.Constants;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -50,6 +55,69 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         frameLayout = findViewById(R.id.frame_layout_main_activity);
         setupBottomNavigation();
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_search) {
+            return true;
+        }
+
+        // if sort by button is selected
+        if (id == R.id.action_sort) {
+            buildDialogBox();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_home) {
+            // Handle the camera action
+        } else if (id == R.id.nav_gallery) {
+
+        } else if (id == R.id.nav_slideshow) {
+
+        } else if (id == R.id.nav_tools) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+        }
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     /**
@@ -88,60 +156,49 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.commit();
     }
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+    private void buildDialogBox() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_singlechoice);
+        adapter.addAll(Constants.getOrderByOptions());
+
+        builder.setNegativeButton(getResources().getString(R.string.dialog_cancel_btn_label), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                sendToFragment(adapter.getItem(which));
+            }
+        });
+
+        builder.show();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
+    private void sendToFragment(String param) {
+        Log.d(TAG, "sendToFragment: " + param);
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        Bundle bundle = new Bundle();
+        bundle.putString(getResources().getString(R.string.order_by_param_transaction_key), param);
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_search || id == R.id.action_sort) {
-            return true;
+        int currentFragmentIdx = bottomNavigationView.getMenu().findItem(bottomNavigationView.getSelectedItemId()).getItemId();
+
+        switch (currentFragmentIdx) {
+            case R.id.nav_item_new:
+                Log.d(TAG, "sendToFragment: NewPhotosFragment");
+                Fragment newPhotosFragment = new NewPhotosFragment();
+                newPhotosFragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout_main_activity, newPhotosFragment).commit();
+                break;
+            case R.id.nav_item_featured:
+                Log.d(TAG, "sendToFragment: FeaturedPhotosFragment");
+                Fragment featuredPhotosFragment = new FeaturedPhotosFragment();
+                featuredPhotosFragment.setArguments(bundle);
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout_main_activity, featuredPhotosFragment).commit();
+                break;
         }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_home) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_tools) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 }

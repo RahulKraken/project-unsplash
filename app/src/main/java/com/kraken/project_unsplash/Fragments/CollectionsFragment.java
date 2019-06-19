@@ -32,7 +32,6 @@ import java.util.Map;
 
 public class CollectionsFragment extends Fragment {
 
-    // TAG for log messages
     private static final String TAG = "SearchAndCollectionsFra";
 
     // root view holding the layout of the fragment

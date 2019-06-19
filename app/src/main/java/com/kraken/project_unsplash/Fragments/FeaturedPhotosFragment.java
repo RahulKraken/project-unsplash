@@ -63,10 +63,18 @@ public class FeaturedPhotosFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // inflate the view and keep in rootView
         rootView = inflater.inflate(R.layout.fragment_photos, container, false);
-        // run the network task to fetch photos before returning the view
-        fetchPhotos();
         // init recycler view
         initRecyclerView();
+        // sorting parameter
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            String param = bundle.getString(this.getResources().getString(R.string.order_by_param_transaction_key));
+            if (param != null) {
+                orderBy = param;
+            }
+        }
+        // get the sorted list of photos
+        sortBy(orderBy);
         return rootView;
     }
 
@@ -85,6 +93,7 @@ public class FeaturedPhotosFragment extends Fragment {
                 // serializer converts the raw json into a Photo[]
                 Serializer serializer = new Serializer();
                 photos.addAll(serializer.listPhotos(response));
+                Log.d(TAG, "onResponse: " + photos.size());
                 // notify recycler view adapter
                 recyclerViewAdapter.notifyDataSetChanged();
             }
@@ -144,5 +153,21 @@ public class FeaturedPhotosFragment extends Fragment {
                 }
             }
         });
+    }
+
+    /**
+     * sorts photos based on @param "param"
+     * @param param : parameter {"latest", "oldest", "popular"}
+     */
+    public void sortBy(String param) {
+        // change the parameter
+        orderBy = param;
+        // clear current photos
+        photos.clear();
+        Log.d(TAG, "sortBy: " + photos.size());
+        // clean the recycler view
+        recyclerViewAdapter.notifyDataSetChanged();
+        // fetch new photos
+        fetchPhotos();
     }
 }

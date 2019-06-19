@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Fragment class for the Featured Photo section
@@ -41,11 +42,12 @@ public class NewPhotosFragment extends Fragment {
 
     // root view of the fragment
     private View rootView;
+
     int page = 1;
-    private String orderBy = "latest";
+    public String orderBy = "latest";
 
     // data
-    List<Photo> photos;
+    private static List<Photo> photos;
 
     // recycler view scroll stuff
     private PhotosRecyclerViewAdapter recyclerViewAdapter;
@@ -63,10 +65,18 @@ public class NewPhotosFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // inflate the view and keep in rootView
         rootView = inflater.inflate(R.layout.fragment_photos, container, false);
-        // run the network task to fetch photos before returning the view
-        fetchPhotos();
         // init recycler view
         initRecyclerView();
+        // sorting parameter
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            String param = bundle.getString(this.getResources().getString(R.string.order_by_param_transaction_key));
+            if (param != null) {
+                orderBy = param;
+            }
+        }
+        // get the sorted list of photos
+        sortBy(orderBy);
         return rootView;
     }
 
@@ -144,5 +154,20 @@ public class NewPhotosFragment extends Fragment {
                 }
             }
         });
+    }
+
+    /**
+     * sorts photos based on @param "param"
+     * @param param : parameter {"latest", "oldest", "popular"}
+     */
+    public void sortBy(String param) {
+        // change the parameter
+        orderBy = param;
+        // clear current photos
+        photos.clear();
+        // clean the recycler view
+        recyclerViewAdapter.notifyDataSetChanged();
+        // fetch new photos
+        fetchPhotos();
     }
 }
