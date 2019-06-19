@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -59,26 +59,25 @@
     </LinearLayout>
 
     <!--contains details-->
-    <LinearLayout
-        android:orientation="horizontal"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="56dp">
 
-        <!-- contains full name and username of user -->
+        <!--contains full name and username-->
         <LinearLayout
             android:orientation="vertical"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <!-- full name -->
             <TextView
                 android:id="@+id/rv_collection_title"
                 style="@style/titleStyle"
+                android:maxLines="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -86,26 +85,25 @@
             <TextView
                 android:id="@+id/rv_collection_username"
                 style="@style/subtitleStyle"
+                android:maxLines="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
 
-        <!-- contains photos count -->
+        <!-- like count -->
         <TextView
             android:id="@+id/rv_collection_photo_cnt"
             style="@style/actionTextStyle"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
             android:layout_gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_marginBottom="5dp"
-        android:background="@color/md_grey_300"
-        android:layout_width="match_parent"
-        android:layout_height="1dp" />
+    </android.support.constraint.ConstraintLayout>
 
 </LinearLayout>
