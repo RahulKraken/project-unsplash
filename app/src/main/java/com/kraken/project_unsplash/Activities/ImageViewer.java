@@ -41,7 +41,6 @@ public class ImageViewer extends AppCompatActivity {
     // widgets
     private ImageView imageView, addFavoritesBtn, profileImage;
     private TextView tvUserName, tvName, tvLikesCnt;
-    private Button setWallpaperBtn;
 
     // photo object
     private Photo photo;
@@ -49,8 +48,6 @@ public class ImageViewer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // hide status bar
-        changeStatusBar();
         setContentView(R.layout.activity_image_viewer);
 
         // set app bar
@@ -169,7 +166,7 @@ public class ImageViewer extends AppCompatActivity {
     /**
      * download the image and set it as wallpaper
      */
-    private void initSetWallpaperBtn() {
+    /*private void initSetWallpaperBtn() {
         // add onClickListener to set wallpaper btn
         setWallpaperBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,7 +197,7 @@ public class ImageViewer extends AppCompatActivity {
                 MyApplication.getLocalRequestQueue().add(imageRequest);
             }
         });
-    }
+    }*/
 
     /**
      * load image into image view
@@ -221,19 +218,5 @@ public class ImageViewer extends AppCompatActivity {
         tvName.setText(photo.getUser().getName());
         tvUserName.setText(photo.getUser().getUsername());
         tvLikesCnt.setText(photo.getLikes() + " Likes");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // hide status bar
-        changeStatusBar();
-    }
-
-    /**
-     * hides the status bar
-     */
-    private void changeStatusBar() {
-        // hide the status bar
     }
 }
