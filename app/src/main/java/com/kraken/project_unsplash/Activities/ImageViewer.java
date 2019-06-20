@@ -9,10 +9,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,8 +39,8 @@ public class ImageViewer extends AppCompatActivity {
     private static final String TAG = "ImageViewer";
 
     // widgets
-    private ImageView imageView, addFavoritesBtn;
-    private TextView tvUserName, tvDescription, tvLikesCnt;
+    private ImageView imageView, addFavoritesBtn, profileImage;
+    private TextView tvUserName, tvName, tvLikesCnt;
     private Button setWallpaperBtn;
 
     // photo object
@@ -49,16 +50,25 @@ public class ImageViewer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // hide status bar
-        hideStatusBar();
+        changeStatusBar();
         setContentView(R.layout.activity_image_viewer);
+
+        // set app bar
+        Toolbar toolbar = findViewById(R.id.toolbar_image);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
         // refer to the widgets
         imageView = findViewById(R.id.img_viewer);
-//        tvUserName = findViewById(R.id.tv_user_name);
-//        tvDescription = findViewById(R.id.tv_description);
-//        setWallpaperBtn = findViewById(R.id.setWallpaperBtn);
+        tvName = findViewById(R.id.tv_name);
+        tvUserName = findViewById(R.id.tv_user_name);
         addFavoritesBtn = findViewById(R.id.img_btn_add_favorites);
         tvLikesCnt = findViewById(R.id.tv_likes_count);
+        profileImage = findViewById(R.id.img_profile_picture);
 
         // get the intent from invoking activity
         Intent intent = getIntent();
@@ -202,11 +212,14 @@ public class ImageViewer extends AppCompatActivity {
                 .load(photo.getUrls().getRegular())
                 .into(imageView);
 
+        // load profile image
+        Glide.with(this)
+                .load(photo.getUser().getProfile_image().getSmall())
+                .into(profileImage);
+
         // set text in the text fields
-//        tvUserName.setText(photo.getUser().getName());
-//        if (photo.getDescription() != null || photo.getAlt_description() != null) {
-//            tvDescription.setText(photo.getDescription() != null ? photo.getDescription() : photo.getAlt_description());
-//        }
+        tvName.setText(photo.getUser().getName());
+        tvUserName.setText(photo.getUser().getUsername());
         tvLikesCnt.setText(photo.getLikes() + " Likes");
     }
 
@@ -214,14 +227,13 @@ public class ImageViewer extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         // hide status bar
-        hideStatusBar();
+        changeStatusBar();
     }
 
     /**
      * hides the status bar
      */
-    private void hideStatusBar() {
+    private void changeStatusBar() {
         // hide the status bar
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
     }
 }

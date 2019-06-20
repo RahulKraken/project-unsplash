@@ -12,6 +12,12 @@
         <!--<item name="actionButtonStyle">@style/ActionButtonStyle</item>-->
     </style>
 
+    <!--image view activity theme-->
+    <style name="ImageViewerTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:statusBarColor">@color/md_black_1000</item>
+    </style>
+
     <!-- style for app bar headings -->
     <style name="headingStyle">
         <item name="android:textSize">20sp</item>
@@ -45,12 +51,6 @@
         <item name="spinBars">true</item>
         <item name="color">@color/md_black_1000</item>
     </style>
-
-    <!--style for action buttons-->
-    <!--<style name="ActionButtonStyle" parent="Widget.AppCompat.Light.ActionButton">-->
-        <!--<item name="android:layout_height">24dp</item>-->
-        <!--<item name="android:layout_width">24dp</item>-->
-    <!--</style>-->
 
     <!--app bar styles-->
     <style name="AppTheme.NoActionBar">
