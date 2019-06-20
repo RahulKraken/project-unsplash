@@ -38,10 +38,9 @@ public class ImageViewer extends AppCompatActivity {
     private static final String TAG = "ImageViewer";
 
     // widgets
-    private ImageView imageView;
+    private ImageView imageView, addFavoritesBtn;
     private TextView tvUserName, tvDescription, tvLikesCnt;
     private Button setWallpaperBtn;
-    private ImageButton addFavoritesBtn;
 
     // photo object
     private Photo photo;
@@ -49,16 +48,15 @@ public class ImageViewer extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // hide status bar
         hideStatusBar();
         setContentView(R.layout.activity_image_viewer);
 
         // refer to the widgets
         imageView = findViewById(R.id.img_viewer);
-        tvUserName = findViewById(R.id.tv_user_name);
-        tvDescription = findViewById(R.id.tv_description);
-        setWallpaperBtn = findViewById(R.id.setWallpaperBtn);
+//        tvUserName = findViewById(R.id.tv_user_name);
+//        tvDescription = findViewById(R.id.tv_description);
+//        setWallpaperBtn = findViewById(R.id.setWallpaperBtn);
         addFavoritesBtn = findViewById(R.id.img_btn_add_favorites);
         tvLikesCnt = findViewById(R.id.tv_likes_count);
 
@@ -70,7 +68,7 @@ public class ImageViewer extends AppCompatActivity {
         // load image into the image view
         LoadImage();
         // activate the set wallpaper button
-        initSetWallpaperBtn();
+//        initSetWallpaperBtn();
         // activate the add to favorites button
         handleFavoritesBtn();
     }
@@ -205,10 +203,10 @@ public class ImageViewer extends AppCompatActivity {
                 .into(imageView);
 
         // set text in the text fields
-        tvUserName.setText(photo.getUser().getName());
-        if (photo.getDescription() != null || photo.getAlt_description() != null) {
-            tvDescription.setText(photo.getDescription() != null ? photo.getDescription() : photo.getAlt_description());
-        }
+//        tvUserName.setText(photo.getUser().getName());
+//        if (photo.getDescription() != null || photo.getAlt_description() != null) {
+//            tvDescription.setText(photo.getDescription() != null ? photo.getDescription() : photo.getAlt_description());
+//        }
         tvLikesCnt.setText(photo.getLikes() + " Likes");
     }
 

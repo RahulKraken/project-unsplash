@@ -1,6 +1,7 @@
 package com.kraken.project_unsplash.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.kraken.project_unsplash.Activities.ImageViewer;
 import com.kraken.project_unsplash.Models.Photo;
 import com.kraken.project_unsplash.R;
 
@@ -39,8 +41,7 @@ public class PhotosRecyclerViewAdapter extends RecyclerView.Adapter<PhotosRecycl
     @Override
     public PhotoViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         // inflate layout and return new viewHolder
-        View view = LayoutInflater.from(context).inflate(R.layout.rv_image_item, viewGroup,
-                false);
+        View view = LayoutInflater.from(context).inflate(R.layout.rv_image_item, viewGroup, false);
         return new PhotoViewHolder(view);
     }
 
@@ -95,7 +96,10 @@ public class PhotosRecyclerViewAdapter extends RecyclerView.Adapter<PhotosRecycl
 
         @Override
         public void onClick(View v) {
-            Log.d(TAG, "onClick: clicked");
+            // launch Image Viewer activity with the photo
+            Intent intent = new Intent(context, ImageViewer.class);
+            intent.putExtra(context.getResources().getString(R.string.photo_intent_transfer_key), photos.get(getAdapterPosition()));
+            context.startActivity(intent);
         }
     }
 }

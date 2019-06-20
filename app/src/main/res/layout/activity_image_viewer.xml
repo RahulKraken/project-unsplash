@@ -1,100 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/md_black_1000"
     tools:context=".Activities.ImageViewer">
-
+    
     <ImageView
         android:id="@+id/img_viewer"
         android:src="@drawable/ic_launcher_background"
-        android:scaleType="centerCrop"
-        android:background="@color/md_black_1000"
+        android:contentDescription="@string/image_view_content_desc"
+        android:scaleType="fitCenter"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <FrameLayout
+    <!--container for action buttons-->
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_gravity="bottom"
-        android:baselineAligned="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="48dp">
 
-        <ImageView
-            android:src="@color/md_black_1000"
-            android:alpha="0.3"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
+        <!--icon and text-->
         <LinearLayout
-            android:orientation="vertical"
-            android:layout_margin="14dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        <LinearLayout
+            android:layout_weight="1"
             android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_vertical"
+            android:layout_width="0dp"
             android:layout_height="wrap_content">
 
+            <ImageView
+                android:id="@+id/img_btn_add_favorites"
+                android:src="@mipmap/ic_favorite_border_dark"
+                android:contentDescription="@string/image_view_content_desc"
+                android:scaleType="fitCenter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
             <TextView
-                android:id="@+id/tv_user_name"
-                style="@style/subtitleStyle"
+                android:id="@+id/tv_likes_count"
+                style="@style/actionTextStyle"
                 android:textColor="@color/md_white_1000"
+                android:alpha="0.8"
+                android:maxLines="1"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="5"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/setWallpaperBtn"
-                android:background="@android:color/transparent"
-                android:textSize="24sp"
-                android:text="@string/set_wallpaper_btn_label"
-                android:alpha="1.0"
-                android:textColor="@color/md_white_1000"
-                android:layout_marginStart="14dp"
-                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
+
+        <!--icon and text-->
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@mipmap/ic_info_light"
+                android:contentDescription="@string/image_view_content_desc"
+                android:scaleType="fitCenter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/tv_description"
-                style="@style/subtitleStyle"
+                android:text="Info"
+                style="@style/actionTextStyle"
                 android:textColor="@color/md_white_1000"
-                android:alpha="0.65"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <LinearLayout
-                android:orientation="horizontal"
+                android:alpha="0.8"
+                android:maxLines="1"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageButton
-                    android:id="@+id/img_btn_add_favorites"
-                    android:src="@drawable/star_light"
-                    android:contentDescription="@string/add_to_favorites_btn_label"
-                    android:scaleType="centerCrop"
-                    android:layout_margin="14dp"
-                    android:background="@android:color/transparent"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp" />
-
-                <TextView
-                    android:id="@+id/tv_likes_count"
-                    style="@style/subtitleStyle"
-                    android:textColor="@color/md_white_1000"
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
-    </FrameLayout>
+        <!--icon and text-->
+        <LinearLayout
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@mipmap/ic_download_light"
+                android:contentDescription="@string/image_view_content_desc"
+                android:scaleType="fitCenter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="22,121"
+                style="@style/actionTextStyle"
+                android:textColor="@color/md_white_1000"
+                android:alpha="0.8"
+                android:maxLines="1"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
