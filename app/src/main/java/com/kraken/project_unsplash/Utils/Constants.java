@@ -5,20 +5,15 @@ import java.util.List;
 
 public class Constants {
 
-    private static final String ACCESS_KEY = "15dbbf8531d6a54d5325124fe9a0f21b897aa7b27b09c982d01cf3b5dd92256c";
-    private static final String BASE_URL = "https://api.unsplash.com";
+    public final static String BASE_URL_AUTH = "https://unsplash.com/oauth";
 
-    private static List<String> orderByOptions = Arrays.asList("latest", "oldest", "popular");
+    public final static String ACCESS_KEY = "15dbbf8531d6a54d5325124fe9a0f21b897aa7b27b09c982d01cf3b5dd92256c";
+    public final static String SECRET_KEY = "0a20b1c09a09db21767dc2fc691dd2d3083c2b7b279eb460c78bc00e075b3309";
+    public final static String RESPONSE_URL = "kraken://unsplash-auth-callback";
+    public final static String SCOPE = "public+read_user+write_user+read_photos+write_photos+write_likes+write_followers+read_collections+write_collections";
+    public final static String RESPONSE_URL_CALLBACK = "unsplash-auth-callback";
 
-    public static List<String> getOrderByOptions() {
-        return orderByOptions;
-    }
+    public final static String BASE_URL = "https://api.unsplash.com";
 
-    public static String getAccessKey() {
-        return ACCESS_KEY;
-    }
-
-    public static String getBaseUrl() {
-        return BASE_URL;
-    }
+    public static final List<String> ORDER_BY_OPTIONS = Arrays.asList("latest", "oldest", "popular");
 }

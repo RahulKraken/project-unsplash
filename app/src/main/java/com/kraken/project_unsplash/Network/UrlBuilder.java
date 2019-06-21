@@ -13,7 +13,7 @@ public class UrlBuilder {
      * @return url
      */
     public static String getAllPhotos(@Nullable Integer count, String param, Integer page) {
-        url = Constants.getBaseUrl();
+        url = Constants.BASE_URL;
         url += count == null ?
                 "/photos?per_page=50&page=" + page + "@order_by=\"" + param + "\"" :
                 "/photos?per_page=" + count + "&page=" + page + "&order_by=\"" + param + "\"";
@@ -26,7 +26,7 @@ public class UrlBuilder {
      * @return url
      */
     public static String getCuratedPhotos(@Nullable Integer count, @Nullable String param, Integer page) {
-        url = Constants.getBaseUrl();
+        url = Constants.BASE_URL;
         url += count == null ? "/photos/curated?per_page=50&page=" + page + "@order_by=\"" + param + "\"" :
                 "/photos/curated?per_page=" + count + "&page=" + page + "&order_by=\"" + param +
                         "\"";
@@ -39,7 +39,7 @@ public class UrlBuilder {
      * @return url
      */
     public static String getPhoto(String id) {
-        url = Constants.getBaseUrl();
+        url = Constants.BASE_URL;
         url += "/photos/" + id;
         return url;
     }
@@ -50,7 +50,7 @@ public class UrlBuilder {
      * @return url
      */
     public static String getFeaturedCollections(@Nullable Integer count, Integer page) {
-        url = Constants.getBaseUrl();
+        url = Constants.BASE_URL;
         url += count == null ? "/collections/featured&page=" + page :
                 "/collections/featured?per_page=" + count + "&page=" + page;
         return url;
@@ -62,7 +62,7 @@ public class UrlBuilder {
      * @return url
      */
     public static String getCuratedCollections(@Nullable Integer count, Integer page) {
-        url = Constants.getBaseUrl();
+        url = Constants.BASE_URL;
         url += count == null ? "/collections/curated&page=" + page :
                 "/collections/curated?per_page=" + count + "&page=" + page;
         return url;
@@ -74,7 +74,7 @@ public class UrlBuilder {
      * @return url
      */
     public static String getCollection(int id) {
-        url = Constants.getBaseUrl();
+        url = Constants.BASE_URL;
         url += "/collections/" + id;
         return url;
     }
@@ -85,7 +85,7 @@ public class UrlBuilder {
      * @return url
      */
     public static String getCollectionPhotos(int id) {
-        url = Constants.getBaseUrl();
+        url = Constants.BASE_URL;
         url += "/collections/" + id + "/photos";
         return url;
     }
@@ -96,7 +96,7 @@ public class UrlBuilder {
      * @return url
      */
     public static String searchPhoto(String key, Integer page) {
-        url = Constants.getBaseUrl();
+        url = Constants.BASE_URL;
         url += "/search/photos?per_page=50&query=" + key + "\"&page=" + page;
         return url;
     }
@@ -107,7 +107,7 @@ public class UrlBuilder {
      * @return url
      */
     public static String searchCollections(String key, Integer page) {
-        url = Constants.getBaseUrl();
+        url = Constants.BASE_URL;
         url += "/search/collections?per_page=25&query=" + key + "\"&page=" + page;
         return url;
     }
@@ -118,7 +118,7 @@ public class UrlBuilder {
      * @return url
      */
     public static String likePhoto(String id) {
-        url = Constants.getBaseUrl();
+        url = Constants.BASE_URL;
         url += "/photos/" + id + "/like";
         return url;
     }
@@ -128,7 +128,7 @@ public class UrlBuilder {
      * @return url
      */
     public static String getRandomPhoto() {
-        url = Constants.getBaseUrl();
+        url = Constants.BASE_URL;
         url += "/photos/random";
         return url;
     }
@@ -139,7 +139,7 @@ public class UrlBuilder {
      * @return url
      */
     public static String getRelatedCollections(String id) {
-        url = Constants.getBaseUrl();
+        url = Constants.BASE_URL;
         url += "/collections/" + id + "/related";
         return url;
     }

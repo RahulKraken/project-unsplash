@@ -2,6 +2,7 @@ package com.kraken.project_unsplash;
 
 import android.app.Application;
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;

@@ -19,6 +19,7 @@ import com.kraken.project_unsplash.MyApplication;
 import com.kraken.project_unsplash.Network.UrlBuilder;
 import com.kraken.project_unsplash.R;
 import com.kraken.project_unsplash.Utils.Constants;
+import com.kraken.project_unsplash.Utils.Params;
 import com.kraken.project_unsplash.Utils.Serializer;
 
 import java.util.HashMap;
@@ -62,10 +63,7 @@ public class FeaturedCollections extends AppCompatActivity {
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("Accept-Version", "v1");
-                params.put("Authorization", "Client-ID " + Constants.getAccessKey());
-                return params;
+                return Params.getParams();
             }
         };
 

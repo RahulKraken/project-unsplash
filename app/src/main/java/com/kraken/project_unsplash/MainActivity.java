@@ -17,10 +17,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.kraken.project_unsplash.Activities.LoginActivity;
@@ -180,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void buildDialogBox() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_singlechoice);
-        adapter.addAll(Constants.getOrderByOptions());
+        adapter.addAll(Constants.ORDER_BY_OPTIONS);
 
         builder.setNegativeButton(getResources().getString(R.string.dialog_cancel_btn_label), new DialogInterface.OnClickListener() {
             @Override
@@ -225,5 +223,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout_main_activity, featuredPhotosFragment).commit();
                 break;
         }
+    }
+
+    //-------------------------- Auth Stuff ------------------------------
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
     }
 }

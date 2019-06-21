@@ -1,6 +1,7 @@
 package com.kraken.project_unsplash.Activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.Snackbar;
@@ -9,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -17,8 +17,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.google.gson.Gson;
+import com.kraken.project_unsplash.Models.AccessToken;
 import com.kraken.project_unsplash.MyApplication;
 import com.kraken.project_unsplash.R;
+import com.kraken.project_unsplash.Utils.Constants;
 
 import java.util.Map;
 
@@ -26,10 +28,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
 
-    // redirect_uri = com.kraken.project_unsplash:/oauth2redirect
-    private String url = "https://unsplash.com/oauth/authorize?client_id=15dbbf8531d6a54d5325124fe9a0f21b897aa7b27b09c982d01cf3b5dd92256c&response_type=code&scope=public+read_user&redirect_uri=kraken://unsplash-auth-callback";
-
-    private String callback = "unsplash-auth-callback";
+    final private String url = Constants.BASE_URL_AUTH + "/authorize?"
+            + "client_id=" + Constants.ACCESS_KEY
+            + "&response_type=code&scope=" + Constants.SCOPE
+            + "&redirect_uri=" + Constants.RESPONSE_URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +48,11 @@ public class LoginActivity extends AppCompatActivity {
         if (intent != null
                 && intent.getData() != null
                 && !intent.getData().getAuthority().isEmpty()
-                && callback.equals(intent.getData().getAuthority())) {
+                && Constants.RESPONSE_URL_CALLBACK.equals(intent.getData().getAuthority())) {
+
             Log.d(TAG, "onNewIntent: data -> " + intent.getData());
             Log.d(TAG, "onNewIntent: authority -> " + intent.getData().getAuthority());
+
             getAccessToken(intent.getData().getQueryParameter("code"));
         }
     }
@@ -56,7 +60,12 @@ public class LoginActivity extends AppCompatActivity {
     private void getAccessToken(String code) {
         Log.d(TAG, "getAccessToken: code -> " + code);
 
-        String authUrl = "https://unsplash.com/oauth/token?client_id=15dbbf8531d6a54d5325124fe9a0f21b897aa7b27b09c982d01cf3b5dd92256c&client_secret=0a20b1c09a09db21767dc2fc691dd2d3083c2b7b279eb460c78bc00e075b3309&redirect_uri=kraken://unsplash-auth-callback&code=" + code + "&grant_type=authorization_code";
+        final String authUrl = Constants.BASE_URL_AUTH +
+                "/token?client_id=" + Constants.ACCESS_KEY +
+                "&client_secret=" + Constants.SECRET_KEY +
+                "&redirect_uri=" + Constants.RESPONSE_URL +
+                "&code=" + code +
+                "&grant_type=authorization_code";
 
         final Gson gson = new Gson();
         StringRequest request = new StringRequest(Request.Method.POST, authUrl, new Response.Listener<String>() {
@@ -64,7 +73,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 Log.d(TAG, "onResponse: 200 Ok\n" + response);
                 AccessToken accessToken = gson.fromJson(response, AccessToken.class);
-                Log.d(TAG, "onResponse: access_token -> " + accessToken.access_token);
+                writeAccessToken(accessToken);
+                Log.d(TAG, "onResponse: access_token -> " + accessToken.getAccess_token());
             }
         }, new Response.ErrorListener() {
             @Override
@@ -81,6 +91,19 @@ public class LoginActivity extends AppCompatActivity {
         MyApplication.getSearchRequestQueue().add(request);
     }
 
+    private void writeAccessToken(AccessToken accessToken) {
+        SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.access_token_shared_preferences), MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(getResources().getString(R.string.access_token_storage_key), accessToken.getAccess_token());
+        editor.apply();
+
+        exit();
+    }
+
+    private void exit() {
+        finish();
+    }
+
     private void handleLoginBtn() {
         final Button loginBtn = findViewById(R.id.login_btn);
 
@@ -95,18 +118,7 @@ public class LoginActivity extends AppCompatActivity {
                         .build();
 
                 customTabsIntent.launchUrl(LoginActivity.this, uri);
-/*
-
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(url));
-                startActivity(intent);
-*/
             }
         });
     }
-}
-
-class AccessToken {
-    String access_token, token_type, refresh_token, scope;
-    int created_at;
 }

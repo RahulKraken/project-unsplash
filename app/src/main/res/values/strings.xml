@@ -45,4 +45,6 @@
     <string name="dialog_cancel_btn_label">CANCEL</string>
     <string name="nav_item_new_label">New</string>
     <string name="order_by_param_transaction_key">ORDER_BY</string>
+    <string name="access_token_shared_preferences">ACCESS_TOKEN_PREFERENCES</string>
+    <string name="access_token_storage_key">ACCESS_TOKEN</string>
 </resources>
