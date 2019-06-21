@@ -13,11 +13,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Activities.LoginActivity"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="unsplash-auth-callback"
+                    android:scheme="kraken" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,11 +36,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.FeaturedCollections" />
-        <activity android:name=".Activities.CollectionView"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".Activities.ImageViewer"
-            android:theme="@style/ImageViewerTheme"
-            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".Activities.CollectionView"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".Activities.ImageViewer"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/ImageViewerTheme" />
     </application>
 
 </manifest>

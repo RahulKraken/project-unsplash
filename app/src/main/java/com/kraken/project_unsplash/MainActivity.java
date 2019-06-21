@@ -1,6 +1,7 @@
 package com.kraken.project_unsplash;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -16,10 +17,13 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.kraken.project_unsplash.Activities.LoginActivity;
 import com.kraken.project_unsplash.Fragments.CollectionsFragment;
 import com.kraken.project_unsplash.Fragments.FeaturedPhotosFragment;
 import com.kraken.project_unsplash.Fragments.NewPhotosFragment;
@@ -90,6 +94,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // if sort by button is selected
         if (id == R.id.action_sort) {
             buildDialogBox();
+            return true;
+        }
+
+        if (id == R.id.action_login) {
+            startActivity(new Intent(this, LoginActivity.class));
             return true;
         }
 

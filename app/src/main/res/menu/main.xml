@@ -13,5 +13,10 @@
         android:orderInCategory="1"
         android:title="@string/action_sort_label"
         android:icon="@mipmap/ic_sort_dark"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_login"
+        android:orderInCategory="2"
+        android:title="Log in" />
 </menu>
