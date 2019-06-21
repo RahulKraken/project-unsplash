@@ -3,9 +3,7 @@ package com.kraken.project_unsplash;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.behavior.HideBottomViewOnScrollBehavior;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -20,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.kraken.project_unsplash.Fragments.CollectionsFragment;
 import com.kraken.project_unsplash.Fragments.FeaturedPhotosFragment;
@@ -33,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // widgets
     private BottomNavigationView bottomNavigationView;
     private FrameLayout frameLayout;
+    private TextView toolbarTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // setting up the toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbarTitle = findViewById(R.id.toolbar_title);
 
         // setting up the drawer layout
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -131,20 +132,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     case R.id.nav_item_new:
                         Log.d(TAG, "onNavigationItemSelected: new photos fragment");
                         setFragment(new NewPhotosFragment());
+                        setToolbarTitle(getResources().getString(R.string.nav_item_new_label));
                         return true;
                     case R.id.nav_item_featured:
                         Log.d(TAG, "onNavigationItemSelected: featured photos fragment");
                         setFragment(new FeaturedPhotosFragment());
+                        setToolbarTitle(getResources().getString(R.string.featured_nav_item_label));
                         return true;
                     case R.id.nav_item_collections:
                         Log.d(TAG, "onNavigationItemSelected: collections fragment");
                         setFragment(new CollectionsFragment());
+                        setToolbarTitle(getResources().getString(R.string.collections_nav_bar_label));
                         return true;
                 }
                 return false;
             }
         });
         bottomNavigationView.setSelectedItemId(R.id.nav_item_new);
+    }
+
+    private void setToolbarTitle(String title) {
+        toolbarTitle.setText(title);
     }
 
     /**
@@ -157,6 +165,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fragmentTransaction.commit();
     }
 
+    /**
+     * build sort by options dialog box
+     */
     private void buildDialogBox() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.select_dialog_singlechoice);
@@ -179,6 +190,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         builder.show();
     }
 
+    /**
+     * sort by dialog function to update the recycler view
+     * @param param : parameter to sort the results
+     */
     private void sendToFragment(String param) {
         Log.d(TAG, "sendToFragment: " + param);
 

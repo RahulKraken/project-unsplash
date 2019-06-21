@@ -1,6 +1,8 @@
 package com.kraken.project_unsplash.Models;
 
-public class Tag {
+import java.io.Serializable;
+
+public class Tag implements Serializable {
     private String title;
 
     public String getTitle() {

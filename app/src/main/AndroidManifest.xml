@@ -25,7 +25,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.FeaturedCollections" />
-        <activity android:name=".Activities.CollectionView" />
+        <activity android:name=".Activities.CollectionView"
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".Activities.ImageViewer"
             android:theme="@style/ImageViewerTheme"
             android:parentActivityName=".MainActivity"/>

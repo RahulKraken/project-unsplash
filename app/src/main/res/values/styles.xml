@@ -9,7 +9,6 @@
         <item name="android:statusBarColor">@color/md_white_1000</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
-        <!--<item name="actionButtonStyle">@style/ActionButtonStyle</item>-->
     </style>
 
     <!--image view activity theme-->
@@ -53,10 +52,8 @@
     </style>
 
     <!--app bar styles-->
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowLightStatusBar">true</item>
+    <style name="ActionBarBackArrow" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">@color/md_black_1000</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -43,8 +44,10 @@ public class CollectionView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection_view);
 
-        // inflate widgets
-        TextView tv_title = findViewById(R.id.collectionTitle);
+        // setup toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        TextView toolbar_title = findViewById(R.id.toolbar_title);
 
         // get collection from the intent
         collection = (Collection) getIntent().getSerializableExtra(getResources().getString(R.string.collection_parcelable_intent_extra));
@@ -53,29 +56,13 @@ public class CollectionView extends AppCompatActivity {
 
         // set title of the collection
         String title = collection.getTitle() != null ? collection.getTitle() : getResources().getString(R.string.collection_title_replacement);
-        tv_title.setText(title);
+        if (getSupportActionBar() != null) {
+            toolbar_title.setText(title);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
         Log.d(TAG, "onCreate: description " + collection.getDescription());
-
-        // if collection has a description create a textView for description and add to linear layout
-        if (collection.getDescription() != null) {
-            TextView tv_desc = new TextView(this, null, 0, R.style.subtitleStyle);
-            tv_desc.setTextSize(14);
-            tv_desc.setPadding(14, 14, 14, 0);
-            tv_desc.setTextColor(ContextCompat.getColor(this, R.color.md_black_1000));
-            LinearLayout.LayoutParams params =
-                    new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            params.setMargins(14, 14, 14, 0);
-            tv_desc.setLayoutParams(params);
-            tv_desc.setText(collection.getDescription());
-
-            LinearLayout linearLayout = findViewById(R.id.collectionViewLinearLayout);
-            linearLayout.addView(tv_desc, 1);
-
-            NestedScrollView nestedScrollView = findViewById(R.id.collectionViewNestedScrollView);
-            nestedScrollView.invalidate();
-            nestedScrollView.requestLayout();
-        }
 
         // get photos belonging to collection
         getPhotosForCollection();
@@ -123,10 +110,10 @@ public class CollectionView extends AppCompatActivity {
      */
     private void initRecyclerView(List<Photo> photos) {
         RecyclerView recyclerView = findViewById(R.id.collectionViewRecyclerView);
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         PhotosRecyclerViewAdapter photosRecyclerViewAdapter = new PhotosRecyclerViewAdapter(this, photos);
 
         recyclerView.setAdapter(photosRecyclerViewAdapter);
-        recyclerView.setLayoutManager(staggeredGridLayoutManager);
+        recyclerView.setLayoutManager(linearLayoutManager);
     }
 }

@@ -1,6 +1,8 @@
 package com.kraken.project_unsplash.Models;
 
-public class CollectionLinks {
+import java.io.Serializable;
+
+public class CollectionLinks implements Serializable {
     private String self, html, photos, related;
 
     public String getSelf() {
