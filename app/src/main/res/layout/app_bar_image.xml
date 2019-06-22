@@ -10,7 +10,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay"
-        android:background="@android:color/transparent"
+        android:background="#33000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -50,7 +50,7 @@
 
                 <LinearLayout
                     android:orientation="vertical"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="16dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toEndOf="@id/container_profile_image"
@@ -63,9 +63,11 @@
                         style="@style/titleStyle"
                         android:textColor="@color/md_white_1000"
                         android:shadowColor="@color/md_grey_500"
+                        android:maxLines="1"
                         android:shadowDx="0"
                         android:shadowDy="1"
                         android:shadowRadius="2"
+                        android:maxWidth="240dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 
@@ -74,9 +76,11 @@
                         style="@style/subtitleStyle"
                         android:textColor="@color/md_white_1000"
                         android:shadowColor="@color/md_grey_500"
+                        android:maxLines="1"
                         android:shadowDx="0"
                         android:shadowDy="1"
                         android:shadowRadius="2"
+                        android:maxWidth="240dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 

@@ -47,4 +47,6 @@
     <string name="order_by_param_transaction_key">ORDER_BY</string>
     <string name="access_token_shared_preferences">ACCESS_TOKEN_PREFERENCES</string>
     <string name="access_token_storage_key">ACCESS_TOKEN</string>
+    <string name="download_action_btn_label">Download</string>
+    <string name="to_collections_action_btn_label">to Collections</string>
 </resources>
