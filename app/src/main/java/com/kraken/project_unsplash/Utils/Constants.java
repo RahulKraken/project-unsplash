@@ -16,4 +16,6 @@ public class Constants {
     public final static String BASE_URL = "https://api.unsplash.com";
 
     public static final List<String> ORDER_BY_OPTIONS = Arrays.asList("latest", "oldest", "popular");
+
+    public static final int NUM_COLUMNS = 2;
 }

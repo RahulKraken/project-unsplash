@@ -1,9 +1,11 @@
 package com.kraken.project_unsplash.Activities;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -29,6 +31,7 @@ import com.kraken.project_unsplash.Utils.Constants;
 import com.kraken.project_unsplash.Utils.Params;
 import com.kraken.project_unsplash.Utils.Serializer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +43,13 @@ public class CollectionView extends AppCompatActivity {
     // current collection
     private Collection collection;
 
+    // recycler view scroll stuff
+    private PhotosRecyclerViewAdapter recyclerViewAdapter;
+    private int pastItemsCount, visibleItemCount, totalItemCount;
+    private int page = 1;
+
+    private List<Photo> photos;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +59,8 @@ public class CollectionView extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         TextView toolbar_title = findViewById(R.id.toolbar_title);
+
+        photos = new ArrayList<>();
 
         // get collection from the intent
         collection = (Collection) getIntent().getSerializableExtra(getResources().getString(R.string.collection_parcelable_intent_extra));
@@ -66,6 +78,7 @@ public class CollectionView extends AppCompatActivity {
         Log.d(TAG, "onCreate: description " + collection.getDescription());
 
         // get photos belonging to collection
+        initRecyclerView();
         getPhotosForCollection();
     }
 
@@ -75,15 +88,16 @@ public class CollectionView extends AppCompatActivity {
     private void getPhotosForCollection() {
         // string request to get raw json for the photos
         StringRequest photosForCollectionRequest =
-                new StringRequest(Request.Method.GET, UrlBuilder.getCollectionPhotos(collection.getId()), new Response.Listener<String>() {
+                new StringRequest(Request.Method.GET, UrlBuilder.getCollectionPhotos(collection.getId(), null, page), new Response.Listener<String>() {
+
                     @Override
                     public void onResponse(String response) {
                         Log.d(TAG, "onResponse: 200 OK\n" + response);
                         // serialize raw json into Photo[]
                         Serializer serializer = new Serializer();
-                        List<Photo> photos = serializer.listPhotos(response);
-                        // inflate the recycler view
-                        initRecyclerView(photos);
+                        photos.addAll(serializer.listPhotos(response));
+                        // notify data set changed
+                        recyclerViewAdapter.notifyDataSetChanged();
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -98,20 +112,38 @@ public class CollectionView extends AppCompatActivity {
                     }
                 };
 
+        page += 1;
+
         // get local request queue and add request to it
         MyApplication.getLocalRequestQueue().add(photosForCollectionRequest);
     }
 
     /**
      * inflate the recycler view
-     * @param photos : Photo[]
      */
-    private void initRecyclerView(List<Photo> photos) {
+    private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.collectionViewRecyclerView);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        PhotosRecyclerViewAdapter photosRecyclerViewAdapter = new PhotosRecyclerViewAdapter(this, photos);
+        final GridLayoutManager layoutManager = new GridLayoutManager(this, Constants.NUM_COLUMNS);
+        recyclerViewAdapter = new PhotosRecyclerViewAdapter(this, photos);
 
-        recyclerView.setAdapter(photosRecyclerViewAdapter);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerView.setLayoutManager(layoutManager);
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                // if scrolled down
+                if (dy > 0) {
+                    visibleItemCount = recyclerView.getChildCount();
+                    totalItemCount = layoutManager.getItemCount();
+                    pastItemsCount = layoutManager.findFirstVisibleItemPosition();
+
+                    // if end reached
+                    if (visibleItemCount + pastItemsCount >= totalItemCount) {
+                        getPhotosForCollection();
+                    }
+                }
+            }
+        });
     }
 }

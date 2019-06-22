@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -127,7 +128,7 @@ public class FeaturedPhotosFragment extends Fragment {
         RecyclerView recyclerView = rootView.findViewById(R.id.rv_featured_photos);
 
         recyclerViewAdapter = new PhotosRecyclerViewAdapter(getContext(), photos);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        final GridLayoutManager layoutManager = new GridLayoutManager(getContext(), Constants.NUM_COLUMNS);
 
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setLayoutManager(layoutManager);

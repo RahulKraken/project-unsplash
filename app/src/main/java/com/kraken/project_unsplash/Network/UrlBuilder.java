@@ -1,5 +1,6 @@
 package com.kraken.project_unsplash.Network;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.kraken.project_unsplash.Utils.Constants;
@@ -25,7 +26,7 @@ public class UrlBuilder {
      * @param count @Nullable int
      * @return url
      */
-    public static String getCuratedPhotos(@Nullable Integer count, @Nullable String param, Integer page) {
+    public static String getCuratedPhotos(@Nullable Integer count, @NonNull String param, Integer page) {
         url = Constants.BASE_URL;
         url += count == null ? "/photos/curated?per_page=50&page=" + page + "@order_by=\"" + param + "\"" :
                 "/photos/curated?per_page=" + count + "&page=" + page + "&order_by=\"" + param +
@@ -84,9 +85,10 @@ public class UrlBuilder {
      * @param id : id of collection
      * @return url
      */
-    public static String getCollectionPhotos(int id) {
+    public static String getCollectionPhotos(@NonNull Integer id, @Nullable Integer count, Integer page) {
         url = Constants.BASE_URL;
-        url += "/collections/" + id + "/photos";
+        url += count == null ? "/collections/" + id + "/photos?per_page=50&page=" + page :
+                "/collections/" + id + "/photos?per_page=" + count + "&page=" + page;
         return url;
     }
 

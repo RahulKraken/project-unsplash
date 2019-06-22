@@ -1,4 +1,4 @@
-package com.kraken.project_unsplash;
+package com.kraken.project_unsplash.Activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -25,6 +25,7 @@ import com.kraken.project_unsplash.Activities.LoginActivity;
 import com.kraken.project_unsplash.Fragments.CollectionsFragment;
 import com.kraken.project_unsplash.Fragments.FeaturedPhotosFragment;
 import com.kraken.project_unsplash.Fragments.NewPhotosFragment;
+import com.kraken.project_unsplash.R;
 import com.kraken.project_unsplash.Utils.Constants;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -230,6 +231,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onResume() {
         super.onResume();
-
     }
 }

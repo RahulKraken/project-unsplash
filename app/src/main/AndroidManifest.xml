@@ -25,7 +25,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:label="@string/title_activity_main"
             android:launchMode="singleTop"
             android:theme="@style/AppTheme.NoActionBar">
@@ -38,10 +38,10 @@
         <activity android:name=".Activities.FeaturedCollections" />
         <activity
             android:name=".Activities.CollectionView"
-            android:parentActivityName=".MainActivity" />
+            android:parentActivityName=".Activities.MainActivity" />
         <activity
             android:name=".Activities.ImageViewer"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".Activities.MainActivity"
             android:theme="@style/ImageViewerTheme" />
     </application>
 

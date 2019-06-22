@@ -16,6 +16,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.kraken.project_unsplash.Activities.ImageViewer;
 import com.kraken.project_unsplash.Models.Photo;
 import com.kraken.project_unsplash.R;
+import com.kraken.project_unsplash.Utils.Constants;
+import com.kraken.project_unsplash.Utils.SquareImageView;
 
 import java.util.List;
 
@@ -57,20 +59,6 @@ public class PhotosRecyclerViewAdapter extends RecyclerView.Adapter<PhotosRecycl
                 .load(photos.get(i).getUrls().getSmall())
                 .apply(requestOptions)
                 .into(holder.mainImage);
-
-        // load user profile image
-        Glide.with(context)
-                .load(photos.get(i).getUser().getProfile_image().getSmall())
-                .apply(requestOptions)
-                .into(holder.profileImage);
-
-        // set user full name
-        holder.fullName.setText(photos.get(i).getUser().getName());
-        // set user username
-        String username = "@" + photos.get(i).getUser().getUsername();
-        holder.username.setText(username);
-        // set likes count
-        holder.likesCnt.setText(String.valueOf(photos.get(i).getLikes()));
     }
 
     @Override
@@ -81,16 +69,15 @@ public class PhotosRecyclerViewAdapter extends RecyclerView.Adapter<PhotosRecycl
     class PhotoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         // views in the layout
-        ImageView mainImage, profileImage;
-        TextView fullName, username, likesCnt;
+        SquareImageView mainImage;
 
         PhotoViewHolder(@NonNull View itemView) {
             super(itemView);
             mainImage = itemView.findViewById(R.id.rv_image_main);
-            profileImage = itemView.findViewById(R.id.rv_image_profile_picture);
-            fullName = itemView.findViewById(R.id.rv_image_name);
-            username = itemView.findViewById(R.id.rv_image_username);
-            likesCnt = itemView.findViewById(R.id.rv_image_like_cnt);
+            int width = context.getResources().getDisplayMetrics().widthPixels;
+            int img_width = width / Constants.NUM_COLUMNS;
+            mainImage.setMinimumWidth(img_width);
+            mainImage.setMaxWidth(img_width);
             itemView.setOnClickListener(this);
         }
 
