@@ -103,7 +103,6 @@ public class CollectionView extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d(TAG, "onErrorResponse: " + error.getMessage());
-                        Toast.makeText(CollectionView.this, "Cannot fetch photos", Toast.LENGTH_SHORT).show();
                     }
                 }) {
                     @Override

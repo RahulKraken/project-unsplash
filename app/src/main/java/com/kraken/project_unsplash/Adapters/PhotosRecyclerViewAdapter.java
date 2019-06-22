@@ -2,6 +2,8 @@ package com.kraken.project_unsplash.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -52,7 +54,8 @@ public class PhotosRecyclerViewAdapter extends RecyclerView.Adapter<PhotosRecycl
         Log.d(TAG, "onBindViewHolder: called");
 
         // Request options for glide
-        RequestOptions requestOptions = new RequestOptions().placeholder(R.color.md_grey_100);
+        Log.d(TAG, "onBindViewHolder: color -> " + photos.get(i).getColor());
+        RequestOptions requestOptions = new RequestOptions().placeholder(new ColorDrawable(Color.parseColor(photos.get(i).getColor())));
 
         // Load main image
         Glide.with(context)
