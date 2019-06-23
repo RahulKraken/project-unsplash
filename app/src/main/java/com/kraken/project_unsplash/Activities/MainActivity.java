@@ -21,7 +21,6 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.kraken.project_unsplash.Activities.LoginActivity;
 import com.kraken.project_unsplash.Fragments.CollectionsFragment;
 import com.kraken.project_unsplash.Fragments.FeaturedPhotosFragment;
 import com.kraken.project_unsplash.Fragments.NewPhotosFragment;
@@ -224,12 +223,5 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout_main_activity, featuredPhotosFragment).commit();
                 break;
         }
-    }
-
-    //-------------------------- Auth Stuff ------------------------------
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 }

@@ -78,6 +78,7 @@ public class ImageViewer extends AppCompatActivity {
 //        initSetWallpaperBtn();
         // activate the add to favorites button
         handleFavoritesBtn();
+        setProfileListener();
     }
 
     /**
@@ -218,5 +219,14 @@ public class ImageViewer extends AppCompatActivity {
         tvName.setText(photo.getUser().getName());
         tvUserName.setText(photo.getUser().getUsername());
         tvLikesCnt.setText(photo.getLikes() + " Likes");
+    }
+
+    private void setProfileListener() {
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ImageViewer.this, UserActivity.class));
+            }
+        });
     }
 }
