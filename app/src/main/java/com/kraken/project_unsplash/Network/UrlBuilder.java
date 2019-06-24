@@ -1,5 +1,6 @@
 package com.kraken.project_unsplash.Network;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -146,9 +147,27 @@ public class UrlBuilder {
         return url;
     }
 
-    public static String getUser(String id) {
+    public static String getUser(String username) {
         url = Constants.BASE_URL;
-        url += "/users/" + id;
+        url += "/users/" + username;
+        return url;
+    }
+
+    public static String getUserPhotos(@NonNull String username, @NonNull Integer page) {
+        url = Constants.BASE_URL;
+        url += "/users/" + username + "/photos?" + "page=" + page;
+        return url;
+    }
+
+    public static String getUserLikes(@NonNull String username, @NonNull Integer page) {
+        url = Constants.BASE_URL;
+        url += "/users/" + username + "/likes?" + "page=" + page;
+        return url;
+    }
+
+    public static String getUserCollections(@NonNull String username, @NonNull Integer page) {
+        url = Constants.BASE_URL;
+        url += "/users/" + username + "/collections?" + "page=" + page;
         return url;
     }
 }

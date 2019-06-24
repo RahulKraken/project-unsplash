@@ -25,6 +25,9 @@ import com.bumptech.glide.Glide;
 import com.kraken.project_unsplash.Fragments.CollectionsFragment;
 import com.kraken.project_unsplash.Fragments.FeaturedPhotosFragment;
 import com.kraken.project_unsplash.Fragments.NewPhotosFragment;
+import com.kraken.project_unsplash.Fragments.UserCollectionFragment;
+import com.kraken.project_unsplash.Fragments.UserLikesFragment;
+import com.kraken.project_unsplash.Fragments.UserPhotosFragment;
 import com.kraken.project_unsplash.Models.User;
 import com.kraken.project_unsplash.MyApplication;
 import com.kraken.project_unsplash.Network.UrlBuilder;
@@ -136,9 +139,17 @@ public class UserActivity extends AppCompatActivity {
 
     private void setupViewPager() {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        viewPagerAdapter.addFragment(new NewPhotosFragment(), "Photos");
-        viewPagerAdapter.addFragment(new FeaturedPhotosFragment(), "Featured");
-        viewPagerAdapter.addFragment(new CollectionsFragment(), "Collections");
+
+        UserPhotosFragment userPhotosFragment = new UserPhotosFragment();
+        userPhotosFragment.putUsername(userName);
+        UserLikesFragment userLikesFragment = new UserLikesFragment();
+        userLikesFragment.putUsername(userName);
+        UserCollectionFragment userCollectionFragment = new UserCollectionFragment();
+        userCollectionFragment.putUsername(userName);
+
+        viewPagerAdapter.addFragment(userPhotosFragment, "Photos");
+        viewPagerAdapter.addFragment(userLikesFragment, "Featured");
+        viewPagerAdapter.addFragment(userCollectionFragment, "Collections");
 
         viewPager.setAdapter(viewPagerAdapter);
     }

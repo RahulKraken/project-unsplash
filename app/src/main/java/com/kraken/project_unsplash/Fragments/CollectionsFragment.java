@@ -109,7 +109,7 @@ public class CollectionsFragment extends Fragment {
     private void initRecyclerView() {
         RecyclerView collectionsRecyclerView = rootView.findViewById(R.id.collectionsRecyclerView);
 
-        recyclerViewAdapter = new CollectionsRecyclerViewAdapter(collections, getContext());
+        recyclerViewAdapter = new CollectionsRecyclerViewAdapter(getContext(), collections);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
 
         collectionsRecyclerView.setAdapter(recyclerViewAdapter);

@@ -77,7 +77,7 @@ public class FeaturedCollections extends AppCompatActivity {
      */
     private void populateRecyclerView(List<Collection> collections) {
         RecyclerView recyclerView = findViewById(R.id.featuredCollectionsRecyclerView);
-        CollectionsRecyclerViewAdapter collectionsRecyclerViewAdapter = new CollectionsRecyclerViewAdapter(collections, this);
+        CollectionsRecyclerViewAdapter collectionsRecyclerViewAdapter = new CollectionsRecyclerViewAdapter(this, collections);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
 
         recyclerView.setAdapter(collectionsRecyclerViewAdapter);

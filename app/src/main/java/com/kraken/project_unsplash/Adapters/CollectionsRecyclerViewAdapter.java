@@ -37,7 +37,7 @@ public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<Collect
      * @param collections : collection[]
      * @param context : activity context
      */
-    public CollectionsRecyclerViewAdapter(List<Collection> collections, Context context) {
+    public CollectionsRecyclerViewAdapter(Context context, List<Collection> collections) {
         this.collections = collections;
         this.context = context;
         Log.d(TAG, "CollectionsRecyclerViewAdapter: " + collections.size());
