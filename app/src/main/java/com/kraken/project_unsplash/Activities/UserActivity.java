@@ -43,6 +43,7 @@ public class UserActivity extends AppCompatActivity {
 
     private static final String TAG = "UserActivity";
 
+    // widgets
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private TextView photoCnt, collectionCnt, name, bio;
@@ -77,21 +78,27 @@ public class UserActivity extends AppCompatActivity {
         bio = findViewById(R.id.user_page_bio);
         profilePic = findViewById(R.id.user_page_profile_pic);
 
+        // get the user
         getUserDetails();
 
         viewPager = findViewById(R.id.user_page_view_pager);
         tabLayout = findViewById(R.id.user_page_tab_layout);
 
+        // setup tab layout
         setupViewPager();
         setupTabLayout();
     }
 
+    /**
+     * GET /users/:username
+     */
     private void getUserDetails() {
         StringRequest getUserRequest = new StringRequest(Request.Method.GET, UrlBuilder.getUser(userName), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "onResponse: 200 OK\n" + response);
                 User user = new Serializer().getUser(response);
+                // populate fields
                 setProfilePic(user);
                 populateTextData(user);
             }
@@ -111,12 +118,14 @@ public class UserActivity extends AppCompatActivity {
         MyApplication.getSearchRequestQueue().add(getUserRequest);
     }
 
+    // set profile picture in the view
     private void setProfilePic(User user) {
         Glide.with(this)
                 .load(user.getProfile_image().getLarge())
                 .into(profilePic);
     }
 
+    // populate the text fields
     private void populateTextData(User user) {
         photoCnt.setText(String.valueOf(user.getTotal_photos()));
         collectionCnt.setText(String.valueOf(user.getTotal_collections()));
@@ -125,6 +134,9 @@ public class UserActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) getSupportActionBar().setTitle(user.getUsername());
     }
 
+    /**
+     * setup tab layout with view pager and set the tab titles
+     */
     @SuppressWarnings("ConstantConditions")
     private void setupTabLayout() {
         Log.d(TAG, "setupTabLayout: Setting up tabLayout");
@@ -137,6 +149,9 @@ public class UserActivity extends AppCompatActivity {
         tabLayout.setSelected(true);
     }
 
+    /**
+     * setup the view pager
+     */
     private void setupViewPager() {
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
