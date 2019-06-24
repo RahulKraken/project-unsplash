@@ -2,6 +2,7 @@ package com.kraken.project_unsplash.Activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -32,11 +33,17 @@ public class UserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
+        // handle the collapsing toolbar
+        CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.user_page_collapsing_toolbar);
+        collapsingToolbarLayout.setTitleEnabled(false);
+
         // set toolbar
         Toolbar toolbar = findViewById(R.id.user_page_toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Title");
+            getSupportActionBar().setTitle("@kraken");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
         viewPager = findViewById(R.id.user_page_view_pager);
@@ -45,7 +52,7 @@ public class UserActivity extends AppCompatActivity {
         setupViewPager();
         setupTabLayout();
     }
-
+    
     @SuppressWarnings("ConstantConditions")
     private void setupTabLayout() {
         Log.d(TAG, "setupTabLayout: Setting up tabLayout");

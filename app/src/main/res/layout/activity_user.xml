@@ -15,25 +15,21 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/user_page_collapsing_toolbar"
             app:layout_scrollFlags="scroll"
+            android:paddingBottom="16dp"
             android:layout_width="match_parent"
-            android:layout_height="206dp">
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/user_page_header_image"
-                android:src="@drawable/profile_picture"
-                android:scaleType="center"
-                android:contentDescription="@string/image_view_content_desc"
-                android:fitsSystemWindows="true"
+            <include
+                android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                layout="@layout/user_activity_header" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/user_page_toolbar"
-                app:layout_scrollFlags="scroll|enterAlways"
+                app:layout_scrollFlags="scroll"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize">
-
-            </android.support.v7.widget.Toolbar>
+                android:layout_height="?attr/actionBarSize" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 

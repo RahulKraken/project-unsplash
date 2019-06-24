@@ -31,10 +31,17 @@
         <item name="android:fontFamily">@font/roboto_bold</item>
     </style>
 
+    <!--user profile labels-->
+    <style name="profileLabelStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/md_grey_500</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+    </style>
+
     <!-- style for subTitles -->
     <style name="subtitleStyle">
         <item name="android:textSize">10sp</item>
-        <item name="android:textColor">@color/md_black_1000</item>
+        <item name="android:textColor">@color/md_grey_700</item>
         <item name="android:fontFamily">@font/roboto_regular</item>
     </style>
 
