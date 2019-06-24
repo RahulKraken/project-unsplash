@@ -145,4 +145,10 @@ public class UrlBuilder {
         url += "/collections/" + id + "/related";
         return url;
     }
+
+    public static String getUser(String id) {
+        url = Constants.BASE_URL;
+        url += "/users/" + id;
+        return url;
+    }
 }

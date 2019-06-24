@@ -19,17 +19,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <include
-                android:layout_marginTop="16dp"
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                layout="@layout/user_activity_header" />
+                android:layout_height="wrap_content">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/user_page_toolbar"
-                app:layout_scrollFlags="scroll"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize" />
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/user_page_toolbar"
+                    app:layout_scrollFlags="scroll"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize" />
+
+                <include
+                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    layout="@layout/user_activity_header" />
+
+            </LinearLayout>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 

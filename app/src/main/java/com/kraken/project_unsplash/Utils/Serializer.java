@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.kraken.project_unsplash.Models.Collection;
 import com.kraken.project_unsplash.Models.Photo;
+import com.kraken.project_unsplash.Models.User;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -86,5 +87,9 @@ public class Serializer {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public User getUser(String response) {
+        return gson.fromJson(response, User.class);
     }
 }

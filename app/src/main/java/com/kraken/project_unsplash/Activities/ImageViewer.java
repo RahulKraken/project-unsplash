@@ -225,7 +225,9 @@ public class ImageViewer extends AppCompatActivity {
         profileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ImageViewer.this, UserActivity.class));
+                Intent intent = new Intent(ImageViewer.this, UserActivity.class);
+                intent.putExtra(getResources().getString(R.string.user_itent_pass_key), photo.getUser().getUsername());
+                startActivity(intent);
             }
         });
     }

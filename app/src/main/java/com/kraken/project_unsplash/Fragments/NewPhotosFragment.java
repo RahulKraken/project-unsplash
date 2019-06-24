@@ -88,9 +88,7 @@ public class NewPhotosFragment extends Fragment {
     private void fetchPhotos() {
         Log.d(TAG, "fetchPhotos: " + UrlBuilder.getAllPhotos(50, orderBy, page));
         // string request fetches raw json using volley
-        StringRequest allPhotosRequest = new StringRequest(Request.Method.GET,
-                UrlBuilder.getAllPhotos(50, orderBy, page),
-                new Response.Listener<String>() {
+        StringRequest allPhotosRequest = new StringRequest(Request.Method.GET, UrlBuilder.getAllPhotos(50, orderBy, page), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "onResponse: 200 OK\n" + response);
