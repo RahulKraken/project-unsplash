@@ -1,6 +1,7 @@
 package com.kraken.project_unsplash.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.kraken.project_unsplash.Activities.CategoryActivity;
 import com.kraken.project_unsplash.R;
 import com.kraken.project_unsplash.Utils.Constants;
 
@@ -58,7 +60,9 @@ public class CategoriesAdapter extends RecyclerView.Adapter<CategoriesAdapter.Ca
 
         @Override
         public void onClick(View v) {
-            Log.d(TAG, "onClick: clicked!");
+            Intent intent = new Intent(context, CategoryActivity.class);
+            intent.putExtra(context.getResources().getString(R.string.category_intent_pass_key), categories.get(getAdapterPosition()));
+            context.startActivity(intent);
         }
     }
 }

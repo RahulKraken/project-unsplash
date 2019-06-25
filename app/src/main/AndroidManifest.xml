@@ -13,7 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.CategoriesActivity"></activity>
+        <activity android:name=".Activities.CategoryActivity"
+            android:parentActivityName=".Activities.CategoryListActivity"
+            android:launchMode="singleTop"/>
+        <activity android:name=".Activities.CategoryListActivity"
+            android:parentActivityName=".Activities.MainActivity"
+            android:launchMode="singleTop"/>
         <activity android:name=".Activities.UserActivity" />
         <activity
             android:name=".Activities.LoginActivity"

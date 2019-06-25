@@ -170,4 +170,11 @@ public class UrlBuilder {
         url += "/users/" + username + "/collections?" + "page=" + page;
         return url;
     }
+
+    public static String getCategoryUrl(@NonNull String category, @NonNull int page) {
+        // /search/photos?query="football"&page=10
+        url = Constants.BASE_URL;
+        url += "/search/photos?query=\"" + category + "\"&page=" + page;
+        return url;
+    }
 }

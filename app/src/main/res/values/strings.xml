@@ -51,4 +51,6 @@
     <string name="to_collections_action_btn_label">to Collections</string>
     <string name="user_itent_pass_key">USER</string>
     <string name="nav_wallpaper_label">Wallpapers</string>
+    <string name="category_intent_pass_key">CATEGORY</string>
+    <string name="categories_list_activity_title">Categories</string>
 </resources>

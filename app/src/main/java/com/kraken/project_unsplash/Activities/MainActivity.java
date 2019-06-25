@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 bottomNavigationView.setSelectedItemId(R.id.nav_item_collections);
                 break;
             case R.id.nav_categories:
-                startActivity(new Intent(this, CategoriesActivity.class));
+                startActivity(new Intent(this, CategoryListActivity.class));
                 break;
         }
 
