@@ -122,6 +122,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Log.d(TAG, "onNavigationItemSelected: navigating to collections");
                 bottomNavigationView.setSelectedItemId(R.id.nav_item_collections);
                 break;
+            case R.id.nav_categories:
+                startActivity(new Intent(this, CategoriesActivity.class));
+                break;
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

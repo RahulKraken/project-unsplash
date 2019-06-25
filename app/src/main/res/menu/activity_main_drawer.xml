@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/nav_group_fragments"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_new"
             android:icon="@mipmap/ic_explore"
@@ -17,6 +19,15 @@
             android:id="@+id/nav_collections"
             android:icon="@mipmap/ic_collections"
             android:title="@string/collections_nav_bar_label" />
+    </group>
+
+    <group
+        android:id="@+id/nav_group_categories"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_categories"
+            android:icon="@mipmap/ic_explore"
+            android:title="Categories" />
     </group>
 
     <item android:title="Communicate">

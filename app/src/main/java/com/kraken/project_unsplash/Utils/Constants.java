@@ -18,4 +18,6 @@ public class Constants {
     public static final List<String> ORDER_BY_OPTIONS = Arrays.asList("latest", "oldest", "popular");
 
     public static final int NUM_COLUMNS = 2;
+
+    public static final String[] CATEGORIES = {"Wallpapers", "Textures & Patterns", "Nature", "Architecture", "Animals", "Travel", "Fashion", "Food & Drink", "Spiritual", "Experimental", "People", "Health", "Arts & Culture"};
 }
