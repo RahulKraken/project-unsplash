@@ -6,21 +6,17 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
+            android:id="@+id/nav_new"
+            android:icon="@mipmap/ic_explore"
+            android:title="@string/nav_item_new_label" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
+            android:id="@+id/nav_featured"
+            android:icon="@mipmap/ic_favorites"
+            android:title="@string/nav_featured_label" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
-        <item
-            android:id="@+id/nav_tools"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="@string/menu_tools" />
+            android:id="@+id/nav_collections"
+            android:icon="@mipmap/ic_collections"
+            android:title="@string/collections_nav_bar_label" />
     </group>
 
     <item android:title="Communicate">
