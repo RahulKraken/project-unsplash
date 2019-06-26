@@ -27,20 +27,20 @@
         <item
             android:id="@+id/nav_categories"
             android:icon="@mipmap/ic_explore"
-            android:title="Categories" />
+            android:title="@string/categories_nav_drawer_label" />
     </group>
 
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/menu_share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/menu_send" />
-        </menu>
-    </item>
+    <group
+        android:id="@+id/nav_group_settings"
+        android:checkableBehavior="single" >
+        <item
+            android:id="@+id/nav_settings"
+            android:icon="@mipmap/ic_settings"
+            android:title="@string/settings_nav_drawer_item_label" />
+        <item
+            android:id="@+id/nav_rate"
+            android:icon="@drawable/ic_star_light"
+            android:title="@string/rate_nav_drawer_label" />
+    </group>
 
 </menu>

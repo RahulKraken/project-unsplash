@@ -53,4 +53,7 @@
     <string name="nav_wallpaper_label">Wallpapers</string>
     <string name="category_intent_pass_key">CATEGORY</string>
     <string name="categories_list_activity_title">Categories</string>
+    <string name="settings_nav_drawer_item_label">Settings</string>
+    <string name="rate_nav_drawer_label">Rate</string>
+    <string name="categories_nav_drawer_label">Categories</string>
 </resources>
