@@ -97,6 +97,8 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString(getResources().getString(R.string.access_token_storage_key), accessToken.getAccess_token());
         editor.apply();
 
+        MyApplication.AUTHENTICATED = true;
+
         exit();
     }
 

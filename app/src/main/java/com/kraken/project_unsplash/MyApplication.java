@@ -16,6 +16,8 @@ public class MyApplication extends Application {
 
     private static final String TAG = "MyApplication";
 
+    public static boolean AUTHENTICATED = false;
+
     /**
      * Network request queues
      * localRequestQueue - requests like photos and collections

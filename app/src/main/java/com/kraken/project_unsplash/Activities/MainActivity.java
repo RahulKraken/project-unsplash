@@ -19,6 +19,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import android.widget.Toast;
 import com.kraken.project_unsplash.Fragments.CollectionsFragment;
 import com.kraken.project_unsplash.Fragments.FeaturedPhotosFragment;
 import com.kraken.project_unsplash.Fragments.NewPhotosFragment;
+import com.kraken.project_unsplash.MyApplication;
 import com.kraken.project_unsplash.R;
 import com.kraken.project_unsplash.Utils.Constants;
 
@@ -57,10 +59,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
+        handleNavigationViewHeader(navigationView);
+
         // setting up bottom navigation view
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         frameLayout = findViewById(R.id.frame_layout_main_activity);
         setupBottomNavigation();
+    }
+
+    //-------------------- experimental ---------------------
+
+    private void handleNavigationViewHeader(NavigationView navigationView) {
+        View header = navigationView.getHeaderView(0);
+        header.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, MyApplication.AUTHENTICATED ? UserActivity.class : LoginActivity.class));
+            }
+        });
     }
 
     @Override
