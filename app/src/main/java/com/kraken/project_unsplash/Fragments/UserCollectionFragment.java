@@ -1,15 +1,17 @@
 package com.kraken.project_unsplash.Fragments;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -18,9 +20,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.kraken.project_unsplash.Adapters.CollectionsRecyclerViewAdapter;
-import com.kraken.project_unsplash.Adapters.PhotosRecyclerViewAdapter;
 import com.kraken.project_unsplash.Models.Collection;
-import com.kraken.project_unsplash.Models.Photo;
 import com.kraken.project_unsplash.MyApplication;
 import com.kraken.project_unsplash.Network.UrlBuilder;
 import com.kraken.project_unsplash.R;
@@ -36,13 +36,13 @@ public class UserCollectionFragment extends Fragment {
 
     private static final String TAG = "UserCollectionFragment";
 
-    View rootView;
+    private View rootView;
 
     private String username;
     private int page = 1;
 
-    List<Collection> collections;
-    CollectionsRecyclerViewAdapter adapter;
+    private List<Collection> collections;
+    private CollectionsRecyclerViewAdapter adapter;
     private int pastItemsCount, visibleItemCount, totalItemCount;
 
     public void putUsername(String username) {
@@ -60,18 +60,19 @@ public class UserCollectionFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_collections, container, false);
-        initRecyclerView();
         fetchCollections();
         return rootView;
     }
 
     private void fetchCollections() {
+        Log.d(TAG, "fetchCollections: " + UrlBuilder.getUserCollections(username, page));
         StringRequest userPhotosRequest = new StringRequest(Request.Method.GET, UrlBuilder.getUserCollections(username, page), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "onResponse: 200 OK\n" + response);
                 collections.addAll(new Serializer().listCollections(response));
                 adapter.notifyDataSetChanged();
+                initRecyclerView();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -92,7 +93,7 @@ public class UserCollectionFragment extends Fragment {
 
     private void initRecyclerView() {
         RecyclerView recyclerView = rootView.findViewById(R.id.collectionsRecyclerView);
-        final GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), Constants.NUM_COLUMNS);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);

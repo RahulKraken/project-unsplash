@@ -2,8 +2,8 @@ package com.kraken.project_unsplash.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +17,6 @@ import com.kraken.project_unsplash.Activities.CollectionView;
 import com.kraken.project_unsplash.Models.Collection;
 import com.kraken.project_unsplash.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<CollectionsRecyclerViewAdapter.CollectionsViewHolder> {
@@ -58,10 +57,10 @@ public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<Collect
     @Override
     public void onBindViewHolder(@NonNull CollectionsViewHolder holder, int i) {
         // load the images
-        loadImage(collections.get(i).getPreview_photos()[0].getUrls().getSmall(),
+        loadImage(collections.get(i).getCover_photo().getUrls().getSmall(),
                 holder.largeImage);
-        loadImage(collections.get(i).getPreview_photos()[1].getUrls().getSmall(), holder.smallImageTop);
-        loadImage(collections.get(i).getPreview_photos()[2].getUrls().getSmall(), holder.smallImageBottom);
+        loadImage(collections.get(i).getPreview_photos()[0].getUrls().getSmall(), holder.smallImageTop);
+        loadImage(collections.get(i).getPreview_photos()[1].getUrls().getSmall(), holder.smallImageBottom);
 
         // set details in text view
         holder.title.setText(collections.get(i).getTitle());

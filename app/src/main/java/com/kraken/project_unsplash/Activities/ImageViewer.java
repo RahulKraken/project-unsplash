@@ -1,31 +1,22 @@
 package com.kraken.project_unsplash.Activities;
 
 import android.annotation.SuppressLint;
-import android.app.WallpaperManager;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
 import com.bumptech.glide.Glide;
 import com.kraken.project_unsplash.Database.DatabaseContract;
 import com.kraken.project_unsplash.Database.DatabaseHelper;
 import com.kraken.project_unsplash.Models.Photo;
-import com.kraken.project_unsplash.MyApplication;
 import com.kraken.project_unsplash.R;
 import com.kraken.project_unsplash.Utils.Serializer;
 

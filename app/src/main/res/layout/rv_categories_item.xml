@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_margin="8dp"
         android:elevation="0dp"
         app:cardBackgroundColor="@color/md_grey_50"
@@ -25,6 +25,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 </LinearLayout>

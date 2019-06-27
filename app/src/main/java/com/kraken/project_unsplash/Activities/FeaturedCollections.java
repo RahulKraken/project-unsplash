@@ -1,10 +1,10 @@
 package com.kraken.project_unsplash.Activities;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -18,11 +18,9 @@ import com.kraken.project_unsplash.Models.Collection;
 import com.kraken.project_unsplash.MyApplication;
 import com.kraken.project_unsplash.Network.UrlBuilder;
 import com.kraken.project_unsplash.R;
-import com.kraken.project_unsplash.Utils.Constants;
 import com.kraken.project_unsplash.Utils.Params;
 import com.kraken.project_unsplash.Utils.Serializer;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
