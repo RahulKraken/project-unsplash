@@ -176,4 +176,10 @@ public class UrlBuilder {
         url += "/search/photos?query=\"" + category + "\"&page=" + page;
         return url;
     }
+
+    public static String getProfile() {
+        url = Constants.BASE_URL;
+        url += "/me";
+        return url;
+    }
 }
