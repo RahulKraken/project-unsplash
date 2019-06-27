@@ -106,7 +106,7 @@ public class NewPhotosFragment extends Fragment {
             // the header parameters
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                return Params.getParams();
+                return Params.getParams(getActivity());
             }
         };
 
@@ -154,7 +154,7 @@ public class NewPhotosFragment extends Fragment {
      * sorts photos based on @param "param"
      * @param param : parameter {"latest", "oldest", "popular"}
      */
-    public void sortBy(String param) {
+    private void sortBy(String param) {
         // change the parameter
         orderBy = param;
         // clear current photos

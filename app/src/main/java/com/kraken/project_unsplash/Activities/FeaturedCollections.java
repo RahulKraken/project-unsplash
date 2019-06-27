@@ -61,7 +61,7 @@ public class FeaturedCollections extends AppCompatActivity {
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                return Params.getParams();
+                return Params.getParams(FeaturedCollections.this);
             }
         };
 

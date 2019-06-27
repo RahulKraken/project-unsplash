@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.kraken.project_unsplash.Fragments.CollectionsFragment;
 import com.kraken.project_unsplash.Fragments.FeaturedPhotosFragment;
 import com.kraken.project_unsplash.Fragments.NewPhotosFragment;
+import com.kraken.project_unsplash.Models.User;
 import com.kraken.project_unsplash.MyApplication;
 import com.kraken.project_unsplash.R;
 import com.kraken.project_unsplash.Utils.Constants;
@@ -74,7 +75,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, MyApplication.AUTHENTICATED ? UserActivity.class : LoginActivity.class));
+                if (MyApplication.AUTHENTICATED) {
+                    launchProfile("me");
+                } else {
+                    launchProfile("login");
+                }
+            }
+
+            private void launchProfile(String key) {
+                if (key.equals("me")) {
+                    Intent intent = new Intent(MainActivity.this, UserActivity.class);
+                    intent.putExtra(getResources().getString(R.string.profile_intent_pass_key), "me");
+                    startActivity(intent);
+                } else if (key.equals("login")){
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                }
             }
         });
     }

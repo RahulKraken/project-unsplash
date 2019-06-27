@@ -79,7 +79,7 @@ public class UserLikesFragment extends Fragment {
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                return Params.getParams();
+                return Params.getParams(getActivity());
             }
         };
 

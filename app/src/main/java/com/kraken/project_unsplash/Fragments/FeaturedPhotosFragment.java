@@ -108,7 +108,7 @@ public class FeaturedPhotosFragment extends Fragment {
             // the header parameters
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                return Params.getParams();
+                return Params.getParams(getActivity());
             }
         };
 

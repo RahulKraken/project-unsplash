@@ -114,7 +114,7 @@ public class CategoryActivity extends AppCompatActivity {
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                return Params.getParams();
+                return Params.getParams(CategoryActivity.this);
             }
         };
 

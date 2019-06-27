@@ -54,6 +54,7 @@ public class UserActivity extends AppCompatActivity {
         // get intent extra
         Intent intent = getIntent();
         userName = intent.getStringExtra(getResources().getString(R.string.user_itent_pass_key));
+        String me = intent.getStringExtra(getResources().getString(R.string.profile_intent_pass_key));
 
         // handle the collapsing toolbar
         CollapsingToolbarLayout collapsingToolbarLayout = findViewById(R.id.user_page_collapsing_toolbar);
@@ -75,7 +76,8 @@ public class UserActivity extends AppCompatActivity {
         profilePic = findViewById(R.id.user_page_profile_pic);
 
         // get the user
-        getUserDetails();
+        if (me != null) getDetails("me");
+        else getDetails(userName);
 
         viewPager = findViewById(R.id.user_page_view_pager);
         tabLayout = findViewById(R.id.user_page_tab_layout);
@@ -85,11 +87,19 @@ public class UserActivity extends AppCompatActivity {
         setupTabLayout();
     }
 
+    private void getDetails(String key) {
+        if (key.equals("me")) {
+            getUserDetails(UrlBuilder.getProfile());
+        } else {
+            getUserDetails(UrlBuilder.getUser(key));
+        }
+    }
+
     /**
      * GET /users/:username
      */
-    private void getUserDetails() {
-        StringRequest getUserRequest = new StringRequest(Request.Method.GET, UrlBuilder.getUser(userName), new Response.Listener<String>() {
+    private void getUserDetails(String url) {
+        StringRequest getUserRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "onResponse: 200 OK\n" + response);
@@ -106,7 +116,7 @@ public class UserActivity extends AppCompatActivity {
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                return Params.getParams();
+                return Params.getParams(UserActivity.this);
             }
         };
 

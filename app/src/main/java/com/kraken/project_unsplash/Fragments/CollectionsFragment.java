@@ -90,7 +90,7 @@ public class CollectionsFragment extends Fragment {
             // the header parameters
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                return Params.getParams();
+                return Params.getParams(getActivity());
             }
         };
 
@@ -108,7 +108,7 @@ public class CollectionsFragment extends Fragment {
         RecyclerView collectionsRecyclerView = rootView.findViewById(R.id.collectionsRecyclerView);
 
         recyclerViewAdapter = new CollectionsRecyclerViewAdapter(getContext(), collections);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
 
         collectionsRecyclerView.setAdapter(recyclerViewAdapter);
         collectionsRecyclerView.setLayoutManager(layoutManager);

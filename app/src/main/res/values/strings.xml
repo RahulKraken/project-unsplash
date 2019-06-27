@@ -56,4 +56,5 @@
     <string name="settings_nav_drawer_item_label">Settings</string>
     <string name="rate_nav_drawer_label">Rate</string>
     <string name="categories_nav_drawer_label">Categories</string>
+    <string name="profile_intent_pass_key">PROFILE</string>
 </resources>

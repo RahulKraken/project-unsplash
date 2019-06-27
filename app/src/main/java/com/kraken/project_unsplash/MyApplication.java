@@ -19,6 +19,7 @@ import com.android.volley.toolbox.Volley;
 import com.kraken.project_unsplash.Database.DatabaseContract;
 import com.kraken.project_unsplash.Database.DatabaseHelper;
 import com.kraken.project_unsplash.Network.UrlBuilder;
+import com.kraken.project_unsplash.Utils.Params;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -66,10 +67,7 @@ public class MyApplication extends Application {
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("Accept-Version", "v1");
-                params.put("Authorization", "Bearer " + getSharedPreferences(getResources().getString(R.string.access_token_shared_preferences), MODE_PRIVATE).getString(getResources().getString(R.string.access_token_storage_key), null));
-                return params;
+                return Params.getAuthenticatedParams(MyApplication.this);
             }
 
             @Override
