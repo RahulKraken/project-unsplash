@@ -49,7 +49,7 @@
     <string name="access_token_storage_key">ACCESS_TOKEN</string>
     <string name="download_action_btn_label">Download</string>
     <string name="to_collections_action_btn_label">to Collections</string>
-    <string name="user_itent_pass_key">USER</string>
+    <string name="user_intent_pass_key">USER</string>
     <string name="nav_wallpaper_label">Wallpapers</string>
     <string name="category_intent_pass_key">CATEGORY</string>
     <string name="categories_list_activity_title">Categories</string>
@@ -57,4 +57,5 @@
     <string name="rate_nav_drawer_label">Rate</string>
     <string name="categories_nav_drawer_label">Categories</string>
     <string name="profile_intent_pass_key">PROFILE</string>
+    <string name="feedback_nav_drawer_item_label">About</string>
 </resources>

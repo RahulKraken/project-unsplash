@@ -68,8 +68,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setupBottomNavigation();
     }
 
-    //-------------------- experimental ---------------------
-
     private void handleNavigationViewHeader(NavigationView navigationView) {
         View header = navigationView.getHeaderView(0);
         header.setOnClickListener(new View.OnClickListener() {
@@ -160,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(new Intent(this, CategoryListActivity.class));
                 break;
             case R.id.nav_settings:
-                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, PreferenceActivity.class));
                 break;
             case R.id.nav_rate:
                 openGooglePlayStore();

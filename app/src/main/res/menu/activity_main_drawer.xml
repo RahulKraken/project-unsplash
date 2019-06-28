@@ -41,6 +41,10 @@
             android:id="@+id/nav_rate"
             android:icon="@drawable/ic_star_light"
             android:title="@string/rate_nav_drawer_label" />
+        <item
+            android:id="@+id/nav_feedback"
+            android:icon="@mipmap/ic_info_light"
+            android:title="@string/feedback_nav_drawer_item_label" />
     </group>
 
 </menu>

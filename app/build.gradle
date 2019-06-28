@@ -36,6 +36,10 @@ dependencies {
     // custom tabs
     implementation 'androidx.browser:browser:1.0.0'
 
+    // preferences
+    implementation "androidx.legacy:legacy-preference-v14:1.0.0"
+    implementation "androidx.preference:preference:1.0.0"
+
     // design
     implementation 'com.google.android.material:material:1.0.0'
 

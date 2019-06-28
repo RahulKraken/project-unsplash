@@ -217,7 +217,7 @@ public class ImageViewer extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ImageViewer.this, UserActivity.class);
-                intent.putExtra(getResources().getString(R.string.user_itent_pass_key), photo.getUser().getUsername());
+                intent.putExtra(getResources().getString(R.string.user_intent_pass_key), photo.getUser().getUsername());
                 startActivity(intent);
             }
         });

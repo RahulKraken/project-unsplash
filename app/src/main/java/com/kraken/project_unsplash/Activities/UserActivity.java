@@ -53,7 +53,7 @@ public class UserActivity extends AppCompatActivity {
 
         // get intent extra
         Intent intent = getIntent();
-        userName = intent.getStringExtra(getResources().getString(R.string.user_itent_pass_key));
+        userName = intent.getStringExtra(getResources().getString(R.string.user_intent_pass_key));
         String me = intent.getStringExtra(getResources().getString(R.string.profile_intent_pass_key));
 
         // handle the collapsing toolbar
