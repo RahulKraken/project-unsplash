@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.kraken.project_unsplash">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -13,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.PreferenceActivity"></activity>
+        <activity android:name=".Activities.PreferenceActivity"
+            android:parentActivityName=".Activities.MainActivity"
+            android:launchMode="singleTop" />
         <activity
             android:name=".Activities.CategoryActivity"
             android:launchMode="singleTop"
@@ -22,7 +25,9 @@
             android:name=".Activities.CategoryListActivity"
             android:launchMode="singleTop"
             android:parentActivityName=".Activities.MainActivity" />
-        <activity android:name=".Activities.UserActivity" />
+        <activity android:name=".Activities.UserActivity"
+            android:parentActivityName=".Activities.ImageViewer"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".Activities.LoginActivity"
             android:launchMode="singleTop">
@@ -55,6 +60,7 @@
         <activity
             android:name=".Activities.ImageViewer"
             android:parentActivityName=".Activities.MainActivity"
+            android:launchMode="singleTop"
             android:theme="@style/ImageViewerTheme" />
     </application>
 
