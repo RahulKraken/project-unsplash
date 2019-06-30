@@ -11,6 +11,7 @@
         <Preference
             android:key="pref_layout"
             android:title="Layout"
+            android:dialogMessage="This is layout dialog"
             android:defaultValue="LINEAR"
             android:summary="Layout of feed" />
     </PreferenceCategory>

@@ -3,6 +3,7 @@ package com.kraken.project_unsplash.Utils;
 import java.util.Arrays;
 import java.util.List;
 
+@SuppressWarnings("ALL")
 public class Constants {
 
     public final static String BASE_URL_AUTH = "https://unsplash.com/oauth";
@@ -20,4 +21,10 @@ public class Constants {
     public static final int NUM_COLUMNS = 2;
 
     public static final String[] CATEGORIES = {"Wallpapers", "Textures & Patterns", "Nature", "Architecture", "Animals", "Travel", "Fashion", "Food & Drink", "Spiritual", "Experimental", "People", "Health", "Arts & Culture"};
+
+    public static final List<String> THEME_OPTIONS = Arrays.asList("Light", "Dark", "AMOLED");
+    public static final List<String> LAYOUT_OPTIONS = Arrays.asList("Grid", "Linear");
+    public static final List<String> QUALITY_OPTIONS = Arrays.asList("Raw", "Full", "Regular", "Small");
+
+    public static final String GITHUB_LINK = "https://github.com/RahulKraken/project-unsplash";
 }
