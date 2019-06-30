@@ -67,43 +67,23 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
     }
 
     private void changeThemeValue(String key) {
-        if (getActivity() != null) {
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_singlechoice);
-            adapter.addAll(Constants.THEME_OPTIONS);
-            createDialog("Theme", key, adapter);
-        }
+        createDialog("Theme", key, Constants.THEME_OPTIONS);
     }
 
     private void changeLayoutValue(String key) {
-        if (getActivity() != null) {
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_singlechoice);
-            adapter.addAll(Constants.LAYOUT_OPTIONS);
-            createDialog("Layout", key, adapter);
-        }
+        createDialog("Layout", key, Constants.LAYOUT_OPTIONS);
     }
 
     private void changeLoadQuality(String key) {
-        if (getActivity() != null) {
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_singlechoice);
-            adapter.addAll(Constants.QUALITY_OPTIONS);
-            createDialog("Load Quality", key, adapter);
-        }
+        createDialog("Load Quality", key, Constants.QUALITY_OPTIONS);
     }
 
     private void changeDownloadQuality(String key) {
-        if (getActivity() != null) {
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_singlechoice);
-            adapter.addAll(Constants.QUALITY_OPTIONS);
-            createDialog("Download Quality", key, adapter);
-        }
+        createDialog("Download Quality", key, Constants.QUALITY_OPTIONS);
     }
 
     private void changeWallpaperQuality(String key) {
-        if (getActivity() != null) {
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.select_dialog_singlechoice);
-            adapter.addAll(Constants.QUALITY_OPTIONS);
-            createDialog("Wallpaper Quality", key, adapter);
-        }
+        createDialog("Wallpaper Quality", key, Constants.QUALITY_OPTIONS);
     }
 
     private void handleVersion() { }
@@ -116,20 +96,19 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
 
     private void showPrivacyPolicy() { }
 
-    private void createDialog(String title, String key, final ArrayAdapter<String> adapter) {
+    private void createDialog(String title, final String key, List<String> list) {
         if (getActivity() != null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            final ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1);
+            adapter.addAll(list);
             builder.setTitle(title)
                     .setAdapter(adapter, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Log.d(TAG, "onClick: " + adapter.getItem(which));
-                        }
-                    })
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Log.d(TAG, "onClick: DONE");
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString(key, adapter.getItem(which));
+                            editor.apply();
+                            Log.d(TAG, "onClick: " + sharedPreferences.getString(key, null));
                         }
                     })
                     .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
