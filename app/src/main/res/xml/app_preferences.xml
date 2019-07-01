@@ -6,13 +6,13 @@
         <Preference
             android:key="pref_theme"
             android:title="Theme"
-            android:defaultValue="LIGHT"
+            android:defaultValue="Light"
             android:summary="Color Theme of the app" />
         <Preference
             android:key="pref_layout"
             android:title="Layout"
             android:dialogMessage="This is layout dialog"
-            android:defaultValue="LINEAR"
+            android:defaultValue="Linear"
             android:summary="Layout of feed" />
     </PreferenceCategory>
 
@@ -22,17 +22,17 @@
         <Preference
             android:key="pref_load_quality"
             android:title="Load Quality"
-            android:defaultValue="REGULAR"
+            android:defaultValue="Regular"
             android:summary="Quality of photos in the feed" />
         <Preference
             android:key="pref_download_quality"
             android:title="Download Quality"
-            android:defaultValue="REGULAR"
+            android:defaultValue="Regular"
             android:summary="Quality of downloaded photo" />
         <Preference
             android:key="pref_wallpaper_quality"
             android:title="Wallpaper Quality"
-            android:defaultValue="FULL  "
+            android:defaultValue="Full"
             android:summary="Quality of wallpapers" />
     </PreferenceCategory>
 

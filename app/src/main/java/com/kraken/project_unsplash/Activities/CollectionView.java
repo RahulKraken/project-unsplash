@@ -1,5 +1,6 @@
 package com.kraken.project_unsplash.Activities;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class CollectionView extends AppCompatActivity {
+public class CollectionView extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = "CollectionView";
 
@@ -48,6 +49,8 @@ public class CollectionView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collection_view);
+
+        MyApplication.preferences.registerOnSharedPreferenceChangeListener(this);
 
         // setup toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -138,5 +141,17 @@ public class CollectionView extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        switch (key) {
+            case "pref_theme":
+                Log.d(TAG, "onSharedPreferenceChanged: theme changed");
+                break;
+            case "pref_layout":
+                Log.d(TAG, "onSharedPreferenceChanged: layout changed");
+                break;
+        }
     }
 }

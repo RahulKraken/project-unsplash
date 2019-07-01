@@ -1,6 +1,7 @@
 package com.kraken.project_unsplash.Activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -35,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class UserActivity extends AppCompatActivity {
+public class UserActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = "UserActivity";
 
@@ -50,6 +51,8 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+
+        MyApplication.preferences.registerOnSharedPreferenceChangeListener(this);
 
         // get intent extra
         Intent intent = getIntent();
@@ -173,6 +176,15 @@ public class UserActivity extends AppCompatActivity {
         viewPagerAdapter.addFragment(userCollectionFragment, "Collections");
 
         viewPager.setAdapter(viewPagerAdapter);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        switch (key) {
+            case "pref_theme":
+                Log.d(TAG, "onSharedPreferenceChanged: theme changed");
+                break;
+        }
     }
 
     // -------------------- Pager Adapter --------------------

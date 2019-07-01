@@ -1,11 +1,14 @@
 package com.kraken.project_unsplash.Fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +38,7 @@ import java.util.Map;
  * selected by default
  */
 
-public class NewPhotosFragment extends Fragment {
+public class NewPhotosFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = "NewPhotosFragment";
 
@@ -55,6 +58,9 @@ public class NewPhotosFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        MyApplication.preferences.registerOnSharedPreferenceChangeListener(this);
+
         // init data
         photos = new ArrayList<>();
     }
@@ -163,5 +169,17 @@ public class NewPhotosFragment extends Fragment {
         recyclerViewAdapter.notifyDataSetChanged();
         // fetch new photos
         fetchPhotos();
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        switch (key) {
+            case "pref_theme":
+                Log.d(TAG, "onSharedPreferenceChanged: Theme changed");
+                break;
+            case "pref_layout":
+                Log.d(TAG, "onSharedPreferenceChanged: Layout changed");
+                break;
+        }
     }
 }

@@ -24,7 +24,7 @@ import com.kraken.project_unsplash.Utils.Constants;
 
 import java.util.Map;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String TAG = "LoginActivity";
 
@@ -37,6 +37,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        MyApplication.preferences.registerOnSharedPreferenceChangeListener(this);
 
         handleLoginBtn();
     }
@@ -122,5 +124,13 @@ public class LoginActivity extends AppCompatActivity {
                 customTabsIntent.launchUrl(LoginActivity.this, uri);
             }
         });
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        switch (key) {
+            case "pref_theme":
+                Log.d(TAG, "onSharedPreferenceChanged: theme changed");
+        }
     }
 }

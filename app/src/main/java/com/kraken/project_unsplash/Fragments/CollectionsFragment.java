@@ -1,9 +1,13 @@
 package com.kraken.project_unsplash.Fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
@@ -22,6 +26,7 @@ import com.kraken.project_unsplash.Models.Collection;
 import com.kraken.project_unsplash.MyApplication;
 import com.kraken.project_unsplash.Network.UrlBuilder;
 import com.kraken.project_unsplash.R;
+import com.kraken.project_unsplash.Utils.Constants;
 import com.kraken.project_unsplash.Utils.Params;
 import com.kraken.project_unsplash.Utils.Serializer;
 
@@ -29,16 +34,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class CollectionsFragment extends Fragment {
+public class CollectionsFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private static final String TAG = "SearchAndCollectionsFra";
+    private static final String TAG = "CollectionsFragment";
 
     // root view holding the layout of the fragment
     private View rootView;
     private int page = 1;
 
     // data
-    List<Collection> collections;
+    private List<Collection> collections;
 
     // recycler view scroll stuff
     private int pastVisibleItems, visibleItemCount, totalItemCount;
@@ -47,6 +52,9 @@ public class CollectionsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        MyApplication.preferences.registerOnSharedPreferenceChangeListener(this);
+
         // init data
         collections = new ArrayList<>();
     }
@@ -136,5 +144,12 @@ public class CollectionsFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals("pref_theme")) {
+            Log.d(TAG, "onSharedPreferenceChanged: theme changes");
+        }
     }
 }

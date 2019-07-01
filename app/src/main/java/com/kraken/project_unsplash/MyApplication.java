@@ -38,9 +38,15 @@ public class MyApplication extends Application {
      */
     private static RequestQueue localRequestQueue, searchRequestQueue;
 
+    public static SharedPreferences preferences;
+
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // load default preferences
+        PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         // initialize request queues
         localRequestQueue = Volley.newRequestQueue(this);
