@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +17,14 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.kraken.project_unsplash.Activities.CollectionView;
 import com.kraken.project_unsplash.Models.Collection;
+import com.kraken.project_unsplash.Models.Photo;
+import com.kraken.project_unsplash.MyApplication;
 import com.kraken.project_unsplash.R;
 
 import java.util.List;
+import java.util.Objects;
 
-public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<CollectionsRecyclerViewAdapter.CollectionsViewHolder> {
+public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<CollectionsRecyclerViewAdapter.CollectionsViewHolder> implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     // TAG for log messages
     private static final String TAG = "CollectionsRecyclerView";
@@ -57,10 +62,10 @@ public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<Collect
     @Override
     public void onBindViewHolder(@NonNull CollectionsViewHolder holder, int i) {
         // load the images
-        loadImage(collections.get(i).getCover_photo().getUrls().getSmall(),
-                holder.largeImage);
-        loadImage(collections.get(i).getPreview_photos()[0].getUrls().getSmall(), holder.smallImageTop);
-        loadImage(collections.get(i).getPreview_photos()[1].getUrls().getSmall(), holder.smallImageBottom);
+        loadImage(getUrl(collections.get(i).getCover_photo()), holder.largeImage);
+        loadImage(getUrl(collections.get(i).getPreview_photos()[1]), holder.smallImageTop);
+        if (collections.get(i).getPreview_photos().length > 1)
+            loadImage(getUrl(collections.get(i).getPreview_photos()[2]), holder.smallImageBottom);
 
         // set details in text view
         holder.title.setText(collections.get(i).getTitle());
@@ -85,6 +90,29 @@ public class CollectionsRecyclerViewAdapter extends RecyclerView.Adapter<Collect
                 .load(url)
                 .apply(requestOptions)
                 .into(imageView);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals("pref_load_quality")) {
+            Log.d(TAG, "onSharedPreferenceChanged: Load quality chnage triggered");
+        }
+    }
+
+    private String getUrl(Photo photo) {
+        Log.d(TAG, "getUrl: " + MyApplication.preferences.getString("pref_load_quality", ""));
+        switch (Objects.requireNonNull(MyApplication.preferences.getString("pref_load_quality", ""))) {
+            case "Small":
+                return photo.getUrls().getSmall();
+            case "Regular":
+                return photo.getUrls().getRegular();
+            case "Full":
+                return photo.getUrls().getFull();
+            case "Raw":
+                return photo.getUrls().getRaw();
+            default:
+                return photo.getUrls().getRegular();
+        }
     }
 
     class CollectionsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

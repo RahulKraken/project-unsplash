@@ -2,6 +2,7 @@ package com.kraken.project_unsplash.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import androidx.annotation.NonNull;
@@ -15,15 +16,18 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.kraken.project_unsplash.Activities.ImageViewer;
 import com.kraken.project_unsplash.Models.Photo;
+import com.kraken.project_unsplash.MyApplication;
+import com.kraken.project_unsplash.Network.UrlBuilder;
 import com.kraken.project_unsplash.R;
 import com.kraken.project_unsplash.Utils.Constants;
 import com.kraken.project_unsplash.Utils.SquareImageView;
 
 import java.util.List;
+import java.util.Objects;
 
-public class PhotosRecyclerViewAdapter extends RecyclerView.Adapter<PhotosRecyclerViewAdapter.PhotoViewHolder> {
+public class PhotosRecyclerViewAdapter extends RecyclerView.Adapter<PhotosRecyclerViewAdapter.PhotoViewHolder> implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private static final String TAG = "StaggeredRecyclerViewAd";
+    private static final String TAG = "PhotosRecyclerViewAd";
 
     // class variables
     private Context context;
@@ -37,6 +41,7 @@ public class PhotosRecyclerViewAdapter extends RecyclerView.Adapter<PhotosRecycl
     public PhotosRecyclerViewAdapter(Context context, List<Photo> photos) {
         this.context = context;
         this.photos = photos;
+        MyApplication.preferences.registerOnSharedPreferenceChangeListener(this);
     }
 
     @NonNull
@@ -57,7 +62,7 @@ public class PhotosRecyclerViewAdapter extends RecyclerView.Adapter<PhotosRecycl
 
         // Load main image
         Glide.with(context)
-                .load(photos.get(i).getUrls().getSmall())
+                .load(getUrl(photos.get(i)))
                 .apply(requestOptions)
                 .into(holder.mainImage);
     }
@@ -65,6 +70,29 @@ public class PhotosRecyclerViewAdapter extends RecyclerView.Adapter<PhotosRecycl
     @Override
     public int getItemCount() {
         return photos.size();
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals("pref_load_quality")) {
+            Log.d(TAG, "onSharedPreferenceChanged: load quality change triggered");
+        }
+    }
+
+    private String getUrl(Photo photo) {
+        Log.d(TAG, "getUrl: " + MyApplication.preferences.getString("pref_load_quality", ""));
+        switch (Objects.requireNonNull(MyApplication.preferences.getString("pref_load_quality", ""))) {
+            case "Small":
+                return photo.getUrls().getSmall();
+            case "Regular":
+                return photo.getUrls().getRegular();
+            case "Full":
+                return photo.getUrls().getFull();
+            case "Raw":
+                return photo.getUrls().getRaw();
+                default:
+                    return photo.getUrls().getRegular();
+        }
     }
 
     class PhotoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
