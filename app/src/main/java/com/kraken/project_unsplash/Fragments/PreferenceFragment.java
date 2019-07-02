@@ -1,7 +1,9 @@
 package com.kraken.project_unsplash.Fragments;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -49,10 +51,6 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
                 return true;
             case "pref_version":
                 handleVersion();
-                return true;
-            case "pref_intro":
-                handleIntro();
-                return true;
             case "pref_github":
                 handleGithub();
                 return true;
@@ -86,15 +84,26 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
         createDialog("Wallpaper Quality", key, Constants.QUALITY_OPTIONS);
     }
 
-    private void handleVersion() { }
+    private void handleVersion() {
+        // todo : change version dynamically
+        Toast.makeText(getActivity(), "1.2.3", Toast.LENGTH_SHORT).show();
+    }
 
-    private void handleIntro() { }
+    private void handleGithub() {
+        Intent githubIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/RahulKraken/project-unsplash"));
+        startActivity(githubIntent);
+    }
 
-    private void handleGithub() { }
+    private void reportBugs() {
+        // todo : put a better bug reporting system
+        Intent issueIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/RahulKraken/project-unsplash/issues"));
+        startActivity(issueIntent);
+    }
 
-    private void reportBugs() { }
-
-    private void showPrivacyPolicy() { }
+    private void showPrivacyPolicy() {
+        // todo : put privacy policy in place and display
+        Toast.makeText(getActivity(), "Privacy Policy under construction", Toast.LENGTH_SHORT).show();
+    }
 
     private void createDialog(String title, final String key, List<String> list) {
         if (getActivity() != null) {

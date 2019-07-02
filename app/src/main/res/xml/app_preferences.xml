@@ -44,10 +44,6 @@
             android:title="Version"
             android:summary="1.3.2" />
         <Preference
-            android:key="pref_intro"
-            android:title="Introduction"
-            android:summary="What Splash can do for you" />
-        <Preference
             android:key="pref_github"
             android:title="Github"
             android:summary="Check out on github" />
