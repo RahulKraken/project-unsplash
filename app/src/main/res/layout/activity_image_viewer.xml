@@ -33,6 +33,7 @@
 
         <!--icon and text-->
         <LinearLayout
+            android:id="@+id/img_btn_add_favorites"
             android:layout_weight="1"
             android:orientation="horizontal"
             android:gravity="center_horizontal"
@@ -41,7 +42,6 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/img_btn_add_favorites"
                 android:src="@mipmap/ic_favorite_border_dark"
                 android:contentDescription="@string/image_view_content_desc"
                 android:scaleType="fitCenter"
@@ -63,6 +63,7 @@
 
         <!--icon and text-->
         <LinearLayout
+            android:id="@+id/img_btn_add_collections"
             android:layout_weight="1"
             android:orientation="horizontal"
             android:gravity="center_horizontal"
@@ -92,6 +93,7 @@
 
         <!--icon and text-->
         <LinearLayout
+            android:id="@+id/img_btn_download"
             android:layout_weight="1"
             android:orientation="horizontal"
             android:gravity="center_horizontal"

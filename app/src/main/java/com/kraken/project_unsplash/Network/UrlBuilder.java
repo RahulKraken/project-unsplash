@@ -116,6 +116,7 @@ public class UrlBuilder {
 
     /**
      * like <POST> / unlike <DELETE> a photo
+     * Make a PUT request
      * @param id : id of photo
      * @return url
      */
