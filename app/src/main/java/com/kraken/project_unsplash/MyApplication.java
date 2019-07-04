@@ -19,8 +19,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.kraken.project_unsplash.Database.DatabaseContract;
 import com.kraken.project_unsplash.Database.DatabaseHelper;
+import com.kraken.project_unsplash.Models.User;
 import com.kraken.project_unsplash.Network.UrlBuilder;
 import com.kraken.project_unsplash.Utils.Params;
+import com.kraken.project_unsplash.Utils.Serializer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,6 +32,8 @@ public class MyApplication extends Application {
     private static final String TAG = "MyApplication";
 
     public static boolean AUTHENTICATED = false;
+
+    public static User me;
 
     /**
      * Network request queues
@@ -65,6 +69,7 @@ public class MyApplication extends Application {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "onResponse: 200 OK\n" + response);
+                me = new Serializer().getUser(response);
             }
         }, new Response.ErrorListener() {
             @Override

@@ -2,17 +2,21 @@ package com.kraken.project_unsplash.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -20,10 +24,10 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.kraken.project_unsplash.Database.DatabaseContract;
 import com.kraken.project_unsplash.Database.DatabaseHelper;
+import com.kraken.project_unsplash.Models.Collection;
 import com.kraken.project_unsplash.Models.Photo;
 import com.kraken.project_unsplash.MyApplication;
 import com.kraken.project_unsplash.Network.UrlBuilder;
@@ -31,9 +35,10 @@ import com.kraken.project_unsplash.R;
 import com.kraken.project_unsplash.Utils.Params;
 import com.kraken.project_unsplash.Utils.Serializer;
 
-import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * ImageViewer Activity class
@@ -49,6 +54,9 @@ public class ImageViewer extends AppCompatActivity {
 
     // photo object
     private Photo photo;
+    private ArrayList<String> collectionTitles;
+    private List<Collection> collectionsArrayList;
+    private ArrayAdapter<String> collectionsDialogAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +81,8 @@ public class ImageViewer extends AppCompatActivity {
         addFavoritesBtn = findViewById(R.id.img_btn_add_favorites);
         addCollectionsBtn = findViewById(R.id.img_btn_add_collections);
         downloadBtn = findViewById(R.id.img_btn_download);
+
+        collectionTitles = new ArrayList<>();
 
         // get the intent from invoking activity
         Intent intent = getIntent();
@@ -141,9 +151,90 @@ public class ImageViewer extends AppCompatActivity {
         addCollectionsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: Adding to collections");
+                if (MyApplication.AUTHENTICATED) {
+                    fetchCollectionsList();
+                } else {
+                    startActivity(new Intent(ImageViewer.this, LoginActivity.class));
+                }
             }
         });
+    }
+
+    private void fetchCollectionsList() {
+        Log.d(TAG, "fetchCollectionsList: ");
+        collectionsArrayList = new ArrayList<>();
+        StringRequest request = new StringRequest(Request.Method.GET, UrlBuilder.getUserCollections(MyApplication.me.getUsername(), 1), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "onResponse: 200 OK\n" + response);
+                collectionsArrayList = new Serializer().listCollections(response);
+                Log.d(TAG, "onResponse: " + collectionsArrayList.size());
+                collectionTitles.clear();
+                for (Collection c : collectionsArrayList) {
+                    collectionTitles.add(c.getTitle());
+                }
+                Log.d(TAG, "onResponse: just test statement");
+                launchCollectionChooserDialog();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse: " + error.toString());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return Params.getParams(ImageViewer.this);
+            }
+        };
+
+        MyApplication.getLocalRequestQueue().add(request);
+    }
+
+    private void launchCollectionChooserDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        collectionsDialogAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+
+        collectionsDialogAdapter.addAll(collectionTitles);
+
+        builder.setTitle("Collections");
+        builder.setAdapter(collectionsDialogAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                addToCollection(collectionsArrayList.get(which).getId());
+            }
+        }).show();
+    }
+
+    private void addToCollection(final int collectionId) {
+        Log.d(TAG, "addToCollection: " + UrlBuilder.addPhotoToCollection(collectionId));
+
+        StringRequest request = new StringRequest(Request.Method.POST, UrlBuilder.addPhotoToCollection(collectionId), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d(TAG, "onResponse: 200 OK\n" + response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d(TAG, "onErrorResponse: " + error.toString());
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return Params.getParams(ImageViewer.this);
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<>();
+                map.put("photo_id", photo.getId());
+                map.put("collection_id", String.valueOf(collectionId));
+                return map;
+            }
+        };
+
+        MyApplication.getLocalRequestQueue().add(request);
     }
 
     private void handleDownloadBtn() {

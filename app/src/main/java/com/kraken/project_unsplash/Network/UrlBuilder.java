@@ -1,5 +1,7 @@
 package com.kraken.project_unsplash.Network;
 
+import android.content.Intent;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -181,6 +183,12 @@ public class UrlBuilder {
     public static String getProfile() {
         url = Constants.BASE_URL;
         url += "/me";
+        return url;
+    }
+
+    public static String addPhotoToCollection(@NonNull Integer collectionId) {
+        url = Constants.BASE_URL;
+        url += "/collections/" + collectionId + "/add";
         return url;
     }
 }
