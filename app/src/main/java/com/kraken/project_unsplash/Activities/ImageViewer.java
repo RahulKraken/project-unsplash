@@ -1,22 +1,19 @@
 package com.kraken.project_unsplash.Activities;
 
 import android.annotation.SuppressLint;
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -25,8 +22,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
-import com.kraken.project_unsplash.Database.DatabaseContract;
-import com.kraken.project_unsplash.Database.DatabaseHelper;
 import com.kraken.project_unsplash.Models.Collection;
 import com.kraken.project_unsplash.Models.Photo;
 import com.kraken.project_unsplash.MyApplication;
@@ -54,9 +49,9 @@ public class ImageViewer extends AppCompatActivity {
 
     // photo object
     private Photo photo;
+
     private ArrayList<String> collectionTitles;
     private List<Collection> collectionsArrayList;
-    private ArrayAdapter<String> collectionsDialogAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,9 +86,8 @@ public class ImageViewer extends AppCompatActivity {
 
         // load image into the image view
         LoadImage();
-        // activate the set wallpaper button
-//        initSetWallpaperBtn();
-        // activate the add to favorites button
+
+        // handle buttons
         handleFavoritesBtn();
         handleCollectionsBtn();
         handleDownloadBtn();
@@ -119,6 +113,10 @@ public class ImageViewer extends AppCompatActivity {
         });
     }
 
+    /**
+     * POST at UrlBuilder.likePhoto() endpoint
+     * like current photo on user's behalf
+     */
     private void likePhoto() {
         StringRequest likePhotoRequest = new StringRequest(Request.Method.POST, UrlBuilder.likePhoto(photo.getId()), new Response.Listener<String>() {
             @Override
@@ -147,6 +145,9 @@ public class ImageViewer extends AppCompatActivity {
         MyApplication.getLocalRequestQueue().add(likePhotoRequest);
     }
 
+    /**
+     * handles add to a collection button
+     */
     private void handleCollectionsBtn() {
         addCollectionsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,6 +161,10 @@ public class ImageViewer extends AppCompatActivity {
         });
     }
 
+    /**
+     * fetch collections created by logged in user
+     * then display a dialog with those collections
+     */
     private void fetchCollectionsList() {
         Log.d(TAG, "fetchCollectionsList: ");
         collectionsArrayList = new ArrayList<>();
@@ -191,9 +196,13 @@ public class ImageViewer extends AppCompatActivity {
         MyApplication.getLocalRequestQueue().add(request);
     }
 
+    /**
+     * opens collection list in a dialog box and responds to collection click by adding photo to
+     * the selected collection
+     */
     private void launchCollectionChooserDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        collectionsDialogAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        ArrayAdapter<String> collectionsDialogAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
 
         collectionsDialogAdapter.addAll(collectionTitles);
 
@@ -206,6 +215,11 @@ public class ImageViewer extends AppCompatActivity {
         }).show();
     }
 
+    /**
+     * POST request at UrlBuilder.addPhotoToCollection() endpoint and add current photo to collection with
+     * collection id as @param "collectionId"
+     * @param collectionId : collection id of collection to which photo is to be added
+     */
     private void addToCollection(final int collectionId) {
         Log.d(TAG, "addToCollection: " + UrlBuilder.addPhotoToCollection(collectionId));
 
@@ -245,76 +259,6 @@ public class ImageViewer extends AppCompatActivity {
             }
         });
     }
-
-    /**
-     * add photo to database
-     */
-    private void addPhotoToDatabase() {
-        // get the byte[] from photo
-        byte[] bytes = Serializer.objectToByteArray(photo);
-        Log.d(TAG, "onClick: converted to byte array");
-
-        // get the database
-        DatabaseHelper helper = new DatabaseHelper(ImageViewer.this);
-        SQLiteDatabase database = helper.getWritableDatabase();
-
-        // create the content values
-        ContentValues values = new ContentValues();
-        values.put(DatabaseContract.FavoritesEntry.COLUMN_PHOTO, bytes);
-
-        // insert into the database
-        database.insert(DatabaseContract.FavoritesEntry.TABLE_NAME, null, values);
-        database.close();
-    }
-
-    /**
-     * delete photo from database
-     * @param index : _id of photo
-     */
-    private void deletePhotoFromDatabase(int index) {
-        DatabaseHelper helper = new DatabaseHelper(ImageViewer.this);
-        SQLiteDatabase database = helper.getWritableDatabase();
-
-        // query to delete
-        database.delete(DatabaseContract.FavoritesEntry.TABLE_NAME, "_id = " + index, null);
-        database.close();
-    }
-
-    /**
-     * download the image and set it as wallpaper
-     */
-//    private void initSetWallpaperBtn() {
-//        // add onClickListener to set wallpaper btn
-//        setWallpaperBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // image request to download image
-//                ImageRequest imageRequest = new ImageRequest(photo.getLinks().getDownload(), new Response.Listener<Bitmap>() {
-//                    @Override
-//                    public void onResponse(Bitmap response) {
-//                        Log.d(TAG, "onResponse: 200 OK\n" + response.toString());
-//                        // wallpaper manager instance
-//                        WallpaperManager wallpaperManager = WallpaperManager.getInstance(getApplicationContext());
-//                        try {
-//                            // set downloaded bitmap as wallpaper
-//                            wallpaperManager.setBitmap(response);
-//                            Toast.makeText(ImageViewer.this, "Wallpaper set successfully!", Toast.LENGTH_SHORT).show();
-//                        } catch (Exception e) {
-//                            e.printStackTrace();
-//                            Toast.makeText(ImageViewer.this, "Failed to set wallpaper!", Toast.LENGTH_SHORT).show();
-//                        }
-//                    }
-//                }, 0, 0, ImageView.ScaleType.FIT_CENTER,  null,
-//                        new Response.ErrorListener() {
-//                            @Override
-//                            public void onErrorResponse(VolleyError error) {
-//                                Log.d(TAG, "onErrorResponse: " + error.getMessage());
-//                            }
-//                        });
-//                MyApplication.getLocalRequestQueue().add(imageRequest);
-//            }
-//        });
-//    }
 
     /**
      * load image into image view
