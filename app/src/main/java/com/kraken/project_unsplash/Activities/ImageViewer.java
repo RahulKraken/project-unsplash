@@ -1,25 +1,37 @@
 package com.kraken.project_unsplash.Activities;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
 import com.kraken.project_unsplash.Models.Collection;
@@ -30,6 +42,10 @@ import com.kraken.project_unsplash.R;
 import com.kraken.project_unsplash.Utils.Params;
 import com.kraken.project_unsplash.Utils.Serializer;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,6 +68,7 @@ public class ImageViewer extends AppCompatActivity {
 
     private ArrayList<String> collectionTitles;
     private List<Collection> collectionsArrayList;
+    private DownloadManager.Request downloadRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -251,13 +268,93 @@ public class ImageViewer extends AppCompatActivity {
         MyApplication.getLocalRequestQueue().add(request);
     }
 
+    /**
+     * handles download button
+     */
     private void handleDownloadBtn() {
         downloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: Downloading photo");
+                downloadPhoto();
             }
         });
+    }
+
+    /**
+     * use download manager to download photo from urls
+     */
+    private void downloadPhoto() {
+        // try creating a download request
+        try {
+            downloadRequest = new DownloadManager.Request(Uri.parse(photo.getUrls().getSmall()));
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+
+        // file name
+        String fileName = photo.getId() + ".jpg";
+        Log.d(TAG, "downloadPhoto: " + fileName);
+
+        // create the directories
+        // todo : cleanup
+        File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath() + "/Unsplash/");
+        Log.d(TAG, "downloadPhoto: path " + dir.getAbsolutePath());
+        if (!dir.exists()) {
+            boolean res = dir.mkdirs();
+            Log.d(TAG, "downloadPhoto: directory created " + res);
+        }
+
+        // allows mobile and wifi downloads
+        downloadRequest.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_MOBILE | DownloadManager.Request.NETWORK_WIFI);
+        downloadRequest.setTitle(fileName);
+
+        // show download in notification
+        downloadRequest.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+
+        // set destination path
+        // todo : handle sdk < 23
+        if (isStoragePermissionGranted()) {
+            downloadRequest.setDestinationInExternalPublicDir(Environment.DIRECTORY_PICTURES, "/Unsplash/" + fileName);
+        } else {
+            requestPermission();
+        }
+
+        // allow media scanner to scan file
+        downloadRequest.allowScanningByMediaScanner();
+
+        final DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+        // get download id
+        final long DM_ID = downloadManager.enqueue(downloadRequest);
+        Log.d(TAG, "downloadPhoto: " + DM_ID);
+    }
+
+    /**
+     * check if storage permission is granted
+     * @return true : permission granted else false
+     */
+    private boolean isStoragePermissionGranted() {
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            Log.d(TAG, "isStoragePermissionGranted: Permission granted");
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * request for storage permission
+     */
+    private void requestPermission() {
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Log.d(TAG, "onRequestPermissionsResult: Permission granted");
+            downloadPhoto();
+        }
     }
 
     /**
