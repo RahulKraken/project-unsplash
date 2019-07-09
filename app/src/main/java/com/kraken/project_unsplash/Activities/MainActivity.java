@@ -121,7 +121,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_search) {
-            return true;
+            Log.d(TAG, "onOptionsItemSelected: launching search activity");
+            startActivity(new Intent(this, SearchActivity.class));
         }
 
         // if sort by button is selected
