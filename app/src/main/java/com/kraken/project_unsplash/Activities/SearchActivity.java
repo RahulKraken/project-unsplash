@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -37,12 +38,17 @@ public class SearchActivity extends AppCompatActivity {
 
     private static final String TAG = "SearchActivity";
 
+    // widgets
     private RecyclerView recyclerView;
     private EditText etSearchKey;
 
+    // content
     private ArrayList<Photo> photos;
     private PhotosRecyclerViewAdapter adapter;
+    private int currentItemCnt, pastItemCnt, totalItemCnt;
 
+
+    // page to fetch
     private int page = 1;
 
     @Override
@@ -50,6 +56,7 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        // set the toolbar
         Toolbar toolbar = findViewById(R.id.toolbar_search);
         setSupportActionBar(toolbar);
 
@@ -65,6 +72,7 @@ public class SearchActivity extends AppCompatActivity {
         photos = new ArrayList<>();
         adapter = new PhotosRecyclerViewAdapter(this, photos);
 
+         // listen to clicks on button and fetch search results
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,6 +82,10 @@ public class SearchActivity extends AppCompatActivity {
         initRecyclerView();
     }
 
+    /**
+     * gets key from edit text and formats the string carefully
+     * and triggers the api request
+     */
     private void fetchResults() {
         String key = String.valueOf(etSearchKey.getText());
         if (key.trim().length() > 0) {
@@ -83,6 +95,10 @@ public class SearchActivity extends AppCompatActivity {
         else Toast.makeText(this, "Enter search key", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * fetch result from end point
+     * @param key : keyword to search for
+     */
     private void getPhotos(String key) {
         Log.d(TAG, "getPhotos: " + UrlBuilder.searchPhoto(key, page));
         StringRequest searchImageRequest = new StringRequest(Request.Method.GET, UrlBuilder.searchPhoto(key, page), new Response.Listener<String>() {
@@ -90,16 +106,18 @@ public class SearchActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 Log.d(TAG, "onResponse: 200 OK\n" + response);
                 try {
+                    // convert response into JSON object and get the "results" array
                     JSONObject jsonObject = new JSONObject(response);
                     String raw = jsonObject.getString("results");
                     Log.d(TAG, "onResponse: RAW " + raw);
 
+                    // serialize the extracted results array of photos and populate the arrayList
                     photos.addAll(new Serializer().listPhotos(raw));
+                    // notify adapter to show new content
                     adapter.notifyDataSetChanged();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -118,10 +136,28 @@ public class SearchActivity extends AppCompatActivity {
         MyApplication.getSearchRequestQueue().add(searchImageRequest);
     }
 
+    /**
+     * initialize recycler view and onScrollListener
+     */
     private void initRecyclerView() {
-        GridLayoutManager layoutManager = new GridLayoutManager(this, Constants.NUM_COLUMNS);
+        final GridLayoutManager layoutManager = new GridLayoutManager(this, Constants.NUM_COLUMNS);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(layoutManager);
+
+        // set onScrollListener to find the end of scroll and fetch more results
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                totalItemCnt = layoutManager.getItemCount();
+                currentItemCnt = recyclerView.getChildCount();
+                pastItemCnt = layoutManager.findFirstVisibleItemPosition();
+
+                if (currentItemCnt + pastItemCnt >= totalItemCnt) {
+                    Toast.makeText(SearchActivity.this, "Reached end", Toast.LENGTH_SHORT).show();
+                    fetchResults();
+                }
+            }
+        });
     }
 }
