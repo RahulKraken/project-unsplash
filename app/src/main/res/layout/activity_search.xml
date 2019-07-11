@@ -33,6 +33,9 @@
                 <EditText
                     android:id="@+id/et_search_key"
                     android:hint="@string/et_search_hint"
+                    android:maxLines="1"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
                     android:textColorHint="@color/md_grey_400"
                     android:textColor="@color/md_black_1000"
                     android:layout_weight="1"

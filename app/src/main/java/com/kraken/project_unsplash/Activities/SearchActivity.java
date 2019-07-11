@@ -2,9 +2,13 @@ package com.kraken.project_unsplash.Activities;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -72,6 +76,19 @@ public class SearchActivity extends AppCompatActivity {
         photos = new ArrayList<>();
         adapter = new PhotosRecyclerViewAdapter(this, photos);
 
+        // action listener on edit text
+        etSearchKey.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    getPhotos(StringUtils.getKeyword(String.valueOf(etSearchKey.getText())));
+                    hideKeyboard();
+                    return true;
+                }
+                return false;
+            }
+        });
+
          // listen to clicks on button and fetch search results
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +97,18 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
         initRecyclerView();
+    }
+
+    /**
+     * hide soft keyboard when search pressed
+     */
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) this.getSystemService(this.INPUT_METHOD_SERVICE);
+        View view = this.getCurrentFocus();
+        if (view == null) {
+            view = new View(this);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     /**
