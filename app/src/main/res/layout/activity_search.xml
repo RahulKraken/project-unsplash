@@ -44,8 +44,8 @@
                     android:layout_height="match_parent" />
 
                 <ImageButton
-                    android:id="@+id/search_btn"
-                    android:src="@mipmap/ic_search_dark"
+                    android:id="@+id/clear_btn"
+                    android:src="@mipmap/ic_clear_light"
                     android:contentDescription="@string/image_view_content_desc"
                     android:background="@android:color/transparent"
                     android:layout_gravity="center"

@@ -71,7 +71,7 @@ public class SearchActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.rv_search);
         etSearchKey = findViewById(R.id.et_search_key);
-        ImageButton searchBtn = findViewById(R.id.search_btn);
+        ImageButton clearBtn = findViewById(R.id.clear_btn);
 
         photos = new ArrayList<>();
         adapter = new PhotosRecyclerViewAdapter(this, photos);
@@ -90,10 +90,10 @@ public class SearchActivity extends AppCompatActivity {
         });
 
          // listen to clicks on button and fetch search results
-        searchBtn.setOnClickListener(new View.OnClickListener() {
+        clearBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fetchResults();
+                etSearchKey.setText("");
             }
         });
         initRecyclerView();
