@@ -7,6 +7,9 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import androidx.fragment.app.Fragment;
@@ -25,6 +28,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private BottomNavigationView bottomNavigationView;
     private FrameLayout frameLayout;
     private TextView toolbarTitle;
+    public static NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,14 +61,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // setting up the drawer layout
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle =
                 new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-        handleNavigationViewHeader(navigationView);
+        handleNavigationViewHeader();
 
         // setting up bottom navigation view
         bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -71,8 +76,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setupBottomNavigation();
     }
 
-    private void handleNavigationViewHeader(NavigationView navigationView) {
-        View header = navigationView.getHeaderView(0);
+    private void handleNavigationViewHeader() {
+        final View header = navigationView.getHeaderView(0);
         header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,6 +98,24 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
+    }
+
+    public static void populateNavHeader() {
+        View header = navigationView.getHeaderView(0);
+
+        ImageView imageView = header.findViewById(R.id.nav_header_profile_image);
+        TextView name = header.findViewById(R.id.nav_header_name);
+        TextView username = header.findViewById(R.id.nav_header_username);
+
+        Log.d(TAG, "populateNavHeader: " + MyApplication.me.getUsername());
+        Log.d(TAG, "populateNavHeader: " + MyApplication.me.getName());
+
+        name.setText(MyApplication.me.getName());
+        username.setText(MyApplication.me.getUsername());
+        Glide.with(MyApplication.getAppContext())
+                .load(MyApplication.me.getProfile_image().getSmall())
+                .apply(new RequestOptions().placeholder(R.color.md_grey_300))
+                .into(imageView);
     }
 
     @Override
@@ -128,11 +151,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // if sort by button is selected
         if (id == R.id.action_sort) {
             buildDialogBox();
-            return true;
-        }
-
-        if (id == R.id.action_login) {
-            startActivity(new Intent(this, LoginActivity.class));
             return true;
         }
 
