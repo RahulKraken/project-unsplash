@@ -2,6 +2,7 @@ package com.kraken.project_unsplash;
 
 import android.app.Application;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.kraken.project_unsplash.Activities.MainActivity;
 import com.kraken.project_unsplash.Database.DatabaseContract;
 import com.kraken.project_unsplash.Database.DatabaseHelper;
 import com.kraken.project_unsplash.Models.User;
@@ -35,6 +37,8 @@ public class MyApplication extends Application {
 
     public static User me;
 
+    private static Context context;
+
     /**
      * Network request queues
      * localRequestQueue - requests like photos and collections
@@ -47,6 +51,8 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        context = getApplicationContext();
 
         // load default preferences
         PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false);
@@ -70,6 +76,7 @@ public class MyApplication extends Application {
             public void onResponse(String response) {
                 Log.d(TAG, "onResponse: 200 OK\n" + response);
                 me = new Serializer().getUser(response);
+                MainActivity.populateNavHeader();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -119,5 +126,9 @@ public class MyApplication extends Application {
 
     public static RequestQueue getSearchRequestQueue() {
         return searchRequestQueue;
+    }
+
+    public static Context getAppContext() {
+        return context;
     }
 }

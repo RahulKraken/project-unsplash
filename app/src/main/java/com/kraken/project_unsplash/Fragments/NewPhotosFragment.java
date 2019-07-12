@@ -105,8 +105,6 @@ public class NewPhotosFragment extends Fragment implements SharedPreferences.OnS
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d(TAG, "onErrorResponse: " + error.toString());
-                // make a toast with the error
-                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
             }
         }) {
             // the header parameters
