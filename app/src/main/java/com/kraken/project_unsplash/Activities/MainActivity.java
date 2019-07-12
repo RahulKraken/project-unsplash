@@ -154,11 +154,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return true;
         }
 
-        if (id == R.id.action_login) {
-            startActivity(new Intent(this, LoginActivity.class));
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
