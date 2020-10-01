@@ -26,59 +26,59 @@ import java.util.Map;
 
 public class FeaturedCollections extends AppCompatActivity {
 
-    private static final String TAG = "FeaturedCollections";
+  private static final String TAG = "FeaturedCollections";
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_featured_collections);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_featured_collections);
 
-        // get collections
-        getCollections();
-    }
+    // get collections
+    getCollections();
+  }
 
-    /**
-     * get featured collections
-     */
-    private void getCollections() {
-        StringRequest featuredCollectionsRequest = new StringRequest(Request.Method.GET,
-                UrlBuilder.getFeaturedCollections(50, 1), new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d(TAG, "onResponse: 200 OK\n" + response);
-                // serialize into Collection[]
-                Serializer serializer = new Serializer();
-                List<Collection> collections = serializer.listCollections(response);
-                // inflate the recycler view with Collection[]
-                populateRecyclerView(collections);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "onErrorResponse: " + error.getMessage());
-                Toast.makeText(FeaturedCollections.this, "Failed to get Collections!!", Toast.LENGTH_SHORT).show();
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                return Params.getParams(FeaturedCollections.this);
-            }
-        };
+  /**
+   * get featured collections
+   */
+  private void getCollections() {
+    StringRequest featuredCollectionsRequest = new StringRequest(Request.Method.GET,
+      UrlBuilder.getFeaturedCollections(50, 1), new Response.Listener<String>() {
+      @Override
+      public void onResponse(String response) {
+        Log.d(TAG, "onResponse: 200 OK\n" + response);
+        // serialize into Collection[]
+        Serializer serializer = new Serializer();
+        List<Collection> collections = serializer.listCollections(response);
+        // inflate the recycler view with Collection[]
+        populateRecyclerView(collections);
+      }
+    }, new Response.ErrorListener() {
+      @Override
+      public void onErrorResponse(VolleyError error) {
+        Log.d(TAG, "onErrorResponse: " + error.getMessage());
+        Toast.makeText(FeaturedCollections.this, "Failed to get Collections!!", Toast.LENGTH_SHORT).show();
+      }
+    }) {
+      @Override
+      public Map<String, String> getHeaders() throws AuthFailureError {
+        return Params.getParams(FeaturedCollections.this);
+      }
+    };
 
-        // get local request queue and add the request to it
-        MyApplication.getLocalRequestQueue().add(featuredCollectionsRequest);
-    }
+    // get local request queue and add the request to it
+    MyApplication.getLocalRequestQueue().add(featuredCollectionsRequest);
+  }
 
-    /**
-     * inflate the recycler view
-     * @param collections : Collection[]
-     */
-    private void populateRecyclerView(List<Collection> collections) {
-        RecyclerView recyclerView = findViewById(R.id.featuredCollectionsRecyclerView);
-        CollectionsRecyclerViewAdapter collectionsRecyclerViewAdapter = new CollectionsRecyclerViewAdapter(this, collections);
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
+  /**
+   * inflate the recycler view
+   * @param collections : Collection[]
+   */
+  private void populateRecyclerView(List<Collection> collections) {
+    RecyclerView recyclerView = findViewById(R.id.featuredCollectionsRecyclerView);
+    CollectionsRecyclerViewAdapter collectionsRecyclerViewAdapter = new CollectionsRecyclerViewAdapter(this, collections);
+    StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
 
-        recyclerView.setAdapter(collectionsRecyclerViewAdapter);
-        recyclerView.setLayoutManager(staggeredGridLayoutManager);
-    }
+    recyclerView.setAdapter(collectionsRecyclerViewAdapter);
+    recyclerView.setLayoutManager(staggeredGridLayoutManager);
+  }
 }

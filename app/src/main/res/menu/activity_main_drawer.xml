@@ -1,50 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view">
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  tools:showIn="navigation_view">
 
-    <group
-        android:id="@+id/nav_group_fragments"
-        android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_new"
-            android:icon="@mipmap/ic_explore"
-            android:title="@string/nav_item_new_label" />
-        <item
-            android:id="@+id/nav_featured"
-            android:icon="@mipmap/ic_favorites"
-            android:title="@string/nav_featured_label" />
-        <item
-            android:id="@+id/nav_collections"
-            android:icon="@mipmap/ic_collections"
-            android:title="@string/collections_nav_bar_label" />
-    </group>
+  <group
+    android:id="@+id/nav_group_fragments"
+    android:checkableBehavior="single">
+    <item
+      android:id="@+id/nav_new"
+      android:icon="@mipmap/ic_explore"
+      android:title="@string/nav_item_new_label" />
+    <item
+      android:id="@+id/nav_featured"
+      android:icon="@mipmap/ic_favorites"
+      android:title="@string/nav_featured_label" />
+    <item
+      android:id="@+id/nav_collections"
+      android:icon="@mipmap/ic_collections"
+      android:title="@string/collections_nav_bar_label" />
+  </group>
 
-    <group
-        android:id="@+id/nav_group_categories"
-        android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_categories"
-            android:icon="@mipmap/ic_explore"
-            android:title="@string/categories_nav_drawer_label" />
-    </group>
+  <group
+    android:id="@+id/nav_group_categories"
+    android:checkableBehavior="single">
+    <item
+      android:id="@+id/nav_categories"
+      android:icon="@mipmap/ic_explore"
+      android:title="@string/categories_nav_drawer_label" />
+  </group>
 
-    <group
-        android:id="@+id/nav_group_settings"
-        android:checkableBehavior="single" >
-        <item
-            android:id="@+id/nav_settings"
-            android:icon="@mipmap/ic_settings"
-            android:title="@string/settings_nav_drawer_item_label" />
-        <item
-            android:id="@+id/nav_rate"
-            android:icon="@drawable/ic_star_light"
-            android:title="@string/rate_nav_drawer_label" />
-        <item
-            android:id="@+id/nav_feedback"
-            android:icon="@mipmap/ic_info_light"
-            android:title="@string/feedback_nav_drawer_item_label" />
-    </group>
+  <group
+    android:id="@+id/nav_group_settings"
+    android:checkableBehavior="single" >
+    <item
+      android:id="@+id/nav_settings"
+      android:icon="@mipmap/ic_settings"
+      android:title="@string/settings_nav_drawer_item_label" />
+    <item
+      android:id="@+id/nav_rate"
+      android:icon="@drawable/ic_star_light"
+      android:title="@string/rate_nav_drawer_label" />
+    <item
+      android:id="@+id/nav_feedback"
+      android:icon="@mipmap/ic_info_light"
+      android:title="@string/feedback_nav_drawer_item_label" />
+  </group>
 
 </menu>

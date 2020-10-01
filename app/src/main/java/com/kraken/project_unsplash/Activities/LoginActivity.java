@@ -26,111 +26,111 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private static final String TAG = "LoginActivity";
+  private static final String TAG = "LoginActivity";
 
-    final private String url = Constants.BASE_URL_AUTH + "/authorize?"
-            + "client_id=" + Constants.ACCESS_KEY
-            + "&response_type=code&scope=" + Constants.SCOPE
-            + "&redirect_uri=" + Constants.RESPONSE_URL;
+  final private String url = Constants.BASE_URL_AUTH + "/authorize?"
+    + "client_id=" + Constants.ACCESS_KEY
+    + "&response_type=code&scope=" + Constants.SCOPE
+    + "&redirect_uri=" + Constants.RESPONSE_URL;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_login);
 
-        MyApplication.preferences.registerOnSharedPreferenceChangeListener(this);
+    MyApplication.preferences.registerOnSharedPreferenceChangeListener(this);
 
-        handleLoginBtn();
+    handleLoginBtn();
+  }
+
+  @Override
+  protected void onNewIntent(Intent intent) {
+    super.onNewIntent(intent);
+    Log.d(TAG, "onNewIntent: got the intent");
+    if (intent != null
+      && intent.getData() != null
+      && !intent.getData().getAuthority().isEmpty()
+      && Constants.RESPONSE_URL_CALLBACK.equals(intent.getData().getAuthority())) {
+
+      Log.d(TAG, "onNewIntent: data -> " + intent.getData());
+      Log.d(TAG, "onNewIntent: authority -> " + intent.getData().getAuthority());
+
+      getAccessToken(intent.getData().getQueryParameter("code"));
     }
+  }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        Log.d(TAG, "onNewIntent: got the intent");
-        if (intent != null
-                && intent.getData() != null
-                && !intent.getData().getAuthority().isEmpty()
-                && Constants.RESPONSE_URL_CALLBACK.equals(intent.getData().getAuthority())) {
+  private void getAccessToken(String code) {
+    Log.d(TAG, "getAccessToken: code -> " + code);
 
-            Log.d(TAG, "onNewIntent: data -> " + intent.getData());
-            Log.d(TAG, "onNewIntent: authority -> " + intent.getData().getAuthority());
+    final String authUrl = Constants.BASE_URL_AUTH +
+      "/token?client_id=" + Constants.ACCESS_KEY +
+      "&client_secret=" + Constants.SECRET_KEY +
+      "&redirect_uri=" + Constants.RESPONSE_URL +
+      "&code=" + code +
+      "&grant_type=authorization_code";
 
-            getAccessToken(intent.getData().getQueryParameter("code"));
-        }
+    final Gson gson = new Gson();
+    StringRequest request = new StringRequest(Request.Method.POST, authUrl, new Response.Listener<String>() {
+      @Override
+      public void onResponse(String response) {
+        Log.d(TAG, "onResponse: 200 Ok\n" + response);
+        AccessToken accessToken = gson.fromJson(response, AccessToken.class);
+        writeAccessToken(accessToken);
+        Log.d(TAG, "onResponse: access_token -> " + accessToken.getAccess_token());
+      }
+    }, new Response.ErrorListener() {
+      @Override
+      public void onErrorResponse(VolleyError error) {
+        Log.d(TAG, "onErrorResponse: ERROR");
+      }
+    }) {
+      @Override
+      protected Map<String, String> getParams() throws AuthFailureError {
+        return super.getParams();
+      }
+    };
+
+    MyApplication.getSearchRequestQueue().add(request);
+  }
+
+  private void writeAccessToken(AccessToken accessToken) {
+    SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.access_token_shared_preferences), MODE_PRIVATE);
+    SharedPreferences.Editor editor = sharedPreferences.edit();
+    editor.putString(getResources().getString(R.string.access_token_storage_key), accessToken.getAccess_token());
+    editor.apply();
+
+    MyApplication.AUTHENTICATED = true;
+
+    exit();
+  }
+
+  private void exit() {
+    finish();
+  }
+
+  private void handleLoginBtn() {
+    final Button loginBtn = findViewById(R.id.login_btn);
+
+    loginBtn.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Snackbar.make(loginBtn, "Button clicked", Snackbar.LENGTH_LONG).show();
+
+        Uri uri = Uri.parse(url);
+        CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
+          .setShowTitle(true)
+          .build();
+
+        customTabsIntent.launchUrl(LoginActivity.this, uri);
+      }
+    });
+  }
+
+  @Override
+  public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+    switch (key) {
+      case "pref_theme":
+        Log.d(TAG, "onSharedPreferenceChanged: theme changed");
     }
-
-    private void getAccessToken(String code) {
-        Log.d(TAG, "getAccessToken: code -> " + code);
-
-        final String authUrl = Constants.BASE_URL_AUTH +
-                "/token?client_id=" + Constants.ACCESS_KEY +
-                "&client_secret=" + Constants.SECRET_KEY +
-                "&redirect_uri=" + Constants.RESPONSE_URL +
-                "&code=" + code +
-                "&grant_type=authorization_code";
-
-        final Gson gson = new Gson();
-        StringRequest request = new StringRequest(Request.Method.POST, authUrl, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d(TAG, "onResponse: 200 Ok\n" + response);
-                AccessToken accessToken = gson.fromJson(response, AccessToken.class);
-                writeAccessToken(accessToken);
-                Log.d(TAG, "onResponse: access_token -> " + accessToken.getAccess_token());
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "onErrorResponse: ERROR");
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                return super.getParams();
-            }
-        };
-
-        MyApplication.getSearchRequestQueue().add(request);
-    }
-
-    private void writeAccessToken(AccessToken accessToken) {
-        SharedPreferences sharedPreferences = getSharedPreferences(getResources().getString(R.string.access_token_shared_preferences), MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(getResources().getString(R.string.access_token_storage_key), accessToken.getAccess_token());
-        editor.apply();
-
-        MyApplication.AUTHENTICATED = true;
-
-        exit();
-    }
-
-    private void exit() {
-        finish();
-    }
-
-    private void handleLoginBtn() {
-        final Button loginBtn = findViewById(R.id.login_btn);
-
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Snackbar.make(loginBtn, "Button clicked", Snackbar.LENGTH_LONG).show();
-
-                Uri uri = Uri.parse(url);
-                CustomTabsIntent customTabsIntent = new CustomTabsIntent.Builder()
-                        .setShowTitle(true)
-                        .build();
-
-                customTabsIntent.launchUrl(LoginActivity.this, uri);
-            }
-        });
-    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        switch (key) {
-            case "pref_theme":
-                Log.d(TAG, "onSharedPreferenceChanged: theme changed");
-        }
-    }
+  }
 }

@@ -1,34 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.appbar.AppBarLayout
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:theme="@style/AppTheme.AppBarOverlay"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <androidx.appcompat.widget.Toolbar
+    android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:theme="@style/AppTheme.AppBarOverlay"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/md_white_1000"
+    app:layout_scrollFlags="scroll|enterAlways"
+    app:theme="@style/ActionBarBackArrow"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/md_white_1000"
-        app:layout_scrollFlags="scroll|enterAlways"
-        app:theme="@style/ActionBarBackArrow"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
+    <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+      <TextView
+        android:id="@+id/toolbar_title"
+        style="@style/headingStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|start"
+        android:textColor="@color/md_black_1000" />
+    </LinearLayout>
 
-            <TextView
-                android:id="@+id/toolbar_title"
-                style="@style/headingStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|start"
-                android:textColor="@color/md_black_1000" />
-        </LinearLayout>
-
-    </androidx.appcompat.widget.Toolbar>
+  </androidx.appcompat.widget.Toolbar>
 
 </com.google.android.material.appbar.AppBarLayout>

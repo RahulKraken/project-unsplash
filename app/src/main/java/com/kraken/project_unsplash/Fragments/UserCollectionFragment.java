@@ -34,88 +34,88 @@ import java.util.Map;
 
 public class UserCollectionFragment extends Fragment {
 
-    private static final String TAG = "UserCollectionFragment";
+  private static final String TAG = "UserCollectionFragment";
 
-    private View rootView;
+  private View rootView;
 
-    private String username;
-    private int page = 1;
+  private String username;
+  private int page = 1;
 
-    private List<Collection> collections;
-    private CollectionsRecyclerViewAdapter adapter;
-    private int pastItemsCount, visibleItemCount, totalItemCount;
+  private List<Collection> collections;
+  private CollectionsRecyclerViewAdapter adapter;
+  private int pastItemsCount, visibleItemCount, totalItemCount;
 
-    public void putUsername(String username) {
-        this.username = username;
-    }
+  public void putUsername(String username) {
+    this.username = username;
+  }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        collections = new ArrayList<>();
-        adapter = new CollectionsRecyclerViewAdapter(getActivity(), collections);
-    }
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    collections = new ArrayList<>();
+    adapter = new CollectionsRecyclerViewAdapter(getActivity(), collections);
+  }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_collections, container, false);
-        fetchCollections();
-        return rootView;
-    }
+  @Nullable
+  @Override
+  public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    rootView = inflater.inflate(R.layout.fragment_collections, container, false);
+    fetchCollections();
+    return rootView;
+  }
 
-    private void fetchCollections() {
-        Log.d(TAG, "fetchCollections: " + UrlBuilder.getUserCollections(username, page));
-        StringRequest userPhotosRequest = new StringRequest(Request.Method.GET, UrlBuilder.getUserCollections(username, page), new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d(TAG, "onResponse: 200 OK\n" + response);
-                collections.addAll(new Serializer().listCollections(response));
-                adapter.notifyDataSetChanged();
-                initRecyclerView();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "onErrorResponse: " + error.toString());
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                return Params.getParams(getActivity());
-            }
-        };
+  private void fetchCollections() {
+    Log.d(TAG, "fetchCollections: " + UrlBuilder.getUserCollections(username, page));
+    StringRequest userPhotosRequest = new StringRequest(Request.Method.GET, UrlBuilder.getUserCollections(username, page), new Response.Listener<String>() {
+      @Override
+      public void onResponse(String response) {
+        Log.d(TAG, "onResponse: 200 OK\n" + response);
+        collections.addAll(new Serializer().listCollections(response));
+        adapter.notifyDataSetChanged();
+        initRecyclerView();
+      }
+    }, new Response.ErrorListener() {
+      @Override
+      public void onErrorResponse(VolleyError error) {
+        Log.d(TAG, "onErrorResponse: " + error.toString());
+      }
+    }) {
+      @Override
+      public Map<String, String> getHeaders() throws AuthFailureError {
+        return Params.getParams(getActivity());
+      }
+    };
 
-        page++;
+    page++;
 
-        MyApplication.getLocalRequestQueue().add(userPhotosRequest);
-    }
+    MyApplication.getLocalRequestQueue().add(userPhotosRequest);
+  }
 
-    private void initRecyclerView() {
-        RecyclerView recyclerView = rootView.findViewById(R.id.collectionsRecyclerView);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+  private void initRecyclerView() {
+    RecyclerView recyclerView = rootView.findViewById(R.id.collectionsRecyclerView);
+    final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
 
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(layoutManager);
+    recyclerView.setAdapter(adapter);
+    recyclerView.setLayoutManager(layoutManager);
 
-        // add onScroll listener
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-                // if scroll up
-                if (dy > 0) {
-                    // get the needed item counts
-                    visibleItemCount = recyclerView.getChildCount();
-                    totalItemCount = layoutManager.getItemCount();
-                    pastItemsCount = layoutManager.findFirstVisibleItemPosition();
+    // add onScroll listener
+    recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+      @Override
+      public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+        // if scroll up
+        if (dy > 0) {
+          // get the needed item counts
+          visibleItemCount = recyclerView.getChildCount();
+          totalItemCount = layoutManager.getItemCount();
+          pastItemsCount = layoutManager.findFirstVisibleItemPosition();
 
-                    if (visibleItemCount + pastItemsCount >= totalItemCount) {
-                        Toast.makeText(getContext(), "reached end", Toast.LENGTH_LONG).show();
-                        // fetch new photos
-                        fetchCollections();
-                    }
-                }
-            }
-        });
-    }
+          if (visibleItemCount + pastItemsCount >= totalItemCount) {
+            Toast.makeText(getContext(), "reached end", Toast.LENGTH_LONG).show();
+            // fetch new photos
+            fetchCollections();
+          }
+        }
+      }
+    });
+  }
 }

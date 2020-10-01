@@ -31,104 +31,104 @@ import java.util.Map;
 
 public class MyApplication extends Application {
 
-    private static final String TAG = "MyApplication";
+  private static final String TAG = "MyApplication";
 
-    public static boolean AUTHENTICATED = false;
+  public static boolean AUTHENTICATED = false;
 
-    public static User me;
+  public static User me;
 
-    private static Context context;
+  private static Context context;
 
-    /**
-     * Network request queues
-     * localRequestQueue - requests like photos and collections
-     * searchRequestQueue - search requests
-     */
-    private static RequestQueue localRequestQueue, searchRequestQueue;
+  /**
+   * Network request queues
+   * localRequestQueue - requests like photos and collections
+   * searchRequestQueue - search requests
+   */
+  private static RequestQueue localRequestQueue, searchRequestQueue;
 
-    public static SharedPreferences preferences;
+  public static SharedPreferences preferences;
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
+  @Override
+  public void onCreate() {
+    super.onCreate();
 
-        context = getApplicationContext();
+    context = getApplicationContext();
 
-        // load default preferences
-        PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false);
-        preferences = PreferenceManager.getDefaultSharedPreferences(this);
+    // load default preferences
+    PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false);
+    preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        // initialize request queues
-        localRequestQueue = Volley.newRequestQueue(this);
-        searchRequestQueue = Volley.newRequestQueue(this);
+    // initialize request queues
+    localRequestQueue = Volley.newRequestQueue(this);
+    searchRequestQueue = Volley.newRequestQueue(this);
 
-        Log.d(TAG, "onCreate: request queues created");
+    Log.d(TAG, "onCreate: request queues created");
 
-        checkAuthenticationState();
+    checkAuthenticationState();
 
-        createDatabase();
-    }
+    createDatabase();
+  }
 
-    public void checkAuthenticationState() {
-        // check if authenticated
-        StringRequest checkIfAuthenticatedRequest = new StringRequest(Request.Method.GET, UrlBuilder.getProfile(), new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d(TAG, "onResponse: 200 OK\n" + response);
-                me = new Serializer().getUser(response);
-                MainActivity.populateNavHeader();
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d(TAG, "onErrorResponse: " + error.toString());
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                return Params.getAuthenticatedParams(MyApplication.this);
-            }
+  public void checkAuthenticationState() {
+    // check if authenticated
+    StringRequest checkIfAuthenticatedRequest = new StringRequest(Request.Method.GET, UrlBuilder.getProfile(), new Response.Listener<String>() {
+      @Override
+      public void onResponse(String response) {
+        Log.d(TAG, "onResponse: 200 OK\n" + response);
+        me = new Serializer().getUser(response);
+        MainActivity.populateNavHeader();
+      }
+    }, new Response.ErrorListener() {
+      @Override
+      public void onErrorResponse(VolleyError error) {
+        Log.d(TAG, "onErrorResponse: " + error.toString());
+      }
+    }) {
+      @Override
+      public Map<String, String> getHeaders() throws AuthFailureError {
+        return Params.getAuthenticatedParams(MyApplication.this);
+      }
 
-            @Override
-            protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                int responseCode = response.statusCode;
-                if (responseCode == 200) {
-                    MyApplication.AUTHENTICATED = true;
-                    Log.d(TAG, "parseNetworkResponse: AUTHENTICATED");
-                } else {
-                    MyApplication.AUTHENTICATED = false;
-                    Log.d(TAG, "parseNetworkResponse: NOT AUTHENTICATED");
-                    SharedPreferences.Editor editor = getSharedPreferences(getResources().getString(R.string.access_token_shared_preferences), MODE_PRIVATE).edit();
-                    editor.putString(getResources().getString(R.string.access_token_storage_key), null);
-                    editor.apply();
-                }
-                return super.parseNetworkResponse(response);
-            }
-        };
+      @Override
+      protected Response<String> parseNetworkResponse(NetworkResponse response) {
+        int responseCode = response.statusCode;
+        if (responseCode == 200) {
+          MyApplication.AUTHENTICATED = true;
+          Log.d(TAG, "parseNetworkResponse: AUTHENTICATED");
+        } else {
+          MyApplication.AUTHENTICATED = false;
+          Log.d(TAG, "parseNetworkResponse: NOT AUTHENTICATED");
+          SharedPreferences.Editor editor = getSharedPreferences(getResources().getString(R.string.access_token_shared_preferences), MODE_PRIVATE).edit();
+          editor.putString(getResources().getString(R.string.access_token_storage_key), null);
+          editor.apply();
+        }
+        return super.parseNetworkResponse(response);
+      }
+    };
 
-        localRequestQueue.add(checkIfAuthenticatedRequest);
-    }
+    localRequestQueue.add(checkIfAuthenticatedRequest);
+  }
 
-    /**
-     * testing interaction with the database
-     */
-    private void createDatabase() {
-        new DatabaseHelper(this);
-    }
+  /**
+   * testing interaction with the database
+   */
+  private void createDatabase() {
+    new DatabaseHelper(this);
+  }
 
-    /**
-     * getters for request queues
-     * @return requestQueue
-     */
-    public static RequestQueue getLocalRequestQueue() {
-        return localRequestQueue;
-    }
+  /**
+   * getters for request queues
+   * @return requestQueue
+   */
+  public static RequestQueue getLocalRequestQueue() {
+    return localRequestQueue;
+  }
 
-    public static RequestQueue getSearchRequestQueue() {
-        return searchRequestQueue;
-    }
+  public static RequestQueue getSearchRequestQueue() {
+    return searchRequestQueue;
+  }
 
-    public static Context getAppContext() {
-        return context;
-    }
+  public static Context getAppContext() {
+    return context;
+  }
 }

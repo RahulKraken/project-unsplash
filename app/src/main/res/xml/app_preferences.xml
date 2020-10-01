@@ -1,59 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <PreferenceCategory
-        android:key="pref_category_general"
-        android:title="General">
-        <Preference
-            android:key="pref_theme"
-            android:title="Theme"
-            android:defaultValue="Light"
-            android:summary="Color Theme of the app" />
-        <Preference
-            android:key="pref_layout"
-            android:title="Layout"
-            android:dialogMessage="This is layout dialog"
-            android:defaultValue="Linear"
-            android:summary="Layout of feed" />
-    </PreferenceCategory>
+  <PreferenceCategory
+    android:key="pref_category_general"
+    android:title="General">
+    <Preference
+      android:key="pref_theme"
+      android:title="Theme"
+      android:defaultValue="Light"
+      android:summary="Color Theme of the app" />
+    <Preference
+      android:key="pref_layout"
+      android:title="Layout"
+      android:dialogMessage="This is layout dialog"
+      android:defaultValue="Linear"
+      android:summary="Layout of feed" />
+  </PreferenceCategory>
 
-    <PreferenceCategory
-        android:key="pref_category_data_use"
-        android:title="Data Usage">
-        <Preference
-            android:key="pref_load_quality"
-            android:title="Load Quality"
-            android:defaultValue="Regular"
-            android:summary="Quality of photos in the feed" />
-        <Preference
-            android:key="pref_download_quality"
-            android:title="Download Quality"
-            android:defaultValue="Regular"
-            android:summary="Quality of downloaded photo" />
-        <Preference
-            android:key="pref_wallpaper_quality"
-            android:title="Wallpaper Quality"
-            android:defaultValue="Full"
-            android:summary="Quality of wallpapers" />
-    </PreferenceCategory>
+  <PreferenceCategory
+    android:key="pref_category_data_use"
+    android:title="Data Usage">
+    <Preference
+      android:key="pref_load_quality"
+      android:title="Load Quality"
+      android:defaultValue="Regular"
+      android:summary="Quality of photos in the feed" />
+    <Preference
+      android:key="pref_download_quality"
+      android:title="Download Quality"
+      android:defaultValue="Regular"
+      android:summary="Quality of downloaded photo" />
+    <Preference
+      android:key="pref_wallpaper_quality"
+      android:title="Wallpaper Quality"
+      android:defaultValue="Full"
+      android:summary="Quality of wallpapers" />
+  </PreferenceCategory>
 
-    <PreferenceCategory
-        android:key="pref_category_about"
-        android:title="About">
-        <Preference
-            android:key="pref_version"
-            android:title="Version"
-            android:summary="1.3.2" />
-        <Preference
-            android:key="pref_github"
-            android:title="Github"
-            android:summary="Check out on github" />
-        <Preference
-            android:key="pref_report_bugs"
-            android:title="Report Bugs"
-            android:summary="Report bugs and request new features" />
-        <Preference
-            android:key="pref_privacy_policy"
-            android:title="Privacy policy"
-            android:summary="Read the privacy policy" />
-    </PreferenceCategory>
+  <PreferenceCategory
+    android:key="pref_category_about"
+    android:title="About">
+    <Preference
+      android:key="pref_version"
+      android:title="Version"
+      android:summary="1.3.2" />
+    <Preference
+      android:key="pref_github"
+      android:title="Github"
+      android:summary="Check out on github" />
+    <Preference
+      android:key="pref_report_bugs"
+      android:title="Report Bugs"
+      android:summary="Report bugs and request new features" />
+    <Preference
+      android:key="pref_privacy_policy"
+      android:title="Privacy policy"
+      android:summary="Read the privacy policy" />
+  </PreferenceCategory>
 </PreferenceScreen>

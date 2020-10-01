@@ -1,70 +1,70 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:statusBarColor">@color/md_white_1000</item>
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
-    </style>
+  <!-- Base application theme. -->
+  <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- Customize your theme here. -->
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+    <item name="android:statusBarColor">@color/md_white_1000</item>
+    <item name="android:windowLightStatusBar">true</item>
+    <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+  </style>
 
-    <!--image view activity theme-->
-    <style name="ImageViewerTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:statusBarColor">@color/md_black_1000</item>
-    </style>
+  <!--image view activity theme-->
+  <style name="ImageViewerTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:windowTranslucentStatus">true</item>
+    <item name="android:statusBarColor">@color/md_black_1000</item>
+  </style>
 
-    <!-- style for app bar headings -->
-    <style name="headingStyle">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/md_black_1000</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
-    </style>
+  <!-- style for app bar headings -->
+  <style name="headingStyle">
+    <item name="android:textSize">20sp</item>
+    <item name="android:textColor">@color/md_black_1000</item>
+    <item name="android:fontFamily">@font/roboto_medium</item>
+  </style>
 
-    <!-- style for titles -->
-    <style name="titleStyle">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/md_black_1000</item>
-        <item name="android:fontFamily">@font/roboto_bold</item>
-    </style>
+  <!-- style for titles -->
+  <style name="titleStyle">
+    <item name="android:textSize">20sp</item>
+    <item name="android:textColor">@color/md_black_1000</item>
+    <item name="android:fontFamily">@font/roboto_bold</item>
+  </style>
 
-    <!--user profile labels-->
-    <style name="profileLabelStyle">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/md_grey_500</item>
-        <item name="android:fontFamily">@font/roboto_regular</item>
-    </style>
+  <!--user profile labels-->
+  <style name="profileLabelStyle">
+    <item name="android:textSize">14sp</item>
+    <item name="android:textColor">@color/md_grey_500</item>
+    <item name="android:fontFamily">@font/roboto_regular</item>
+  </style>
 
-    <!-- style for subTitles -->
-    <style name="subtitleStyle">
-        <item name="android:textSize">10sp</item>
-        <item name="android:textColor">@color/md_grey_700</item>
-        <item name="android:fontFamily">@font/roboto_regular</item>
-    </style>
+  <!-- style for subTitles -->
+  <style name="subtitleStyle">
+    <item name="android:textSize">10sp</item>
+    <item name="android:textColor">@color/md_grey_700</item>
+    <item name="android:fontFamily">@font/roboto_regular</item>
+  </style>
 
-    <!-- style for action numbers -->
-    <style name="actionTextStyle">
-        <item name="android:textSize">10sp</item>
-        <item name="android:textColor">@color/md_black_1000</item>
-        <item name="android:fontFamily">@font/roboto_medium</item>
-    </style>
+  <!-- style for action numbers -->
+  <style name="actionTextStyle">
+    <item name="android:textSize">10sp</item>
+    <item name="android:textColor">@color/md_black_1000</item>
+    <item name="android:fontFamily">@font/roboto_medium</item>
+  </style>
 
-    <!--style for nav drawer toggle-->
-    <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle" >
-        <item name="spinBars">true</item>
-        <item name="color">@color/md_black_1000</item>
-    </style>
+  <!--style for nav drawer toggle-->
+  <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle" >
+    <item name="spinBars">true</item>
+    <item name="color">@color/md_black_1000</item>
+  </style>
 
-    <!--app bar styles-->
-    <style name="ActionBarBackArrow" parent="ThemeOverlay.AppCompat.ActionBar">
-        <item name="colorControlNormal">@color/md_black_1000</item>
-    </style>
+  <!--app bar styles-->
+  <style name="ActionBarBackArrow" parent="ThemeOverlay.AppCompat.ActionBar">
+    <item name="colorControlNormal">@color/md_black_1000</item>
+  </style>
 
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+  <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+  <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>
