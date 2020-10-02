@@ -88,7 +88,7 @@ public class FeaturedPhotosFragment extends Fragment implements SharedPreference
     Log.d(TAG, "fetchPhotos: " + UrlBuilder.getAllPhotos(50, orderBy, page));
     // string request fetches raw json using volley
     StringRequest allPhotosRequest = new StringRequest(Request.Method.GET,
-      UrlBuilder.getCuratedPhotos(50, orderBy, page),
+      UrlBuilder.getAllPhotos(50, orderBy, page),
       new Response.Listener<String>() {
         @Override
         public void onResponse(String response) {
@@ -104,14 +104,13 @@ public class FeaturedPhotosFragment extends Fragment implements SharedPreference
       @Override
       public void onErrorResponse(VolleyError error) {
         Log.d(TAG, "onErrorResponse: " + error.toString());
-        // make a toast with the error
-        Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
       }
     }) {
       // the header parameters
       @Override
       public Map<String, String> getHeaders() throws AuthFailureError {
-        return Params.getParams(getActivity());
+        Log.d(TAG, "getHeaders: " + Params.getGeneralParams().toString());
+        return Params.getGeneralParams();
       }
     };
 

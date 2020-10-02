@@ -21,7 +21,7 @@ public class Params {
     return params;
   }
 
-  private static Map<String, String> getGeneralParams() {
+  public static Map<String, String> getGeneralParams() {
     Map<String, String> params = new HashMap<>();
     params.put("Accept-Version", "v1");
     params.put("Authorization", "Client-ID " + Constants.ACCESS_KEY);

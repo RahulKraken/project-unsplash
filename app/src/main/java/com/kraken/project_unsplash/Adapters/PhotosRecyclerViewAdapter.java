@@ -54,10 +54,7 @@ public class PhotosRecyclerViewAdapter extends RecyclerView.Adapter<PhotosRecycl
 
   @Override
   public void onBindViewHolder(@NonNull PhotoViewHolder holder, int i) {
-    Log.d(TAG, "onBindViewHolder: called");
-
     // Request options for glide
-    Log.d(TAG, "onBindViewHolder: color -> " + photos.get(i).getColor());
     RequestOptions requestOptions = new RequestOptions().placeholder(new ColorDrawable(Color.parseColor(photos.get(i).getColor())));
 
     // Load main image
@@ -84,8 +81,6 @@ public class PhotosRecyclerViewAdapter extends RecyclerView.Adapter<PhotosRecycl
     switch (Objects.requireNonNull(MyApplication.preferences.getString("pref_load_quality", ""))) {
       case "Small":
         return photo.getUrls().getSmall();
-      case "Regular":
-        return photo.getUrls().getRegular();
       case "Full":
         return photo.getUrls().getFull();
       case "Raw":
