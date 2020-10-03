@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -48,6 +49,7 @@ public class CollectionsFragment extends Fragment implements SharedPreferences.O
   // recycler view scroll stuff
   private int pastVisibleItems, visibleItemCount, totalItemCount;
   private CollectionsRecyclerViewAdapter recyclerViewAdapter;
+  private ProgressBar progressBar;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,7 +66,9 @@ public class CollectionsFragment extends Fragment implements SharedPreferences.O
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     // inflate the root view
     rootView = inflater.inflate(R.layout.fragment_collections, container, false);
+    progressBar = rootView.findViewById(R.id.collections_progress_bar);
     // fetch the collections
+    showProgressBar();
     fetchCuratedCollections();
     // init the recycler view
     initRecyclerView();
@@ -83,6 +87,7 @@ public class CollectionsFragment extends Fragment implements SharedPreferences.O
         @Override
         public void onResponse(String response) {
           Log.d(TAG, "onResponse: 200 OK\n" + response);
+          hideProgressbar();
           // serializer converts the raw JSON into Collection[]
           Serializer serializer = new Serializer();
           collections.addAll(serializer.listCollections(response));
@@ -93,6 +98,7 @@ public class CollectionsFragment extends Fragment implements SharedPreferences.O
       @Override
       public void onErrorResponse(VolleyError error) {
         Log.d(TAG, "onErrorResponse: " + error.getMessage());
+        hideProgressbar();
       }
     }) {
       // the header parameters
@@ -151,5 +157,13 @@ public class CollectionsFragment extends Fragment implements SharedPreferences.O
     if (key.equals("pref_theme")) {
       Log.d(TAG, "onSharedPreferenceChanged: theme changes");
     }
+  }
+
+  private void showProgressBar() {
+    progressBar.setVisibility(View.VISIBLE);
+  }
+
+  private void hideProgressbar() {
+    progressBar.setVisibility(View.INVISIBLE);
   }
 }

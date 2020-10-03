@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -51,6 +52,7 @@ public class FeaturedPhotosFragment extends Fragment implements SharedPreference
   // recycler view scroll stuff
   private PhotosRecyclerViewAdapter recyclerViewAdapter;
   private int pastItemsCount, visibleItemCount, totalItemCount;
+  private ProgressBar progressBar;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,6 +68,8 @@ public class FeaturedPhotosFragment extends Fragment implements SharedPreference
   public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
     // inflate the view and keep in rootView
     rootView = inflater.inflate(R.layout.fragment_photos, container, false);
+    progressBar = rootView.findViewById(R.id.photos_progress_bar);
+    showProgressBar();
     // init recycler view
     initRecyclerView();
     // sorting parameter
@@ -81,6 +85,14 @@ public class FeaturedPhotosFragment extends Fragment implements SharedPreference
     return rootView;
   }
 
+  private void showProgressBar() {
+    progressBar.setVisibility(View.VISIBLE);
+  }
+
+  private void hideProgressBar() {
+    progressBar.setVisibility(View.INVISIBLE);
+  }
+
   /**
    * Use the localRequestQueue to fetch featured photos
    */
@@ -92,6 +104,7 @@ public class FeaturedPhotosFragment extends Fragment implements SharedPreference
       new Response.Listener<String>() {
         @Override
         public void onResponse(String response) {
+          hideProgressBar();
           Log.d(TAG, "onResponse: 200 OK\n" + response);
           // serializer converts the raw json into a Photo[]
           Serializer serializer = new Serializer();
@@ -103,6 +116,7 @@ public class FeaturedPhotosFragment extends Fragment implements SharedPreference
       }, new Response.ErrorListener() {
       @Override
       public void onErrorResponse(VolleyError error) {
+        hideProgressBar();
         Log.d(TAG, "onErrorResponse: " + error.toString());
       }
     }) {

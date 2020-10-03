@@ -5,6 +5,15 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent">
 
+  <ProgressBar
+    android:id="@+id/photos_progress_bar"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_width="48dp"
+    android:layout_height="48dp" />
+
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/rv_featured_photos"
     android:layout_width="match_parent"
