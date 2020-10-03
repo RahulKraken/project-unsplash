@@ -58,6 +58,15 @@
 
   </com.google.android.material.appbar.AppBarLayout>
 
+  <ProgressBar
+    android:id="@+id/search_progress_bar"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_width="48dp"
+    android:layout_height="48dp" />
+
   <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/rv_search"
     app:layout_constraintTop_toBottomOf="@id/appbar_search"

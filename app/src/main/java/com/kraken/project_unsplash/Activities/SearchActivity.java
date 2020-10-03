@@ -1,5 +1,6 @@
 package com.kraken.project_unsplash.Activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -8,6 +9,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +47,7 @@ public class SearchActivity extends AppCompatActivity {
   // widgets
   private RecyclerView recyclerView;
   private EditText etSearchKey;
+  private ProgressBar progressBar;
 
   // content
   private ArrayList<Photo> photos;
@@ -71,7 +74,9 @@ public class SearchActivity extends AppCompatActivity {
 
     recyclerView = findViewById(R.id.rv_search);
     etSearchKey = findViewById(R.id.et_search_key);
-    ImageButton searchBtn = findViewById(R.id.search_btn);
+    progressBar = findViewById(R.id.search_progress_bar);
+    hideProgressBar();
+    final ImageButton searchBtn = findViewById(R.id.search_btn);
 
     photos = new ArrayList<>();
     adapter = new PhotosRecyclerViewAdapter(this, photos);
@@ -81,8 +86,7 @@ public class SearchActivity extends AppCompatActivity {
       @Override
       public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
         if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-          getPhotos(StringUtils.getKeyword(String.valueOf(etSearchKey.getText())));
-          hideKeyboard();
+          searchBtn.callOnClick();
           return true;
         }
         return false;
@@ -93,6 +97,8 @@ public class SearchActivity extends AppCompatActivity {
     searchBtn.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
+        etSearchKey.clearFocus();
+        hideKeyboard();
         fetchResults();
       }
     });
@@ -103,12 +109,12 @@ public class SearchActivity extends AppCompatActivity {
    * hide soft keyboard when search pressed
    */
   private void hideKeyboard() {
-    InputMethodManager imm = (InputMethodManager) this.getSystemService(this.INPUT_METHOD_SERVICE);
+    InputMethodManager imm = (InputMethodManager) this.getSystemService(INPUT_METHOD_SERVICE);
     View view = this.getCurrentFocus();
     if (view == null) {
       view = new View(this);
     }
-    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
   }
 
   /**
@@ -116,6 +122,7 @@ public class SearchActivity extends AppCompatActivity {
    * and triggers the api request
    */
   private void fetchResults() {
+    showProgressBar();
     String key = String.valueOf(etSearchKey.getText());
     if (key.trim().length() > 0) {
       key = StringUtils.getKeyword(key);
@@ -133,6 +140,7 @@ public class SearchActivity extends AppCompatActivity {
     StringRequest searchImageRequest = new StringRequest(Request.Method.GET, UrlBuilder.searchPhoto(key, page), new Response.Listener<String>() {
       @Override
       public void onResponse(String response) {
+        hideProgressBar();
         Log.d(TAG, "onResponse: 200 OK\n" + response);
         try {
           // convert response into JSON object and get the "results" array
@@ -151,6 +159,7 @@ public class SearchActivity extends AppCompatActivity {
     }, new Response.ErrorListener() {
       @Override
       public void onErrorResponse(VolleyError error) {
+        hideProgressBar();
         Log.d(TAG, "onErrorResponse: " + error.toString());
       }
     }) {
@@ -188,5 +197,13 @@ public class SearchActivity extends AppCompatActivity {
         }
       }
     });
+  }
+
+  private void showProgressBar() {
+    progressBar.setVisibility(View.VISIBLE);
+  }
+
+  private void hideProgressBar() {
+    progressBar.setVisibility(View.INVISIBLE);
   }
 }
