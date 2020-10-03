@@ -157,7 +157,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     return super.onOptionsItemSelected(item);
   }
 
-  @SuppressWarnings("StatementWithEmptyBody")
   @Override
   public boolean onNavigationItemSelected(MenuItem item) {
     // Handle navigation view item clicks here.
@@ -222,24 +221,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (menuItem.getItemId()) {
           case R.id.nav_item_new:
             Log.d(TAG, "onNavigationItemSelected: new photos fragment");
-            setFragment(new NewPhotosFragment());
-            setToolbarTitle(getResources().getString(R.string.nav_item_new_label));
+            setFragmentView(new NewPhotosFragment(), getResources().getString(R.string.nav_item_new_label), 0);
             return true;
           case R.id.nav_item_featured:
             Log.d(TAG, "onNavigationItemSelected: featured photos fragment");
-            setFragment(new FeaturedPhotosFragment());
-            setToolbarTitle(getResources().getString(R.string.featured_nav_item_label));
+            setFragmentView(new FeaturedPhotosFragment(), getResources().getString(R.string.featured_nav_item_label), 1);
             return true;
           case R.id.nav_item_collections:
             Log.d(TAG, "onNavigationItemSelected: collections fragment");
-            setFragment(new CollectionsFragment());
-            setToolbarTitle(getResources().getString(R.string.collections_nav_bar_label));
+            setFragmentView(new CollectionsFragment(), getResources().getString(R.string.collections_nav_bar_label), 2);
             return true;
         }
         return false;
       }
     });
     bottomNavigationView.setSelectedItemId(R.id.nav_item_new);
+  }
+
+  private void setFragmentView(Fragment fragment, String title, int navId) {
+    setFragment(fragment);
+    setToolbarTitle(title);
+    navigationView.getMenu().getItem(navId).setChecked(true);
   }
 
   private void setToolbarTitle(String title) {
