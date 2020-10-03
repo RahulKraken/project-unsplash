@@ -64,7 +64,8 @@ public class UserLikesFragment extends Fragment {
   }
 
   private void fetchPhotos() {
-    StringRequest userPhotosRequest = new StringRequest(Request.Method.GET, UrlBuilder.getUserLikes(username, page), new Response.Listener<String>() {
+    Log.d(TAG, "fetchPhotos: " + UrlBuilder.getUserLikes(MyApplication.me.getUsername(), page));
+    StringRequest userPhotosRequest = new StringRequest(Request.Method.GET, UrlBuilder.getUserLikes(MyApplication.me.getUsername(), page), new Response.Listener<String>() {
       @Override
       public void onResponse(String response) {
         Log.d(TAG, "onResponse: 200 OK\n" + response);

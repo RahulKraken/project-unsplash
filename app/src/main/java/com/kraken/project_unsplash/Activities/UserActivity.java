@@ -164,6 +164,7 @@ public class UserActivity extends AppCompatActivity implements SharedPreferences
   private void setupViewPager() {
     ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
 
+    Log.d(TAG, "setupViewPager: " + userName);
     UserPhotosFragment userPhotosFragment = new UserPhotosFragment();
     userPhotosFragment.putUsername(userName);
     UserLikesFragment userLikesFragment = new UserLikesFragment();

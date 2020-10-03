@@ -65,8 +65,10 @@ public class UserCollectionFragment extends Fragment {
   }
 
   private void fetchCollections() {
-    Log.d(TAG, "fetchCollections: " + UrlBuilder.getUserCollections(username, page));
-    StringRequest userPhotosRequest = new StringRequest(Request.Method.GET, UrlBuilder.getUserCollections(username, page), new Response.Listener<String>() {
+    Log.d(TAG, "fetchCollections: " + UrlBuilder.getUserCollections(MyApplication.me.getUsername(), page));
+    StringRequest userPhotosRequest = new StringRequest(
+      Request.Method.GET, UrlBuilder.getUserCollections(MyApplication.me.getUsername(), page
+    ), new Response.Listener<String>() {
       @Override
       public void onResponse(String response) {
         Log.d(TAG, "onResponse: 200 OK\n" + response);
