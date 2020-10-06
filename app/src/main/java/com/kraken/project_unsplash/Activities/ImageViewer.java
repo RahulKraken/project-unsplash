@@ -291,7 +291,7 @@ public class ImageViewer extends AppCompatActivity {
   private void downloadPhoto() {
     // try creating a download request
     try {
-      downloadRequest = new DownloadManager.Request(Uri.parse(photo.getUrls().getSmall()));
+      downloadRequest = new DownloadManager.Request(Uri.parse(photo.getUrls().getFull()));
     } catch (IllegalArgumentException e) {
       e.printStackTrace();
     }
