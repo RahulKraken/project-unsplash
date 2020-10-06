@@ -34,6 +34,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.kraken.project_unsplash.Models.Collection;
 import com.kraken.project_unsplash.Models.Photo;
 import com.kraken.project_unsplash.MyApplication;
@@ -123,6 +124,7 @@ public class ImageViewer extends AppCompatActivity {
         Log.d(TAG, "onClick: Adding to favorites");
         if (MyApplication.AUTHENTICATED) {
           likePhoto();
+          MyApplication.logEvent("ImageViewer: add to favorites event", "add to favorites", "string");
         } else {
           startActivity(new Intent(ImageViewer.this, LoginActivity.class));
         }
@@ -171,6 +173,7 @@ public class ImageViewer extends AppCompatActivity {
       public void onClick(View v) {
         if (MyApplication.AUTHENTICATED) {
           fetchCollectionsList();
+          MyApplication.logEvent("ImageViewer: add to collection event", "Add to collection", "string");
         } else {
           startActivity(new Intent(ImageViewer.this, LoginActivity.class));
         }
@@ -276,6 +279,7 @@ public class ImageViewer extends AppCompatActivity {
       @Override
       public void onClick(View v) {
         Log.d(TAG, "onClick: Downloading photo");
+        MyApplication.logEvent("ImageViewer: download event", "Download", "string");
         downloadPhoto();
       }
     });
@@ -382,6 +386,7 @@ public class ImageViewer extends AppCompatActivity {
     profileImage.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
+        MyApplication.logEvent("Photographer profile visited", "Profile visited", "string");
         Intent intent = new Intent(ImageViewer.this, UserActivity.class);
         intent.putExtra(getResources().getString(R.string.user_intent_pass_key), photo.getUser().getUsername());
         startActivity(intent);

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.kraken.project_unsplash.Activities.MainActivity;
 import com.kraken.project_unsplash.Database.DatabaseContract;
 import com.kraken.project_unsplash.Database.DatabaseHelper;
@@ -39,6 +41,8 @@ public class MyApplication extends Application {
 
   private static Context context;
 
+  private static FirebaseAnalytics firebaseAnalytics;
+
   /**
    * Network request queues
    * localRequestQueue - requests like photos and collections
@@ -54,6 +58,9 @@ public class MyApplication extends Application {
 
     context = getApplicationContext();
 
+    // initialize firebase analytics
+    firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+
     // load default preferences
     PreferenceManager.setDefaultValues(this, R.xml.app_preferences, false);
     preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -67,6 +74,14 @@ public class MyApplication extends Application {
     checkAuthenticationState();
 
     createDatabase();
+  }
+
+  public static void logEvent(String id, String name, String contentType) {
+    Bundle bundle = new Bundle();
+    bundle.putString(FirebaseAnalytics.Param.ITEM_ID, id);
+    bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, name);
+    bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, contentType);
+    MyApplication.firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
   }
 
   public void checkAuthenticationState() {

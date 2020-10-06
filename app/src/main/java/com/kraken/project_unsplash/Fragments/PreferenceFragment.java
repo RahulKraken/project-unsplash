@@ -14,6 +14,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
+import com.kraken.project_unsplash.MyApplication;
 import com.kraken.project_unsplash.R;
 import com.kraken.project_unsplash.Utils.Constants;
 
@@ -35,29 +36,37 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
   public boolean onPreferenceTreeClick(Preference preference) {
     switch (preference.getKey()) {
       case "pref_theme":
+        MyApplication.logEvent("Preference theme", "Theme changed event", "string");
         changeThemeValue(preference.getKey());
         return true;
       case "pref_layout":
+        MyApplication.logEvent("Preference layout", "Layout changed event", "string");
         changeLayoutValue(preference.getKey());
         return true;
       case "pref_load_quality":
+        MyApplication.logEvent("Preference load quality", "Load quality changed event", "string");
         changeLoadQuality(preference.getKey());
         return true;
       case "pref_download_quality":
+        MyApplication.logEvent("Preference download quality", "Download quality changed event", "string");
         changeDownloadQuality(preference.getKey());
         return true;
       case "pref_wallpaper_quality":
+        MyApplication.logEvent("Preference wallpaper quality", "Wallpaper quality changed event", "string");
         changeWallpaperQuality(preference.getKey());
         return true;
       case "pref_version":
         handleVersion();
       case "pref_github":
+        MyApplication.logEvent("Github visited", "Github event", "string");
         handleGithub();
         return true;
       case "pref_report_bugs":
+        MyApplication.logEvent("Report bug used", "Report bug", "string");
         reportBugs();
         return true;
       case "pref_privacy_policy":
+        MyApplication.logEvent("Privacy policy checked", "Privacy policy", "string");
         showPrivacyPolicy();
         return true;
     }

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "861330218516",
+    "firebase_url": "https://project-unsplash.firebaseio.com",
+    "project_id": "project-unsplash",
+    "storage_bucket": "project-unsplash.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:861330218516:android:fca0cbb0bda648060d9101",
+        "android_client_info": {
+          "package_name": "com.kraken.project_unsplash"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "861330218516-rirlirktlld93nsojdhrs6b2m7q5ghmv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kraken.project_unsplash",
+            "certificate_hash": "06a40aaeebf152d42cd5d5a6e12a88b680b5aa14"
+          }
+        },
+        {
+          "client_id": "861330218516-06dfiilt7vm29a4lgma22ivk3pgokkle.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCl73I1rsHVozGlFg5Jpd1qup_oiF1Rv1c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "861330218516-06dfiilt7vm29a4lgma22ivk3pgokkle.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -145,11 +145,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     //noinspection SimplifiableIfStatement
     if (id == R.id.action_search) {
       Log.d(TAG, "onOptionsItemSelected: launching search activity");
+      MyApplication.logEvent("Search activity launched", "Search used", "string");
       startActivity(new Intent(this, SearchActivity.class));
     }
 
     // if sort by button is selected
     if (id == R.id.action_sort) {
+      MyApplication.logEvent("Search feature used", "sort used", "string");
       buildDialogBox();
       return true;
     }
@@ -165,23 +167,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     switch (id) {
       case R.id.nav_new:
         Log.d(TAG, "onNavigationItemSelected: navigating to new photos");
+        MyApplication.logEvent("Navigation drawer used", "new items fragment", "string");
         bottomNavigationView.setSelectedItemId(R.id.nav_item_new);
         break;
       case R.id.nav_featured:
         Log.d(TAG, "onNavigationItemSelected: navigating to featured");
+        MyApplication.logEvent("Navigation drawer used", "featured items fragment", "string");
         bottomNavigationView.setSelectedItemId(R.id.nav_item_featured);
         break;
       case R.id.nav_collections:
         Log.d(TAG, "onNavigationItemSelected: navigating to collections");
+        MyApplication.logEvent("Navigation drawer used", "collections fragment", "string");
         bottomNavigationView.setSelectedItemId(R.id.nav_item_collections);
         break;
       case R.id.nav_categories:
+        MyApplication.logEvent("Navigation drawer used", "Category Activity", "string");
         startActivity(new Intent(this, CategoryListActivity.class));
         break;
       case R.id.nav_settings:
+        MyApplication.logEvent("Navigation drawer used", "Settings Activity", "string");
         startActivity(new Intent(this, PreferenceActivity.class));
         break;
       case R.id.nav_rate:
+        MyApplication.logEvent("Navigation drawer used", "Rate app on play store", "string");
         openGooglePlayStore();
         break;
     }
@@ -221,14 +229,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         switch (menuItem.getItemId()) {
           case R.id.nav_item_new:
             Log.d(TAG, "onNavigationItemSelected: new photos fragment");
+            MyApplication.logEvent("Bottom navigation used", "New Photos fragment", "string");
             setFragmentView(new NewPhotosFragment(), getResources().getString(R.string.nav_item_new_label), 0);
             return true;
           case R.id.nav_item_featured:
             Log.d(TAG, "onNavigationItemSelected: featured photos fragment");
+            MyApplication.logEvent("Bottom navigation used", "Featured Photos fragment", "string");
             setFragmentView(new FeaturedPhotosFragment(), getResources().getString(R.string.featured_nav_item_label), 1);
             return true;
           case R.id.nav_item_collections:
             Log.d(TAG, "onNavigationItemSelected: collections fragment");
+            MyApplication.logEvent("Bottom navigation used", "Collections fragment", "string");
             setFragmentView(new CollectionsFragment(), getResources().getString(R.string.collections_nav_bar_label), 2);
             return true;
         }
