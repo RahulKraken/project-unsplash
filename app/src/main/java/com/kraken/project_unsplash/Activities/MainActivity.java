@@ -151,11 +151,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     // if sort by button is selected
-    if (id == R.id.action_sort) {
-      MyApplication.logEvent("Search feature used", "sort used", "string");
-      buildDialogBox();
-      return true;
-    }
+//    if (id == R.id.action_sort) {
+//      MyApplication.logEvent("Search feature used", "sort used", "string");
+//      buildDialogBox();
+//      return true;
+//    }
 
     return super.onOptionsItemSelected(item);
   }
