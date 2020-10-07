@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         MyApplication.logEvent("Navigation drawer used", "Category Activity", "string");
         startActivity(new Intent(this, CategoryListActivity.class));
         break;
-      case R.id.nav_settings:
+      case R.id.nav_about:
         MyApplication.logEvent("Navigation drawer used", "Settings Activity", "string");
         startActivity(new Intent(this, PreferenceActivity.class));
         break;

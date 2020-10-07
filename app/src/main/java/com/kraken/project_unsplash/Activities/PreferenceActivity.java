@@ -24,7 +24,7 @@ public class PreferenceActivity extends AppCompatActivity {
       getSupportActionBar().setDisplayShowHomeEnabled(true);
 
       TextView tv = findViewById(R.id.toolbar_title);
-      tv.setText("Settings");
+      tv.setText(R.string.about_activity_title);
     }
 
     // put preference fragment in frame layout
