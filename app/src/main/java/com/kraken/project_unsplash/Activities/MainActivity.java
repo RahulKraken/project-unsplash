@@ -68,7 +68,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     toggle.syncState();
     navigationView.setNavigationItemSelectedListener(this);
 
-    handleNavigationViewHeader();
+    // todo: uncomment to turn on login feature
+//    handleNavigationViewHeader();
 
     // setting up bottom navigation view
     bottomNavigationView = findViewById(R.id.bottom_navigation);

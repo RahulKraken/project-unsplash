@@ -71,7 +71,7 @@ public class MyApplication extends Application {
 
     Log.d(TAG, "onCreate: request queues created");
 
-    checkAuthenticationState();
+//    checkAuthenticationState();
 
     createDatabase();
   }
