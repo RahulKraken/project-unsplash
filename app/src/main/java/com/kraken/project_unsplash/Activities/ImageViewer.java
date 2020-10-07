@@ -3,22 +3,19 @@ package com.kraken.project_unsplash.Activities;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -31,7 +28,6 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
 import com.kraken.project_unsplash.Models.Collection;
@@ -43,9 +39,6 @@ import com.kraken.project_unsplash.Utils.Params;
 import com.kraken.project_unsplash.Utils.Serializer;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -102,13 +95,26 @@ public class ImageViewer extends AppCompatActivity {
     photo = (Photo) intent.getSerializableExtra(getResources().getString(R.string.photo_intent_transfer_key));
 
     // load image into the image view
-    LoadImage();
+    loadImage();
 
     // handle buttons
     handleFavoritesBtn();
     handleCollectionsBtn();
     handleDownloadBtn();
     setProfileListener();
+  }
+
+  @Override
+  public void onBackPressed() {
+    finish();
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    if (item.getItemId() == android.R.id.home) {
+      this.onBackPressed();
+    }
+    return true;
   }
 
   /**
@@ -123,6 +129,7 @@ public class ImageViewer extends AppCompatActivity {
         Log.d(TAG, "onClick: Adding to favorites");
         if (MyApplication.AUTHENTICATED) {
           likePhoto();
+          MyApplication.logEvent("ImageViewer: add to favorites event", "add to favorites", "string");
         } else {
           startActivity(new Intent(ImageViewer.this, LoginActivity.class));
         }
@@ -171,6 +178,7 @@ public class ImageViewer extends AppCompatActivity {
       public void onClick(View v) {
         if (MyApplication.AUTHENTICATED) {
           fetchCollectionsList();
+          MyApplication.logEvent("ImageViewer: add to collection event", "Add to collection", "string");
         } else {
           startActivity(new Intent(ImageViewer.this, LoginActivity.class));
         }
@@ -276,6 +284,7 @@ public class ImageViewer extends AppCompatActivity {
       @Override
       public void onClick(View v) {
         Log.d(TAG, "onClick: Downloading photo");
+        MyApplication.logEvent("ImageViewer: download event", "Download", "string");
         downloadPhoto();
       }
     });
@@ -287,7 +296,7 @@ public class ImageViewer extends AppCompatActivity {
   private void downloadPhoto() {
     // try creating a download request
     try {
-      downloadRequest = new DownloadManager.Request(Uri.parse(photo.getUrls().getSmall()));
+      downloadRequest = new DownloadManager.Request(Uri.parse(photo.getUrls().getFull()));
     } catch (IllegalArgumentException e) {
       e.printStackTrace();
     }
@@ -361,7 +370,7 @@ public class ImageViewer extends AppCompatActivity {
    * load image into image view
    */
   @SuppressLint("SetTextI18n")
-  private void LoadImage() {
+  private void loadImage() {
     // load image with glide
     Glide.with(this)
       .load(photo.getUrls().getRegular())
@@ -382,6 +391,7 @@ public class ImageViewer extends AppCompatActivity {
     profileImage.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
+        MyApplication.logEvent("Photographer profile visited", "Profile visited", "string");
         Intent intent = new Intent(ImageViewer.this, UserActivity.class);
         intent.putExtra(getResources().getString(R.string.user_intent_pass_key), photo.getUser().getUsername());
         startActivity(intent);

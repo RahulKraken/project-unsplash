@@ -8,10 +8,10 @@
     android:icon="@mipmap/ic_search_dark"
     app:showAsAction="ifRoom" />
 
-  <item
-    android:id="@+id/action_sort"
-    android:orderInCategory="1"
-    android:title="@string/action_sort_label"
-    android:icon="@mipmap/ic_sort_dark"
-    app:showAsAction="ifRoom" />
+<!--  <item-->
+<!--    android:id="@+id/action_sort"-->
+<!--    android:orderInCategory="1"-->
+<!--    android:title="@string/action_sort_label"-->
+<!--    android:icon="@mipmap/ic_sort_dark"-->
+<!--    app:showAsAction="ifRoom" />-->
 </menu>
