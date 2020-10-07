@@ -58,6 +58,11 @@
     <item name="color">@color/md_black_1000</item>
   </style>
 
+  <!--nav drawer theme-->
+  <style name="Drawer" parent="Theme.AppCompat.Light">
+    <item name="colorControlHighlight">#0000</item>
+  </style>
+
   <!--app bar styles-->
   <style name="ActionBarBackArrow" parent="ThemeOverlay.AppCompat.ActionBar">
     <item name="colorControlNormal">@color/md_black_1000</item>

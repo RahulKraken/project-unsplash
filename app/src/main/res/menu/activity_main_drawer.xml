@@ -6,7 +6,7 @@
 
   <group
     android:id="@+id/nav_group_fragments"
-    android:checkableBehavior="single">
+    android:checkableBehavior="none">
     <item
       android:id="@+id/nav_new"
       android:icon="@mipmap/ic_explore"
@@ -23,7 +23,7 @@
 
   <group
     android:id="@+id/nav_group_categories"
-    android:checkableBehavior="single">
+    android:checkableBehavior="none">
     <item
       android:id="@+id/nav_categories"
       android:icon="@mipmap/ic_explore"
@@ -32,7 +32,7 @@
 
   <group
     android:id="@+id/nav_group_settings"
-    android:checkableBehavior="single" >
+    android:checkableBehavior="none" >
 <!--    <item-->
 <!--      android:id="@+id/nav_settings"-->
 <!--      android:icon="@mipmap/ic_settings"-->

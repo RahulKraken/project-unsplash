@@ -253,7 +253,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
   private void setFragmentView(Fragment fragment, String title, int navId) {
     setFragment(fragment);
     setToolbarTitle(title);
-    navigationView.getMenu().getItem(navId).setChecked(true);
+//    navigationView.getMenu().getItem(navId).setChecked(true);
   }
 
   private void setToolbarTitle(String title) {
