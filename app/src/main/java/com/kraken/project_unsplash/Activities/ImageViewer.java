@@ -3,22 +3,19 @@ package com.kraken.project_unsplash.Activities;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -31,10 +28,8 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.kraken.project_unsplash.Models.Collection;
 import com.kraken.project_unsplash.Models.Photo;
 import com.kraken.project_unsplash.MyApplication;
@@ -44,9 +39,6 @@ import com.kraken.project_unsplash.Utils.Params;
 import com.kraken.project_unsplash.Utils.Serializer;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -103,13 +95,26 @@ public class ImageViewer extends AppCompatActivity {
     photo = (Photo) intent.getSerializableExtra(getResources().getString(R.string.photo_intent_transfer_key));
 
     // load image into the image view
-    LoadImage();
+    loadImage();
 
     // handle buttons
     handleFavoritesBtn();
     handleCollectionsBtn();
     handleDownloadBtn();
     setProfileListener();
+  }
+
+  @Override
+  public void onBackPressed() {
+    finish();
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    if (item.getItemId() == android.R.id.home) {
+      this.onBackPressed();
+    }
+    return true;
   }
 
   /**
@@ -365,7 +370,7 @@ public class ImageViewer extends AppCompatActivity {
    * load image into image view
    */
   @SuppressLint("SetTextI18n")
-  private void LoadImage() {
+  private void loadImage() {
     // load image with glide
     Glide.with(this)
       .load(photo.getUrls().getRegular())
