@@ -99,6 +99,8 @@ public class SearchActivity extends AppCompatActivity {
       public void onClick(View v) {
         etSearchKey.clearFocus();
         hideKeyboard();
+        photos.clear();
+        showProgressBar();
         fetchResults();
       }
     });
