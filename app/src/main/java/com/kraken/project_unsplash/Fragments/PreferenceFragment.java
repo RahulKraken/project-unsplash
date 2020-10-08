@@ -111,7 +111,8 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
 
   private void showPrivacyPolicy() {
     // todo : put privacy policy in place and display
-    Toast.makeText(getActivity(), "Privacy Policy under construction", Toast.LENGTH_SHORT).show();
+    Intent githubIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://project-unsplash-privacy-policy.s3.us-east-2.amazonaws.com/privacy-policy.html"));
+    startActivity(githubIntent);
   }
 
   private void createDialog(String title, final String key, List<String> list) {
