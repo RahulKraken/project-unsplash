@@ -22,7 +22,7 @@
       android:id="@+id/nav_header_profile_image"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:src="@color/md_grey_300"
+      android:src="@mipmap/ic_launcher"
       android:contentDescription="@string/nav_header_desc" />
 
   </androidx.cardview.widget.CardView>
@@ -32,7 +32,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="@dimen/nav_header_vertical_spacing"
-    android:text="@string/nav_header_title"
+    android:text="@string/app_name"
     android:textColor="@color/md_black_1000"
     android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
@@ -40,7 +40,7 @@
     android:id="@+id/nav_header_username"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:textColor="@color/md_black_1000"
-    android:text="@string/nav_header_subtitle" />
+    android:textColor="@color/md_black_1000" />
+<!--    android:text="@string/nav_header_subtitle" />-->
 
 </LinearLayout>
