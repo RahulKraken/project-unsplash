@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">Project-Unsplash</string>
+  <string name="app_name">Splash</string>
   <string name="image_view_content_desc">Image</string>
   <string name="search_button_content_desc">Search button</string>
   <string name="collection_recycler_view_item">Collection Recycler view item</string>
@@ -25,8 +25,7 @@
   <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
   <string name="navigation_drawer_open">Open navigation drawer</string>
   <string name="navigation_drawer_close">Close navigation drawer</string>
-  <string name="nav_header_title">Android Studio</string>
-  <string name="nav_header_subtitle">android.studio@android.com</string>
+  <string name="nav_header_title">Splash</string>
   <string name="nav_header_desc">Navigation header</string>
   <string name="action_settings">Settings</string>
 

@@ -28,6 +28,8 @@ import com.kraken.project_unsplash.Utils.Constants;
 import com.kraken.project_unsplash.Utils.Params;
 import com.kraken.project_unsplash.Utils.Serializer;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -100,18 +102,27 @@ public class FeaturedPhotosFragment extends Fragment implements SharedPreference
     Log.d(TAG, "fetchPhotos: " + UrlBuilder.getAllPhotos(50, orderBy, page));
     // string request fetches raw json using volley
     StringRequest allPhotosRequest = new StringRequest(Request.Method.GET,
-      UrlBuilder.getAllPhotos(50, orderBy, page),
+//      UrlBuilder.getAllPhotos(50, orderBy, page),
+      "https://api.unsplash.com/search/photos?per_page=50&page=1&order_by=\"latest\"&query=\"featured\"",
       new Response.Listener<String>() {
         @Override
         public void onResponse(String response) {
           hideProgressBar();
           Log.d(TAG, "onResponse: 200 OK\n" + response);
-          // serializer converts the raw json into a Photo[]
-          Serializer serializer = new Serializer();
-          photos.addAll(serializer.listPhotos(response));
-          Log.d(TAG, "onResponse: " + photos.size());
-          // notify recycler view adapter
-          recyclerViewAdapter.notifyDataSetChanged();
+          try {
+            // convert response into JSON object and get the "results" array
+            JSONObject jsonObject = new JSONObject(response);
+            String raw = jsonObject.getString("results");
+            Log.d(TAG, "onResponse: RAW " + raw);
+            // serializer converts the raw json into a Photo[]
+            Serializer serializer = new Serializer();
+            photos.addAll(serializer.listPhotos(raw));
+            Log.d(TAG, "onResponse: " + photos.size());
+            // notify recycler view adapter
+            recyclerViewAdapter.notifyDataSetChanged();
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
         }
       }, new Response.ErrorListener() {
       @Override
